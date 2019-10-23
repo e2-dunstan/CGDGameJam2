@@ -13,6 +13,7 @@ public class DrawArrow : MonoBehaviour
     public bool validMove;
     Vector3[] points = new Vector3[2];
     private LineRenderer lr;
+    float distLine = 0.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -54,6 +55,8 @@ public class DrawArrow : MonoBehaviour
             anim.Kill();
             anim.enabled = false;
         }
+        distLine = Mathf.InverseLerp(endLoc.transform.position.magnitude, startloc.transform.position.magnitude, 1f );
+
         points[0] = startloc.transform.position;
         points[1] = endLoc.transform.position;
     }
@@ -74,15 +77,8 @@ public class DrawArrow : MonoBehaviour
                 lr.enabled = true;
             }
             GetComponent<LineRenderer>().SetPositions(points);
+            lr.endWidth = distLine;
+            print(distLine);
         }
-    }
-
-    private void Debug()
-    {
-        //Vector3 heading = (endLoc.transform.position - startloc.transform.position);
-        //float distance = heading.magnitude;
-        //Vector3 direction = heading / distance;
-        //Debug.DrawRay(startloc.transform.position, direction * distance, Color.black);
-
     }
 }

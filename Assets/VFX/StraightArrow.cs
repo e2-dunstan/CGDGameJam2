@@ -14,7 +14,6 @@ public class StraightArrow : MonoBehaviour
     void Start()
     {
         pathPos = 0.0f;
-        pathParticleInst.SetActive(false);
     }   
 
     // Update is called once per frame
