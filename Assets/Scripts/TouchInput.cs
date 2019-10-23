@@ -119,6 +119,7 @@ public class TouchInput : MonoBehaviour
 
     private void ResetTouch(PlayerTouch _touch)
     {
+        Debug.Log("Resetting touch");
         _touch.tracking = false;
         _touch.moved = false;
         _touch.selectedChar = null;
