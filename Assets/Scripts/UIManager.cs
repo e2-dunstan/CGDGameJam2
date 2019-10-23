@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JobLoadManager : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
+    public Job job;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
+        job = JobManager.Instance.GetRandomInactiveJobAndAddToQueue();
     }
 
     // Update is called once per frame
