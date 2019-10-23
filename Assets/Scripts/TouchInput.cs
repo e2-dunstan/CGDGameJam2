@@ -40,6 +40,11 @@ public class TouchInput : MonoBehaviour
                 if (!IsTracking(Input.GetTouch(i)) && IsEmployee(Input.GetTouch(i).position))
                 {
                     PlayerTouch newTouch = GetNewTouch();
+                    if (newTouch == null)
+                    {
+                        Debug.LogWarning("No free touches! Increase max touch count or stop touching the screen");
+                        continue;
+                    }
                     newTouch.tracking = true;
                     newTouch.touchStart = newTouch.data.position;
                     newTouch.selectedChar = toAssign;
@@ -73,24 +78,18 @@ public class TouchInput : MonoBehaviour
     {
         foreach (PlayerTouch touch in playerTouches)
         {
-            if (touch.data.phase == TouchPhase.Began)
+            touch.touchEnd = touch.data.position;
+            if (touch.data.phase == TouchPhase.Moved)
             {
-                Debug.Log("Touch began");
+                touch.moved = true;
             }
-            else
+            if (touch.data.phase == TouchPhase.Ended)
             {
                 touch.touchEnd = touch.data.position;
-                if (touch.data.phase == TouchPhase.Moved)
-                {
-                    touch.moved = true;
-                }
-                if (touch.data.phase == TouchPhase.Ended)
-                {
-                    touch.touchEnd = touch.data.position;
-                    ProcessPlayerTouchData(touch);
-                }
-            }
+                ProcessPlayerTouchData(touch);
 
+                ResetTouch(touch);
+            }
         }
     }
 
@@ -115,7 +114,6 @@ public class TouchInput : MonoBehaviour
                 return playerTouches[i];
             }
         }
-        Debug.LogWarning("No free touches! Increase max touch count or stop touching the screen");
         return null;
     }
 
@@ -135,7 +133,5 @@ public class TouchInput : MonoBehaviour
             _touch.selectedChar.Selected = false;
             _touch.selectedChar.ProcessNewPath(_touch);
         }
-
-        ResetTouch(_touch);
     }
 }
