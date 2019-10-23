@@ -17,7 +17,7 @@ public class TouchInput : MonoBehaviour
         public Vector3 touchEnd;
     }
     private List<PlayerTouch> playerTouches = new List<PlayerTouch>();
-    public int maxTouches = 4;
+    public int maxTouches = 10;
 
     private Employee toAssign = null;
 
@@ -45,6 +45,7 @@ public class TouchInput : MonoBehaviour
                         Debug.LogWarning("No free touches! Increase max touch count or stop touching the screen");
                         continue;
                     }
+                    newTouch.data = Input.GetTouch(i);
                     newTouch.tracking = true;
                     newTouch.touchStart = newTouch.data.position;
                     newTouch.selectedChar = toAssign;
@@ -54,7 +55,6 @@ public class TouchInput : MonoBehaviour
                     Debug.Log("Employee touched");
                 }
             }
-
             UpdateCurrentTouches();
         }
     }
@@ -76,8 +76,22 @@ public class TouchInput : MonoBehaviour
 
     private void UpdateCurrentTouches()
     {
+        for(int i = 0; i < Input.touchCount; i++)
+        {
+            foreach(PlayerTouch touch in playerTouches)
+            {
+                if (Input.GetTouch(i).fingerId == touch.data.fingerId)
+                {
+                    touch.data = Input.GetTouch(i);
+                }
+            }
+        }
+
         foreach (PlayerTouch touch in playerTouches)
         {
+            //if (!touch.tracking) continue;
+            Debug.Log("touches being updated");
+
             touch.touchEnd = touch.data.position;
             if (touch.data.phase == TouchPhase.Moved)
             {
@@ -85,6 +99,7 @@ public class TouchInput : MonoBehaviour
             }
             if (touch.data.phase == TouchPhase.Ended)
             {
+                Debug.Log("touch phase ended");
                 touch.touchEnd = touch.data.position;
                 ProcessPlayerTouchData(touch);
 
@@ -97,7 +112,8 @@ public class TouchInput : MonoBehaviour
     {
         for (int i = 0; i < playerTouches.Count; i++)
         {
-            if (playerTouches[i].data.fingerId == _touch.fingerId)
+            if (playerTouches[i].data.fingerId == _touch.fingerId
+                && playerTouches[i].tracking)
             {
                 return true;
             }
