@@ -17,7 +17,7 @@ public class TouchInput : MonoBehaviour
         public Vector3 touchEnd;
     }
     private List<PlayerTouch> playerTouches = new List<PlayerTouch>();
-    public int maxTouches = 4;
+    public int maxTouches = 10;
 
     private Employee toAssign = null;
 
@@ -40,6 +40,12 @@ public class TouchInput : MonoBehaviour
                 if (!IsTracking(Input.GetTouch(i)) && IsEmployee(Input.GetTouch(i).position))
                 {
                     PlayerTouch newTouch = GetNewTouch();
+                    if (newTouch == null)
+                    {
+                        Debug.LogWarning("No free touches! Increase max touch count or stop touching the screen");
+                        continue;
+                    }
+                    newTouch.data = Input.GetTouch(i);
                     newTouch.tracking = true;
                     newTouch.touchStart = newTouch.data.position;
                     newTouch.selectedChar = toAssign;
@@ -49,7 +55,6 @@ public class TouchInput : MonoBehaviour
                     Debug.Log("Employee touched");
                 }
             }
-
             UpdateCurrentTouches();
         }
     }
@@ -71,26 +76,35 @@ public class TouchInput : MonoBehaviour
 
     private void UpdateCurrentTouches()
     {
+        for(int i = 0; i < Input.touchCount; i++)
+        {
+            foreach(PlayerTouch touch in playerTouches)
+            {
+                if (Input.GetTouch(i).fingerId == touch.data.fingerId)
+                {
+                    touch.data = Input.GetTouch(i);
+                }
+            }
+        }
+
         foreach (PlayerTouch touch in playerTouches)
         {
-            if (touch.data.phase == TouchPhase.Began)
-            {
-                Debug.Log("Touch began");
-            }
-            else
-            {
-                touch.touchEnd = touch.data.position;
-                if (touch.data.phase == TouchPhase.Moved)
-                {
-                    touch.moved = true;
-                }
-                if (touch.data.phase == TouchPhase.Ended)
-                {
-                    touch.touchEnd = touch.data.position;
-                    ProcessPlayerTouchData(touch);
-                }
-            }
+            //if (!touch.tracking) continue;
+            Debug.Log("touches being updated");
 
+            touch.touchEnd = touch.data.position;
+            if (touch.data.phase == TouchPhase.Moved)
+            {
+                touch.moved = true;
+            }
+            if (touch.data.phase == TouchPhase.Ended)
+            {
+                Debug.Log("touch phase ended");
+                touch.touchEnd = touch.data.position;
+                ProcessPlayerTouchData(touch);
+
+                ResetTouch(touch);
+            }
         }
     }
 
@@ -98,7 +112,8 @@ public class TouchInput : MonoBehaviour
     {
         for (int i = 0; i < playerTouches.Count; i++)
         {
-            if (playerTouches[i].data.fingerId == _touch.fingerId)
+            if (playerTouches[i].data.fingerId == _touch.fingerId
+                && playerTouches[i].tracking)
             {
                 return true;
             }
@@ -115,12 +130,12 @@ public class TouchInput : MonoBehaviour
                 return playerTouches[i];
             }
         }
-        Debug.LogWarning("No free touches! Increase max touch count or stop touching the screen");
         return null;
     }
 
     private void ResetTouch(PlayerTouch _touch)
     {
+        Debug.Log("Resetting touch");
         _touch.tracking = false;
         _touch.moved = false;
         _touch.selectedChar = null;
@@ -135,7 +150,5 @@ public class TouchInput : MonoBehaviour
             _touch.selectedChar.Selected = false;
             _touch.selectedChar.ProcessNewPath(_touch);
         }
-
-        ResetTouch(_touch);
     }
 }
