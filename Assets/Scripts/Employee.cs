@@ -32,7 +32,6 @@ public class Employee : MonoBehaviour
 
     private bool shouldRelaxAfterMoving = false;
     private InteractableFurniture.Interactable currentInteractable = null;
-    private bool atInteractable = false;
 
     public bool Selected
     {
@@ -55,7 +54,8 @@ public class Employee : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(state);
+        moveSpeed = agent.velocity.magnitude / defaultMaxSpeed;
+        anim.SetFloat("MoveSpeed", moveSpeed);
 
         switch (state)
         {
@@ -78,24 +78,21 @@ public class Employee : MonoBehaviour
         switch (newState)
         {
             case State.IDLE:
-                if (currentInteractable != null || atInteractable)
+                if (currentInteractable != null)
                 {
-                    atInteractable = false;
                     currentInteractable.occupied = false;
                     if (currentInteractable.type == InteractableFurniture.Interactable.Type.CHAIR)
+                    {
                         anim.SetTrigger("Stand");
+                        MoveTo(transform.position + (transform.forward * 3));
+                    }
 
                     currentInteractable = null;
                 }
                 break;
             case State.RELAXING:
 
-                Vector3 rot = new Vector3(
-                    transform.eulerAngles.x,
-                    currentInteractable.origin.eulerAngles.y,
-                    transform.eulerAngles.z);
-                //transform.eulerAngles = rot;
-                transform.rotation = currentInteractable.origin.rotation;
+                StartCoroutine(RotateTo(currentInteractable.origin.rotation));
                 if (currentInteractable.type == InteractableFurniture.Interactable.Type.CHAIR)
                     anim.SetTrigger("Sit");
 
@@ -128,19 +125,20 @@ public class Employee : MonoBehaviour
             currentInteractable = InteractableFurniture.Instance.GetInteractable();
             if (currentInteractable != null)
                 MoveTo(currentInteractable.origin.position);
+            
             timeIdle = 0;
         }
     }
 
     private void UpdateRelaxing()
     {
-        if (currentInteractable == null || !atInteractable) return;
+        if (currentInteractable == null) return;
 
         timeIdle += Time.deltaTime;
         if (timeIdle > 5f)
         {
-            //find new
-            anim.SetTrigger("Stand");
+            ChangeState(State.IDLE);
+            timeIdle = 0;
         }
     }
 
@@ -155,10 +153,6 @@ public class Employee : MonoBehaviour
         {
             agent.speed = 0;
         }
-
-        moveSpeed = agent.velocity.magnitude / defaultMaxSpeed;
-        anim.SetFloat("MoveSpeed", moveSpeed);
-
 
         if (moveSpeed > 0.7f)
         {
@@ -187,6 +181,8 @@ public class Employee : MonoBehaviour
         }
     }
 
+    #endregion
+
     private bool CanMove()
     {
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle")
@@ -202,7 +198,22 @@ public class Employee : MonoBehaviour
         }
     }
 
-    #endregion
+    private IEnumerator RotateTo(Quaternion rot)
+    {
+        rot.x = transform.rotation.x;
+        rot.z = transform.rotation.z;
+
+        float rotTime = 0.2f;
+        for(float t = 0; t < rotTime; t += Time.deltaTime)
+        {
+            transform.rotation = Quaternion.Lerp(transform.rotation, rot, t / rotTime);
+
+            yield return null;
+        }
+
+        transform.rotation = rot;
+    }
+
 
     #region NAVMESH
     public void ProcessNewPath(TouchInput.PlayerTouch _touchInfo)
@@ -226,6 +237,7 @@ public class Employee : MonoBehaviour
     private IEnumerator GetPath()
     {
         path = new NavMeshPath();
+        float timeToFindPath = 0;
         while (path.status != NavMeshPathStatus.PathComplete && !Selected)
         {
             agent.CalculatePath(destination, path);
@@ -235,8 +247,16 @@ public class Employee : MonoBehaviour
                 Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.red);
             }
 
+            timeToFindPath += Time.deltaTime;
+            if (timeToFindPath > 3.0f)
+            {
+                break;
+            }
             yield return null;
         }
+
+        timeToFindPath = 0;
+
         ChangeState(State.MOVING);
         agent.destination = destination;
         agent.SetPath(path);

@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gender: 0
-  debugVisualisation: 1
+  debugVisualisation: 0
 --- !u!195 &1096808171312651268
 NavMeshAgent:
   m_ObjectHideFlags: 0
