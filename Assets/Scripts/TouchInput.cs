@@ -6,6 +6,12 @@ public class TouchInput : MonoBehaviour
 {
     public static TouchInput Instance;
 
+    public enum InputType
+    {
+        MOUSE, TOUCH
+    }
+    public InputType inputType = InputType.TOUCH;
+
     public class PlayerTouch
     {
         public Touch data;
@@ -17,9 +23,11 @@ public class TouchInput : MonoBehaviour
         public Vector3 touchEnd;
     }
     private List<PlayerTouch> playerTouches = new List<PlayerTouch>();
-    public int maxTouches = 10;
+    [SerializeField] private int maxTouches = 10;
 
     private Employee toAssign = null;
+
+    private bool mousePressed = false;
 
     private void Awake()
     {
@@ -33,29 +41,66 @@ public class TouchInput : MonoBehaviour
 
     private void Update()
     {
-        if (Input.touchCount > 0)
+        // -- MOUSE INPUT -- //
+        if (inputType == InputType.MOUSE)
         {
-            for (int i = 0; i < Input.touchCount; i++)
+            if (Input.GetMouseButtonDown(0) && IsEmployee(Input.mousePosition))
             {
-                if (!IsTracking(Input.GetTouch(i)) && IsEmployee(Input.GetTouch(i).position))
-                {
-                    PlayerTouch newTouch = GetNewTouch();
-                    if (newTouch == null)
-                    {
-                        Debug.LogWarning("No free touches! Increase max touch count or stop touching the screen");
-                        continue;
-                    }
-                    newTouch.data = Input.GetTouch(i);
-                    newTouch.tracking = true;
-                    newTouch.touchStart = newTouch.data.position;
-                    newTouch.selectedChar = toAssign;
-                    newTouch.selectedChar.Selected = true;
-                    toAssign = null;
+                mousePressed = true;
+                playerTouches[0].touchStart = Input.mousePosition;
+                playerTouches[0].selectedChar = toAssign;
+                playerTouches[0].selectedChar.Selected = true;
+                playerTouches[0].tracking = true;
+                toAssign = null;
 
-                    Debug.Log("Employee touched");
-                }
+                Debug.Log("mouse pressed");
             }
-            UpdateCurrentTouches();
+            if (Input.GetMouseButton(0) 
+                && playerTouches[0].tracking
+                && mousePressed
+                && Vector3.Distance(Input.mousePosition, playerTouches[0].touchStart) > 0)
+            {
+                playerTouches[0].moved = true;
+                Debug.Log("mouse moved");
+            }
+            if (Input.GetMouseButtonUp(0) && mousePressed)
+            {
+                playerTouches[0].touchEnd = Input.mousePosition;
+                ProcessPlayerTouchData(playerTouches[0]);
+
+                Debug.Log("mouse released");
+
+                mousePressed = false;
+                ResetTouch(playerTouches[0]);
+            }
+        }
+        // -- TOUCH INPUT -- //
+        else if (inputType == InputType.TOUCH)
+        {
+            if (Input.touchCount > 0)
+            {
+                for (int i = 0; i < Input.touchCount; i++)
+                {
+                    if (!IsTracking(Input.GetTouch(i)) && IsEmployee(Input.GetTouch(i).position))
+                    {
+                        PlayerTouch newTouch = GetNewTouch();
+                        if (newTouch == null)
+                        {
+                            Debug.LogWarning("No free touches! Increase max touch count or stop touching the screen");
+                            continue;
+                        }
+                        newTouch.data = Input.GetTouch(i);
+                        newTouch.tracking = true;
+                        newTouch.touchStart = newTouch.data.position;
+                        newTouch.selectedChar = toAssign;
+                        newTouch.selectedChar.Selected = true;
+                        toAssign = null;
+
+                        Debug.Log("Employee touched");
+                    }
+                }
+                UpdateCurrentTouches();
+            }
         }
     }
 
@@ -89,8 +134,7 @@ public class TouchInput : MonoBehaviour
 
         foreach (PlayerTouch touch in playerTouches)
         {
-            //if (!touch.tracking) continue;
-            Debug.Log("touches being updated");
+            if (!touch.tracking) continue;
 
             touch.touchEnd = touch.data.position;
             if (touch.data.phase == TouchPhase.Moved)
