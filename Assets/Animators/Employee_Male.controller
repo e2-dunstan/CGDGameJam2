@@ -50,14 +50,14 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!1102 &-3941242613879018549
+--- !u!1102 &-5630022448310939343
 AnimatorState:
   serializedVersion: 5
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: male_act_sit_on_chair
+  m_Name: female_act_standup_chair
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -70,7 +70,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: cd0db4d58249e5843b678a49de53c94a, type: 3}
+  m_Motion: {fileID: 7400000, guid: 37fc41a29618f0b428b7d84e9871df1c, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -83,7 +83,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BasicMotions@Idle02
+  m_Name: BasicMotions@Idle01
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -97,20 +97,20 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 3e331de7ae1981a4d80aa5799e9b3afe, type: 3}
+  m_Motion: {fileID: 7400000, guid: 59a515d01e333a74c82eb5c7c8434049, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &-1936511357951533225
+--- !u!1102 &-3221942970732587929
 AnimatorState:
   serializedVersion: 5
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: male_emotion_laugh_on_chair
+  m_Name: female_handshake
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -123,7 +123,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 9bed16f5753391f498f7ff2bf4e76992, type: 3}
+  m_Motion: {fileID: 7400000, guid: 893a2b4246ea89841b9254f3240a932c, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -142,26 +142,26 @@ AnimatorStateMachine:
     m_State: {fileID: 3312461870165670611}
     m_Position: {x: 160, y: 360, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -1936511357951533225}
-    m_Position: {x: -480, y: 240, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 3785221810255673396}
-    m_Position: {x: -480, y: 180, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 7363492631647918366}
-    m_Position: {x: 450, y: 240, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -3941242613879018549}
-    m_Position: {x: -480, y: 300, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 346899299250973187}
-    m_Position: {x: -480, y: 360, z: 0}
-  - serializedVersion: 1
     m_State: {fileID: -3524425397193501562}
     m_Position: {x: -90, y: 280, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7651282579575385801}
     m_Position: {x: -90, y: 430, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -3221942970732587929}
+    m_Position: {x: 430, y: 190, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 3961972909638141772}
+    m_Position: {x: -480, y: 130, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 6441348091140149801}
+    m_Position: {x: -480, y: 180, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 7378186497596301626}
+    m_Position: {x: -480, y: 230, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -5630022448310939343}
+    m_Position: {x: -480, y: 280, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -245,32 +245,6 @@ BlendTree:
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 0
---- !u!1102 &346899299250973187
-AnimatorState:
-  serializedVersion: 5
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: male_act_standup_chair
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 70ed7022d26bbc845ac0aef1283128c2, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1102 &3312461870165670611
 AnimatorState:
   serializedVersion: 5
@@ -278,7 +252,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: male_idle_pant
+  m_Name: female_idle_pant
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -292,20 +266,20 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 2f6b2f462e084ff499862ef621e9eded, type: 3}
+  m_Motion: {fileID: 7400000, guid: c666c31b935567e40b01f9a889acf7fe, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &3785221810255673396
+--- !u!1102 &3961972909638141772
 AnimatorState:
   serializedVersion: 5
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: male_talk_sit
+  m_Name: female_talk_sit
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -318,7 +292,33 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: eb8c3bd21c706464abf2adda21f43ad6, type: 3}
+  m_Motion: {fileID: 7400000, guid: 678073c5e1a9174478434ef0d9e866cf, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &6441348091140149801
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: female_emotion_laugh_on_chair
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 0bd1f62ab1699a1469551c1ae0dd4ee5, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -349,14 +349,14 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!1102 &7363492631647918366
+--- !u!1102 &7378186497596301626
 AnimatorState:
   serializedVersion: 5
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: male_handshake
+  m_Name: female_act_sit_on_chair
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -369,7 +369,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 0ec27603504523240905a35178a920b9, type: 3}
+  m_Motion: {fileID: 7400000, guid: 67d813243269a1c469915f8fbea4cf20, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
