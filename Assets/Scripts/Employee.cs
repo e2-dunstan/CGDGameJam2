@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEditor;
 
 public class Employee : MonoBehaviour
 {
@@ -34,6 +35,14 @@ public class Employee : MonoBehaviour
         if (path != null)
         {
             state = State.MOVING;
+
+            if (debugVisualisation)
+            {
+                for (int i = 0; i < path.corners.Length - 1; i++)
+                {
+                    Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.red);
+                }
+            }
         }
         else
         {
