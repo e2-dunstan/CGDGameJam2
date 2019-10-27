@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DrawArrow : MonoBehaviour
 {
+  //  private TouchInput ti;
+   // private TouchInput.PlayerTouch pt;
     private StraightArrow anim;
     [SerializeField] private GameObject startloc;
     [SerializeField] private GameObject endLoc;
@@ -15,9 +17,13 @@ public class DrawArrow : MonoBehaviour
     private LineRenderer lr;
     float distLine = 0.0f;
 
+    float min = 0.45f;
+    float max = 10.0f;
     // Start is called before the first frame update
     void Start()
     {
+       // ti = GameObject.FindGameObjectWithTag("GameController").GetComponent<TouchInput>();
+       // pt = GameObject.FindGameObjectWithTag("GameController").GetComponent<TouchInput.PlayerTouch>();
         lr = GetComponent<LineRenderer>();
         lr.enabled = false;
         anim = GetComponent<StraightArrow>();
@@ -42,7 +48,7 @@ public class DrawArrow : MonoBehaviour
         //Once the player drops a dev
         if (onClick && !endPointSet && startPointSet && validMove)
         {
-            print("Set end position!! " + startloc.transform.position);
+            print("Set end position!! " + endLoc.transform.position);
             endPointSet = true;
         }
         //Start playing the animation once the player drops the dev
@@ -55,10 +61,27 @@ public class DrawArrow : MonoBehaviour
             anim.Kill();
             anim.enabled = false;
         }
-        distLine = Mathf.InverseLerp(endLoc.transform.position.magnitude, startloc.transform.position.magnitude, 1f );
-
+        float distance = Vector3.Distance(startloc.transform.position, endLoc.transform.position);
+        if (distance < min)
+        {
+            distLine = 1.0f;
+        }
+        else if (distance > max)
+        {
+            distLine = 0.1f;
+        }
+        else
+        {
+            distLine = 1 -(distance / max);
+        }
+        if (distLine <= 0.25f)
+        {
+            distLine = 0.1f;
+        }
         points[0] = startloc.transform.position;
         points[1] = endLoc.transform.position;
+        print("Distance" + distance);
+
     }
 
     private void FixedUpdate()
@@ -77,8 +100,9 @@ public class DrawArrow : MonoBehaviour
                 lr.enabled = true;
             }
             GetComponent<LineRenderer>().SetPositions(points);
+            lr.startWidth = distLine;
             lr.endWidth = distLine;
-            print(distLine);
+            print("DistLine" +distLine);
         }
     }
 }
