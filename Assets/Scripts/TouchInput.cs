@@ -20,7 +20,9 @@ public class TouchInput : MonoBehaviour
         public bool moved = false;
         public Employee selectedChar = null;
         public Vector3 touchStart;
+        public Vector3 worldStart;
         public Vector3 touchEnd;
+        public Vector3 worldEnd;
     }
     private List<PlayerTouch> playerTouches = new List<PlayerTouch>();
     [SerializeField] private int maxTouches = 10;
@@ -102,6 +104,7 @@ public class TouchInput : MonoBehaviour
                 newTouch.data = Input.GetTouch(i);
                 newTouch.tracking = true;
                 newTouch.touchStart = newTouch.data.position;
+                newTouch.worldStart = TouchToWorldspace(newTouch.touchStart);
                 newTouch.selectedChar = toAssign;
                 newTouch.selectedChar.Selected = true;
                 toAssign = null;
@@ -145,6 +148,8 @@ public class TouchInput : MonoBehaviour
             if (!touch.tracking) continue;
 
             touch.touchEnd = touch.data.position;
+            touch.worldEnd = TouchToWorldspace(touch.touchEnd);
+
             if (touch.data.phase == TouchPhase.Moved)
             {
                 touch.moved = true;
@@ -158,6 +163,20 @@ public class TouchInput : MonoBehaviour
                 ResetTouch(touch);
             }
         }
+    }
+
+    private Vector3 TouchToWorldspace(Vector3 touchPos)
+    {
+        Vector3 world = Vector3.zero;
+
+        Ray ray = Camera.main.ScreenPointToRay(touchPos);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+            world = hit.point;
+            world.y = 0;
+        }
+        return world;
     }
 
     private bool IsTouchAlreadyBeingTracked(Touch _touch)
@@ -202,5 +221,18 @@ public class TouchInput : MonoBehaviour
             _touch.selectedChar.Selected = false;
             _touch.selectedChar.ProcessNewPath(_touch);
         }
+    }
+
+    public List<PlayerTouch> GetCurrentTouches()
+    {
+        List<PlayerTouch> activeTouches = new List<PlayerTouch>();
+
+        foreach(PlayerTouch touch in playerTouches)
+        {
+            if (touch.tracking)
+                activeTouches.Add(touch);
+        }
+
+        return activeTouches;
     }
 }
