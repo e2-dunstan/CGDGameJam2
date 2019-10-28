@@ -4,14 +4,50 @@ using UnityEngine;
 
 public class VFXController : MonoBehaviour
 {
+    public static VFXController Instance;
+
     private StraightArrow fxStraightArrow;
     private DrawArrow fxDrawArrow;
-    //Get start and end
-    //Check is greater than 0
-    // Player touches
-    // Start is called before the first frame update
+
+    public GameObject pathIndicatorPrefab;
+
+    public class PathIndicator
+    {
+        public GameObject instance;
+        public DrawArrow drawArrow;
+        public StraightArrow straightArrow;
+        public TouchInput.PlayerTouch touchRef = null;
+    }
+    private List<PathIndicator> pathIndicators = new List<PathIndicator>();
+
+
+
     private void Awake()
     {
+        if (Instance == null) Instance = this;
+    }
+
+    private void Start()
+    {
+        for(int i = 0; i < TouchInput.Instance.MaxTouches; i++)
+        {
+            //Initialise a new path indicator on start
+            PathIndicator pathIndicator = new PathIndicator();
+            //Instantiate the prefab
+            pathIndicator.instance = Instantiate(pathIndicatorPrefab, transform);
+            //Assign script references
+            pathIndicator.drawArrow = pathIndicator.instance.GetComponent<DrawArrow>();
+            pathIndicator.straightArrow = pathIndicator.instance.GetComponent<StraightArrow>();
+            //Assign touch reference
+            pathIndicator.touchRef = TouchInput.Instance.playerTouches[i];
+
+            //Disable the object by default
+            pathIndicator.instance.SetActive(false);
+
+            pathIndicators.Add(pathIndicator);
+        }
+
+        //This will need modifying to allow for the path indicators
         InitialiseSubScripts();
     }
 
@@ -19,13 +55,22 @@ public class VFXController : MonoBehaviour
     void Update()
     {
         DrawArrowManage();
-        List<TouchInput.PlayerTouch> touches = TouchInput.Instance.GetCurrentTouches();
-        if (touches.Count >= 0)
+        
+        //New code
+        for(int i = 0; i < pathIndicators.Count; i++)
         {
-            foreach (TouchInput.PlayerTouch touch in touches)
+            if (!pathIndicators[i].touchRef.tracking)
             {
-                fxDrawArrow.startloc = touch.touchStart;
+                //If this touch isn't being tracked, skip over this iteration and ensure it's disabled
+                pathIndicators[i].instance.SetActive(false);
+                continue;
             }
+
+            //If it's not active, set it active
+            if (!pathIndicators[i].instance.activeInHierarchy)
+                pathIndicators[i].instance.SetActive(false);
+
+            //update the positions here using pathIndicators[i].touchRef.worldStart/End and the references to the scripts
         }
     }
 
@@ -51,6 +96,5 @@ public class VFXController : MonoBehaviour
         {
             fxStraightArrow.enabled = false;
         }
-
     }
 }

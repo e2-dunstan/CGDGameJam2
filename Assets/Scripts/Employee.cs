@@ -12,6 +12,8 @@ public class Employee : MonoBehaviour
     }
     public Gender gender;
 
+    [HideInInspector] public Room currentRoom = Room.RELAX; 
+
     public enum State
     {
         IDLE, RELAXING, MOVING, WORKING
@@ -76,7 +78,7 @@ public class Employee : MonoBehaviour
         }
     }
 
-    private void ChangeState(State newState)
+    public void ChangeState(State newState)
     {
         switch (newState)
         {
@@ -104,10 +106,34 @@ public class Employee : MonoBehaviour
 
                 break;
             case State.WORKING:
-
+                FindWorkstation();
                 break;
         }
         state = newState;
+    }
+
+    private void FindWorkstation()
+    {
+        currentInteractable = InteractableFurniture.Instance.GetInteractable(currentRoom);
+        if (currentInteractable != null)
+        {
+            StartCoroutine(GoToWorkstation());
+        }
+    }
+
+    private IEnumerator GoToWorkstation()
+    {
+        float lerpTime = 0.5f;
+
+        for (float t = 0; t < lerpTime; t += Time.deltaTime)
+        {
+            transform.position = Vector3.Lerp(transform.position, currentInteractable.origin.position, t);
+            yield return null;
+        }
+        yield return RotateTo(currentInteractable.origin.rotation);
+
+        if (currentInteractable.type == InteractableFurniture.Interactable.Type.CHAIR)
+            anim.SetTrigger("Sit");
     }
 
     #region UPDATE STATES
@@ -217,6 +243,14 @@ public class Employee : MonoBehaviour
         }
 
         transform.rotation = rot;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponent<RoomType>() != null)
+        {
+            currentRoom = other.GetComponent<RoomType>().roomType;
+        }
     }
 
 
