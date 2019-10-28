@@ -21,6 +21,7 @@ public class TaskRoomManager : MonoBehaviour
             {
                 job.isTaskActive = true;
                 job = other.gameObject.GetComponent<EmployeeJobManager>().GetJob();
+                JobUIManager.Instance.SpawnUIElement(JobUIManager.UIElement.PROGRESS_BAR, gameObject);
             }
         }
     }
