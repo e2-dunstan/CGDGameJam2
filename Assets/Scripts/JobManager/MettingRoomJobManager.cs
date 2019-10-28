@@ -16,6 +16,8 @@ public class MettingRoomJobManager : MonoBehaviour
 
     private int numberOfEmployeesInRoom = 0;
 
+    private GameObject UIElement = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +33,10 @@ public class MettingRoomJobManager : MonoBehaviour
         {
             //Instantiate UI element at gamePos
             //Give UI element this job
-            jobs.Add(JobManager.Instance.GetRandomInactiveJobAndAddToQueue());
+            UIElement = JobUIManager.Instance.SpawnUIElement(JobUIManager.UIElement.JOB_DESCRIPTION, gameObject);
+            Job tempJob = JobManager.Instance.GetRandomInactiveJobAndAddToQueue();
+            UIElement.GetComponent<JobOfferBox>().SetUpJobUI(tempJob);
+            jobs.Add(tempJob);
             dt = 0.0f;
         }
     }

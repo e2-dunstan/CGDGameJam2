@@ -13,7 +13,8 @@ public class JobUIManager : MonoBehaviour
     {
         HAS_TASK = 0,
         HAS_COMPLETED_TASK = 1,
-        PROGRESS_BAR = 2
+        PROGRESS_BAR = 2,
+        JOB_DESCRIPTION = 3
     }
     void Awake()
     {
@@ -34,7 +35,7 @@ public class JobUIManager : MonoBehaviour
     }
 
 
-    public void SpawnUIElement(UIElement _uiElement, GameObject _gameObject)
+    public GameObject SpawnUIElement(UIElement _uiElement, GameObject _gameObject)
     {
         switch(_uiElement)
         {
@@ -44,7 +45,7 @@ public class JobUIManager : MonoBehaviour
                     obj.transform.parent = gameObject.transform;
                     obj.GetComponent<AttachUIToGameObject>().SetTargetObject(_gameObject);
                     ActiveUIElements.Add(obj);
-                    break;
+                    return obj;
                 }
             case UIElement.PROGRESS_BAR:
                 {
@@ -52,9 +53,19 @@ public class JobUIManager : MonoBehaviour
                     obj.transform.parent = gameObject.transform;
                     obj.GetComponent<AttachUIToGameObject>().SetTargetObject(_gameObject);
                     ActiveUIElements.Add(obj);
-                    break;
+                    return obj;
+                }
+            case UIElement.JOB_DESCRIPTION:
+                {
+                    GameObject obj = Instantiate(gameObject.GetComponent<JobUIObjects>().jobDescription);
+                    obj.transform.parent = gameObject.transform;
+                    obj.GetComponent<AttachUIToGameObject>().SetTargetObject(_gameObject);
+                    ActiveUIElements.Add(obj);
+                    return obj;
                 }
         }
+
+        return null;
     }
 
     public void RemoveUIElementFromObject(UIElement _uIElement, GameObject _gameObject)
