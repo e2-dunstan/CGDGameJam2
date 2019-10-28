@@ -203,4 +203,17 @@ public class TouchInput : MonoBehaviour
             _touch.selectedChar.ProcessNewPath(_touch);
         }
     }
+
+    public List<PlayerTouch> GetCurrentTouches()
+    {
+        List<PlayerTouch> activeTouches = new List<PlayerTouch>();
+
+        foreach(PlayerTouch touch in playerTouches)
+        {
+            if (touch.tracking)
+                activeTouches.Add(touch);
+        }
+
+        return activeTouches;
+    }
 }
