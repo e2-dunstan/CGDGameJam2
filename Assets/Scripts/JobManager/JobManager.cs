@@ -5,6 +5,14 @@ using System.Linq;
 
 public class JobManager : MonoBehaviour
 {
+    public enum  CurrentGameDifficulty
+    {
+        SUPER_EASY = 0,
+        EASY = 1,
+        MEDIUM = 2,
+        HARD = 3
+    }
+
     public static JobManager Instance;
 
     [SerializeField]
@@ -14,6 +22,15 @@ public class JobManager : MonoBehaviour
     public Jobs jobs { get; set; }
 
     public List<Job> ActiveJobList = new List<Job>();
+
+
+    //Difficulty related variables
+    public int jobsCompletedInPeriod = 0;
+    public CurrentGameDifficulty currentGameDifficulty = CurrentGameDifficulty.EASY;
+
+    [SerializeField]
+    private float difficultyDeltaTime = 0.0f;
+    private float timeBetweenRemovingJob = 30.0f;
 
     void Awake()
     {
@@ -41,8 +58,38 @@ public class JobManager : MonoBehaviour
         if (jobsLoaded)
         {
             UpdateActiveJobsTimer(Time.deltaTime);
+            UpdateCurrentDifficulty(Time.deltaTime);
         }
 
+    }
+    /// <summary>
+    /// Since we wish for difficulty to be adaptive, change difficulty up depending upon current effectiveness in time period
+    /// </summary>
+    private void UpdateCurrentDifficulty(float _dt)
+    {
+        difficultyDeltaTime += _dt;
+
+        if(difficultyDeltaTime > timeBetweenRemovingJob)
+        {
+            jobsCompletedInPeriod--;
+        }
+
+        if(jobsCompletedInPeriod < 2)
+        {
+            currentGameDifficulty = CurrentGameDifficulty.SUPER_EASY;
+        }
+        else if(jobsCompletedInPeriod < 4)
+        {
+            currentGameDifficulty = CurrentGameDifficulty.EASY;
+        }
+        else if(jobsCompletedInPeriod < 6)
+        {
+            currentGameDifficulty = CurrentGameDifficulty.MEDIUM;
+        }
+        else if(jobsCompletedInPeriod < 8)
+        {
+            currentGameDifficulty = CurrentGameDifficulty.HARD;
+        }
     }
 
     private void UpdateActiveJobsTimer(float _dt)
