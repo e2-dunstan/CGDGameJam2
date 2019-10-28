@@ -62,57 +62,129 @@ MonoBehaviour:
   interactables:
   - helperText: Kitchen chair 1
     type: 1
-    room: 0
+    room: 3
     origin: {fileID: 0}
     occupied: 0
   - helperText: Kitchen chair 2
     type: 1
-    room: 0
+    room: 3
     origin: {fileID: 0}
     occupied: 0
   - helperText: Sofa L
     type: 1
-    room: 0
+    room: 3
     origin: {fileID: 0}
     occupied: 0
   - helperText: Sofa R
     type: 1
-    room: 0
+    room: 3
     origin: {fileID: 0}
     occupied: 0
   - helperText: Rest idle
     type: 0
-    room: 0
+    room: 3
     origin: {fileID: 0}
     occupied: 0
   - helperText: Rest idle
     type: 0
-    room: 0
+    room: 3
     origin: {fileID: 0}
     occupied: 0
   - helperText: Rest idle
     type: 0
-    room: 0
+    room: 3
     origin: {fileID: 0}
     occupied: 0
   - helperText: Rest chair
+    type: 1
+    room: 3
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 1 Seat 1
+    type: 1
+    room: 0
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 1 Seat 2
+    type: 1
+    room: 0
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 1 Seat 3
+    type: 1
+    room: 0
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 1 Seat 4
+    type: 1
+    room: 0
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 1 Standing 1
     type: 0
     room: 0
     origin: {fileID: 0}
     occupied: 0
---- !u!114 &1468695699656951272
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8098372375447038360}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2055ce9841f97743b080a854e95b60b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parent: {fileID: 0}
+  - helperText: Task Room 2 Seat 1
+    type: 1
+    room: 1
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 2 Seat 2
+    type: 1
+    room: 1
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 2 Seat 3
+    type: 1
+    room: 1
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 2 Seat 4
+    type: 1
+    room: 1
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 2 Seat 5
+    type: 1
+    room: 1
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 3 Seat 1
+    type: 1
+    room: 2
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 3 Seat 2
+    type: 1
+    room: 2
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 3 Seat 3
+    type: 1
+    room: 2
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 3 Seat 4
+    type: 1
+    room: 2
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 3 Seat 5
+    type: 1
+    room: 2
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Meeting Room Stand
+    type: 0
+    room: 5
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Presentation Room Stand
+    type: 0
+    room: 4
+    origin: {fileID: 0}
+    occupied: 0
 --- !u!1001 &4466210281614452010
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -182,12 +254,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90a93eb20948282429c6e208044ba7d8, type: 3}
---- !u!1 &8098372375447038360 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5591245678761790642, guid: 90a93eb20948282429c6e208044ba7d8,
-    type: 3}
-  m_PrefabInstance: {fileID: 4466210281614452010}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8098372375447038362 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5591245678761790640, guid: 90a93eb20948282429c6e208044ba7d8,

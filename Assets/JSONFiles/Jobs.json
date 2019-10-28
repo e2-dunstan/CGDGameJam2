@@ -14,6 +14,54 @@
   "currentPlayersAssigned": 0,
   "playerSpeedMultiplier": 0,
   "timeUntilFailure": 0
+  },
+  {
+  "taskIconLocation": "UISprite",
+  "taskName": "Commit",
+  "taskDescription": null,
+  "taskTime": 0.0,
+  "taskDifficulty": 0,
+  "recommendedUnitCount": 0,
+  "isInQueue": false,
+  "baseTaskScore": 0.0,
+  "timeUntilDequeue": 0.0,
+  "isTaskActive": false,
+  "currentActiveTime": 0.0,
+  "currentPlayersAssigned": 0,
+  "playerSpeedMultiplier": 0,
+  "timeUntilFailure": 0
+  },
+  {
+  "taskIconLocation": "UISprite",
+  "taskName": "Make Meme",
+  "taskDescription": null,
+  "taskTime": 0.0,
+  "taskDifficulty": 0,
+  "recommendedUnitCount": 0,
+  "isInQueue": false,
+  "baseTaskScore": 0.0,
+  "timeUntilDequeue": 0.0,
+  "isTaskActive": false,
+  "currentActiveTime": 0.0,
+  "currentPlayersAssigned": 0,
+  "playerSpeedMultiplier": 0,
+  "timeUntilFailure": 0
+  },
+  {
+  "taskIconLocation": "UISprite",
+  "taskName": "Make Something Else",
+  "taskDescription": null,
+  "taskTime": 0.0,
+  "taskDifficulty": 0,
+  "recommendedUnitCount": 0,
+  "isInQueue": false,
+  "baseTaskScore": 0.0,
+  "timeUntilDequeue": 0.0,
+  "isTaskActive": false,
+  "currentActiveTime": 0.0,
+  "currentPlayersAssigned": 0,
+  "playerSpeedMultiplier": 0,
+  "timeUntilFailure": 0
   }]
 }
 
