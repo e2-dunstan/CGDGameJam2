@@ -65,7 +65,7 @@ public class TouchInput : MonoBehaviour
             playerTouches[0].tracking = true;
             toAssign = null;
 
-            Debug.Log("mouse pressed");
+            //Debug.Log("mouse pressed");
         }
         if (Input.GetMouseButton(0)
             && playerTouches[0].tracking
@@ -73,14 +73,14 @@ public class TouchInput : MonoBehaviour
             && Vector3.Distance(Input.mousePosition, playerTouches[0].touchStart) > 0)
         {
             playerTouches[0].moved = true;
-            Debug.Log("mouse moved");
+            //Debug.Log("mouse moved");
         }
         if (Input.GetMouseButtonUp(0) && mousePressed)
         {
             playerTouches[0].touchEnd = Input.mousePosition;
             ProcessPlayerTouchData(playerTouches[0]);
 
-            Debug.Log("mouse released");
+            //Debug.Log("mouse released");
 
             mousePressed = false;
             ResetTouch(playerTouches[0]);

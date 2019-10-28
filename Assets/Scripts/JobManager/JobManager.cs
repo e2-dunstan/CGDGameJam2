@@ -5,17 +5,15 @@ using System.Linq;
 
 public class JobManager : MonoBehaviour
 {
-    private float dt = 0.0f;
-
     public static JobManager Instance;
 
     [SerializeField]
     private JobLoadManager jobLoadManager;
 
     private bool jobsLoaded = false;
-    private Jobs jobs { get; set; }
+    public Jobs jobs { get; set; }
 
-    private List<Job> ActiveJobList = new List<Job>();
+    public List<Job> ActiveJobList = new List<Job>();
 
     void Awake()
     {
@@ -53,20 +51,27 @@ public class JobManager : MonoBehaviour
         {
             foreach (var job in ActiveJobList)
             {
-                if (job.isTaskActive)
-                {
-                    job.currentActiveTime += dt;
+               job.currentActiveTime += _dt;
 
-                    if(job.currentActiveTime > job.timeUntilDeque)
-                    {
-                        job.isTaskActive = false;
-                        job.isInQueue = false;
-                        
-                        ActiveJobList = ActiveJobList.Where(x => x.taskID != job.taskID).ToList();
-                    }
-                }
+                //if (job.currentActiveTime > job.timeUntilDeque)
+                //{
+                //    job.isTaskActive = false;
+                //    job.isInQueue = false;
+
+                //    ActiveJobList = ActiveJobList.Where(x => x.taskID != job.taskID).ToList();
+                //}
             }
         }
+    }
+
+    /// <summary>
+    /// Get a job by ID
+    /// </summary>
+    /// <param name="_id"></param>
+    /// <returns></returns>
+    public Job GetJobById(string _id)
+    {
+        return jobs.jobList.Where(x => x.taskID == _id).FirstOrDefault();
     }
 
     //=================Helper Functions===============
@@ -87,7 +92,7 @@ public class JobManager : MonoBehaviour
 
         int randomIndex = Random.Range(0, ActiveJobList.Count - 1);
 
-        InactiveJobList[randomIndex].isInQueue = true;
+        InactiveJobList[randomIndex].isTaskActive = true;
 
         ActiveJobList.Add(InactiveJobList[randomIndex]);
 
@@ -103,7 +108,7 @@ public class JobManager : MonoBehaviour
 
         int randomIndex = Random.Range(0, ActiveJobList.Count - 1);
 
-        InactiveJobList[randomIndex].isInQueue = true;
+        InactiveJobList[randomIndex].isTaskActive = true;
 
         ActiveJobList.Add(InactiveJobList[randomIndex]);
 
