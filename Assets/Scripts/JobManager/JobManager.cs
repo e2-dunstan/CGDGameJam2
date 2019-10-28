@@ -90,7 +90,7 @@ public class JobManager : MonoBehaviour
     {
         List<Job> InactiveJobList = jobs.jobList.Where(x => !x.isTaskActive).ToList();
 
-        int randomIndex = Random.Range(0, ActiveJobList.Count - 1);
+        int randomIndex = Random.Range(0, InactiveJobList.Count - 1);
 
         InactiveJobList[randomIndex].isTaskActive = true;
 
@@ -106,7 +106,7 @@ public class JobManager : MonoBehaviour
     {
         List<Job> InactiveJobList = jobs.jobList.Where(x => !x.isTaskActive && x.taskDifficulty == _difficulty).ToList();
 
-        int randomIndex = Random.Range(0, ActiveJobList.Count - 1);
+        int randomIndex = Random.Range(0, InactiveJobList.Count - 1);
 
         InactiveJobList[randomIndex].isTaskActive = true;
 
