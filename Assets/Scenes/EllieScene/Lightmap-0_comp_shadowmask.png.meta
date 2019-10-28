@@ -6,8 +6,13 @@ TextureImporter:
   serializedVersion: 10
   mipmaps:
     mipMapMode: 0
+<<<<<<< HEAD:Assets/ProCore/ProBuilder/About/Images/Banner_Hover.png.meta
+    enableMipMap: 0
+    sRGBTexture: 1
+=======
     enableMipMap: 1
     sRGBTexture: 0
+>>>>>>> LevelDesign:Assets/Scenes/EllieScene/Lightmap-1_comp_dir.png.meta
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
