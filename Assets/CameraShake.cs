@@ -84,4 +84,16 @@ public class CameraShake : MonoBehaviour
         intense = _intense;
         timeout = _length;
     }
+
+    public Vector3 StartPoint
+    {
+        get { return startPoint; }
+        set
+        {
+            startPoint = value;
+            minPoint = startPoint - gameObject.transform.right;
+            maxPoint = startPoint + gameObject.transform.right;
+            newPoint = maxPoint;
+        }
+    }
 }
