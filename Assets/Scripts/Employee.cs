@@ -30,6 +30,7 @@ public class Employee : MonoBehaviour
     private float defaultMaxSpeed;
     private float timeIdle = 0;
     private float timeIdleToWait = 5;
+    private float timeSitToWait = 5;
 
     public bool debugVisualisation = true;
 
@@ -54,7 +55,8 @@ public class Employee : MonoBehaviour
         else
             anim.SetBool("Male", false);
 
-        timeIdleToWait = Random.Range(3, 10);
+        timeIdleToWait = Random.Range(1, 3);
+        timeSitToWait = Random.Range(10, 30);
     }
 
     private void Update()
@@ -89,7 +91,7 @@ public class Employee : MonoBehaviour
                     if (currentInteractable.type == InteractableFurniture.Interactable.Type.CHAIR)
                     {
                         anim.SetTrigger("Stand");
-                        MoveTo(transform.position + (transform.forward * 3));
+                        MoveTo(transform.position + (transform.forward * 1));
                     }
 
                     currentInteractable = null;
@@ -165,11 +167,15 @@ public class Employee : MonoBehaviour
         if (currentInteractable == null) return;
 
         timeIdle += Time.deltaTime;
-        if (timeIdle > timeIdleToWait)
+
+        float waitTime = currentInteractable.type == InteractableFurniture.Interactable.Type.CHAIR ? timeSitToWait : timeIdleToWait;
+
+        if (timeIdle > waitTime)
         {
             ChangeState(State.IDLE);
             timeIdle = 0;
-            timeIdleToWait = Random.Range(3, 10);
+            timeIdleToWait = Random.Range(0, 3);
+            timeSitToWait = Random.Range(10, 30);
         }
     }
 
