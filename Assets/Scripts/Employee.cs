@@ -27,6 +27,7 @@ public class Employee : MonoBehaviour
     private float currentMaxSpeed = 1.0f;
     private float defaultMaxSpeed;
     private float timeIdle = 0;
+    private float timeIdleToWait = 5;
 
     public bool debugVisualisation = true;
 
@@ -50,6 +51,8 @@ public class Employee : MonoBehaviour
             anim.SetBool("Male", true);
         else
             anim.SetBool("Male", false);
+
+        timeIdleToWait = Random.Range(3, 10);
     }
 
     private void Update()
@@ -118,7 +121,7 @@ public class Employee : MonoBehaviour
         if (anim.GetBool("Pant")) anim.SetBool("Pant", false);
 
         timeIdle += Time.deltaTime;
-        if (timeIdle > 5f)
+        if (timeIdle > timeIdleToWait)
         {
             shouldRelaxAfterMoving = true;
 
@@ -126,7 +129,8 @@ public class Employee : MonoBehaviour
             if (currentInteractable != null)
                 MoveTo(currentInteractable.origin.position);
             
-            timeIdle = 0;
+            timeIdle = 0; 
+            timeIdleToWait = Random.Range(3, 10);
         }
     }
 
@@ -135,10 +139,11 @@ public class Employee : MonoBehaviour
         if (currentInteractable == null) return;
 
         timeIdle += Time.deltaTime;
-        if (timeIdle > 5f)
+        if (timeIdle > timeIdleToWait)
         {
             ChangeState(State.IDLE);
             timeIdle = 0;
+            timeIdleToWait = Random.Range(3, 10);
         }
     }
 
