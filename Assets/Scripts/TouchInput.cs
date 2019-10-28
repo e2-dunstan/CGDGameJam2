@@ -6,6 +6,12 @@ public class TouchInput : MonoBehaviour
 {
     public static TouchInput Instance;
 
+    public enum InputType
+    {
+        MOUSE, TOUCH
+    }
+    public InputType inputType = InputType.TOUCH;
+
     public class PlayerTouch
     {
         public Touch data;
@@ -17,9 +23,12 @@ public class TouchInput : MonoBehaviour
         public Vector3 touchEnd;
     }
     private List<PlayerTouch> playerTouches = new List<PlayerTouch>();
-    public int maxTouches = 10;
+    [SerializeField] private int maxTouches = 10;
+
 
     private Employee toAssign = null;
+    private bool mousePressed = false;
+
 
     private void Awake()
     {
@@ -33,33 +42,77 @@ public class TouchInput : MonoBehaviour
 
     private void Update()
     {
-        if (Input.touchCount > 0)
+        // -- MOUSE INPUT -- //
+        if (inputType == InputType.MOUSE)
         {
-            for (int i = 0; i < Input.touchCount; i++)
-            {
-                if (!IsTracking(Input.GetTouch(i)) && IsEmployee(Input.GetTouch(i).position))
-                {
-                    PlayerTouch newTouch = GetNewTouch();
-                    if (newTouch == null)
-                    {
-                        Debug.LogWarning("No free touches! Increase max touch count or stop touching the screen");
-                        continue;
-                    }
-                    newTouch.data = Input.GetTouch(i);
-                    newTouch.tracking = true;
-                    newTouch.touchStart = newTouch.data.position;
-                    newTouch.selectedChar = toAssign;
-                    newTouch.selectedChar.Selected = true;
-                    toAssign = null;
-
-                    Debug.Log("Employee touched");
-                }
-            }
-            UpdateCurrentTouches();
+            UpdateMouseInput();
+        }
+        // -- TOUCH INPUT -- //
+        else if (inputType == InputType.TOUCH && Input.touchCount > 0)
+        {
+            UpdateTouchInput();
         }
     }
 
-    private bool IsEmployee(Vector2 pos)
+    private void UpdateMouseInput()
+    {
+        if (Input.GetMouseButtonDown(0) && IsEmployeeAtThisPosition(Input.mousePosition))
+        {
+            mousePressed = true;
+            playerTouches[0].touchStart = Input.mousePosition;
+            playerTouches[0].selectedChar = toAssign;
+            playerTouches[0].selectedChar.Selected = true;
+            playerTouches[0].tracking = true;
+            toAssign = null;
+
+            Debug.Log("mouse pressed");
+        }
+        if (Input.GetMouseButton(0)
+            && playerTouches[0].tracking
+            && mousePressed
+            && Vector3.Distance(Input.mousePosition, playerTouches[0].touchStart) > 0)
+        {
+            playerTouches[0].moved = true;
+            Debug.Log("mouse moved");
+        }
+        if (Input.GetMouseButtonUp(0) && mousePressed)
+        {
+            playerTouches[0].touchEnd = Input.mousePosition;
+            ProcessPlayerTouchData(playerTouches[0]);
+
+            Debug.Log("mouse released");
+
+            mousePressed = false;
+            ResetTouch(playerTouches[0]);
+        }
+    }
+
+    private void UpdateTouchInput()
+    {
+        for (int i = 0; i < Input.touchCount; i++)
+        {
+            if (!IsTouchAlreadyBeingTracked(Input.GetTouch(i)) && IsEmployeeAtThisPosition(Input.GetTouch(i).position))
+            {
+                PlayerTouch newTouch = GetNewTouch();
+                if (newTouch == null)
+                {
+                    Debug.LogWarning("No free touches! Increase max touch count or stop touching the screen");
+                    continue;
+                }
+                newTouch.data = Input.GetTouch(i);
+                newTouch.tracking = true;
+                newTouch.touchStart = newTouch.data.position;
+                newTouch.selectedChar = toAssign;
+                newTouch.selectedChar.Selected = true;
+                toAssign = null;
+
+                Debug.Log("Employee touched");
+            }
+        }
+        UpdateEmployeeTouches();
+    }
+
+    private bool IsEmployeeAtThisPosition(Vector2 pos)
     {
         Ray ray = Camera.main.ScreenPointToRay(pos);
         RaycastHit hit;
@@ -74,7 +127,7 @@ public class TouchInput : MonoBehaviour
         return false;
     }
 
-    private void UpdateCurrentTouches()
+    private void UpdateEmployeeTouches()
     {
         for(int i = 0; i < Input.touchCount; i++)
         {
@@ -89,8 +142,7 @@ public class TouchInput : MonoBehaviour
 
         foreach (PlayerTouch touch in playerTouches)
         {
-            //if (!touch.tracking) continue;
-            Debug.Log("touches being updated");
+            if (!touch.tracking) continue;
 
             touch.touchEnd = touch.data.position;
             if (touch.data.phase == TouchPhase.Moved)
@@ -108,7 +160,7 @@ public class TouchInput : MonoBehaviour
         }
     }
 
-    private bool IsTracking(Touch _touch)
+    private bool IsTouchAlreadyBeingTracked(Touch _touch)
     {
         for (int i = 0; i < playerTouches.Count; i++)
         {
