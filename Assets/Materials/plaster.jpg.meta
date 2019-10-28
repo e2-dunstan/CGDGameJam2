@@ -6,8 +6,17 @@ TextureImporter:
   serializedVersion: 10
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+<<<<<<< HEAD:Assets/ProCore/ProBuilder/About/Images/Banner_Normal.png.meta
+    enableMipMap: 0
     sRGBTexture: 1
+=======
+    enableMipMap: 1
+<<<<<<< HEAD:Assets/Scenes/EllieScene/Lightmap-2_comp_dir.png.meta
+    sRGBTexture: 0
+>>>>>>> LevelDesign:Assets/Scenes/EllieScene/Lightmap-2_comp_dir.png.meta
+=======
+    sRGBTexture: 1
+>>>>>>> LevelDesign:Assets/Materials/plaster.jpg.meta
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
