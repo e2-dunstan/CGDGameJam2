@@ -12,6 +12,8 @@ public class Employee : MonoBehaviour
     }
     public Gender gender;
 
+    [HideInInspector] public Room currentRoom = Room.RELAX; 
+
     public enum State
     {
         IDLE, RELAXING, MOVING, WORKING
@@ -28,6 +30,7 @@ public class Employee : MonoBehaviour
     private float defaultMaxSpeed;
     private float timeIdle = 0;
     private float timeIdleToWait = 5;
+    private float timeSitToWait = 5;
 
     public bool debugVisualisation = true;
 
@@ -52,7 +55,8 @@ public class Employee : MonoBehaviour
         else
             anim.SetBool("Male", false);
 
-        timeIdleToWait = Random.Range(3, 10);
+        timeIdleToWait = Random.Range(1, 3);
+        timeSitToWait = Random.Range(10, 30);
     }
 
     private void Update()
@@ -76,7 +80,7 @@ public class Employee : MonoBehaviour
         }
     }
 
-    private void ChangeState(State newState)
+    public void ChangeState(State newState)
     {
         switch (newState)
         {
@@ -87,7 +91,7 @@ public class Employee : MonoBehaviour
                     if (currentInteractable.type == InteractableFurniture.Interactable.Type.CHAIR)
                     {
                         anim.SetTrigger("Stand");
-                        MoveTo(transform.position + (transform.forward * 3));
+                        MoveTo(transform.position + (transform.forward * 1));
                     }
 
                     currentInteractable = null;
@@ -104,10 +108,34 @@ public class Employee : MonoBehaviour
 
                 break;
             case State.WORKING:
-
+                FindWorkstation();
                 break;
         }
         state = newState;
+    }
+
+    private void FindWorkstation()
+    {
+        currentInteractable = InteractableFurniture.Instance.GetInteractable(currentRoom);
+        if (currentInteractable != null)
+        {
+            StartCoroutine(GoToWorkstation());
+        }
+    }
+
+    private IEnumerator GoToWorkstation()
+    {
+        float lerpTime = 0.5f;
+
+        for (float t = 0; t < lerpTime; t += Time.deltaTime)
+        {
+            transform.position = Vector3.Lerp(transform.position, currentInteractable.origin.position, t);
+            yield return null;
+        }
+        yield return RotateTo(currentInteractable.origin.rotation);
+
+        if (currentInteractable.type == InteractableFurniture.Interactable.Type.CHAIR)
+            anim.SetTrigger("Sit");
     }
 
     #region UPDATE STATES
@@ -139,11 +167,15 @@ public class Employee : MonoBehaviour
         if (currentInteractable == null) return;
 
         timeIdle += Time.deltaTime;
-        if (timeIdle > timeIdleToWait)
+
+        float waitTime = currentInteractable.type == InteractableFurniture.Interactable.Type.CHAIR ? timeSitToWait : timeIdleToWait;
+
+        if (timeIdle > waitTime)
         {
             ChangeState(State.IDLE);
             timeIdle = 0;
-            timeIdleToWait = Random.Range(3, 10);
+            timeIdleToWait = Random.Range(0, 3);
+            timeSitToWait = Random.Range(10, 30);
         }
     }
 
@@ -217,6 +249,14 @@ public class Employee : MonoBehaviour
         }
 
         transform.rotation = rot;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponent<RoomType>() != null)
+        {
+            currentRoom = other.GetComponent<RoomType>().roomType;
+        }
     }
 
 

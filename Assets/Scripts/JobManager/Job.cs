@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 [System.Serializable]
 public enum Difficulty
@@ -37,6 +38,8 @@ public class Job
 
     public bool InitJob()
     {
+        taskID = Guid.NewGuid().ToString();
+
         Debug.Log(taskIconLocation);
         taskIcon = Resources.Load<Sprite>(taskIconLocation);
 
@@ -48,5 +51,12 @@ public class Job
         {
             return false;
         }
+    }
+
+    public void ResetJob()
+    {
+        isInQueue = false;
+        isTaskActive = false;
+        currentActiveTime = 0.0f;
     }
 }

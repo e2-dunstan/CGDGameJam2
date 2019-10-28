@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class DrawArrow : MonoBehaviour
 {
-  //  private TouchInput ti;
-   // private TouchInput.PlayerTouch pt;
-    private StraightArrow anim;
-    [SerializeField] private GameObject startloc;
-    [SerializeField] private GameObject endLoc;
-    [SerializeField] private bool onClick;
-    [SerializeField] private bool startPointSet;
-    [SerializeField] private bool endPointSet;
+    public Vector3 startloc;
+    public Vector3 endLoc;
+    public bool onClick;
+    public bool startPointSet;
+    public bool endPointSet;
     public bool validMove;
+
+    public bool killPS;
+    public bool startPs;
     Vector3[] points = new Vector3[2];
     private LineRenderer lr;
     float distLine = 0.0f;
@@ -22,12 +22,8 @@ public class DrawArrow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       // ti = GameObject.FindGameObjectWithTag("GameController").GetComponent<TouchInput>();
-       // pt = GameObject.FindGameObjectWithTag("GameController").GetComponent<TouchInput.PlayerTouch>();
         lr = GetComponent<LineRenderer>();
         lr.enabled = false;
-        anim = GetComponent<StraightArrow>();
-        anim.enabled = false;
         onClick = false;
         startPointSet = false;
         endPointSet = false;
@@ -37,31 +33,31 @@ public class DrawArrow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        killPS = false;
         //Once the player clicks a Dev
         if (onClick && !startPointSet && !endPointSet)
         {
-            print("Set starting position!! " + startloc.transform.position);
+            //print("Set starting position!! " + startloc.transform.position);
             startPointSet = true;
         }
 
         //Once the player drops a dev
         if (onClick && !endPointSet && startPointSet && validMove)
         {
-            print("Set end position!! " + endLoc.transform.position);
+            //print("Set end position!! " + endLoc.transform.position);
             endPointSet = true;
         }
         //Start playing the animation once the player drops the dev
         if (startPointSet && endPointSet)
         {
-            anim.enabled = true;
+            startPs = true;
         }
         else
         {
-            anim.Kill();
-            anim.enabled = false;
+            killPS = true;
+            startPs = false;
         }
-        float distance = Vector3.Distance(startloc.transform.position, endLoc.transform.position);
+        float distance = Vector3.Distance(startloc, endLoc);
         if (distance < min)
         {
             distLine = 1.0f;
@@ -74,13 +70,13 @@ public class DrawArrow : MonoBehaviour
         {
             distLine = 1 -(distance / max);
         }
-        if (distLine <= 0.25f)
+        if (distLine <= 0.1f)
         {
             distLine = 0.1f;
         }
-        points[0] = startloc.transform.position;
-        points[1] = endLoc.transform.position;
-        print("Distance" + distance);
+        points[0] = startloc;
+        points[1] = endLoc;
+        //print("Distance" + distance);
 
     }
 
@@ -102,7 +98,7 @@ public class DrawArrow : MonoBehaviour
             GetComponent<LineRenderer>().SetPositions(points);
             lr.startWidth = distLine;
             lr.endWidth = distLine;
-            print("DistLine" +distLine);
+            //print("DistLine" +distLine);
         }
     }
 }

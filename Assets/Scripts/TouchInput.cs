@@ -24,9 +24,9 @@ public class TouchInput : MonoBehaviour
         public Vector3 touchEnd;
         public Vector3 worldEnd;
     }
-    private List<PlayerTouch> playerTouches = new List<PlayerTouch>();
+    [HideInInspector] public List<PlayerTouch> playerTouches = new List<PlayerTouch>();
+    public int MaxTouches { get; private set; }
     [SerializeField] private int maxTouches = 10;
-
 
     private Employee toAssign = null;
     private bool mousePressed = false;
@@ -36,7 +36,9 @@ public class TouchInput : MonoBehaviour
     {
         if (Instance == null) Instance = this;
 
-        for (int i = 0; i < maxTouches; i++)
+        MaxTouches = maxTouches;
+
+        for (int i = 0; i < MaxTouches; i++)
         {
             playerTouches.Add(new PlayerTouch());
         }
@@ -67,7 +69,7 @@ public class TouchInput : MonoBehaviour
             playerTouches[0].tracking = true;
             toAssign = null;
 
-            Debug.Log("mouse pressed");
+            //Debug.Log("mouse pressed");
         }
         if (Input.GetMouseButton(0)
             && playerTouches[0].tracking
@@ -75,14 +77,14 @@ public class TouchInput : MonoBehaviour
             && Vector3.Distance(Input.mousePosition, playerTouches[0].touchStart) > 0)
         {
             playerTouches[0].moved = true;
-            Debug.Log("mouse moved");
+            //Debug.Log("mouse moved");
         }
         if (Input.GetMouseButtonUp(0) && mousePressed)
         {
             playerTouches[0].touchEnd = Input.mousePosition;
             ProcessPlayerTouchData(playerTouches[0]);
 
-            Debug.Log("mouse released");
+            //Debug.Log("mouse released");
 
             mousePressed = false;
             ResetTouch(playerTouches[0]);
@@ -108,8 +110,6 @@ public class TouchInput : MonoBehaviour
                 newTouch.selectedChar = toAssign;
                 newTouch.selectedChar.Selected = true;
                 toAssign = null;
-
-                Debug.Log("Employee touched");
             }
         }
         UpdateEmployeeTouches();
@@ -156,8 +156,9 @@ public class TouchInput : MonoBehaviour
             }
             if (touch.data.phase == TouchPhase.Ended)
             {
-                Debug.Log("touch phase ended");
                 touch.touchEnd = touch.data.position;
+                touch.worldEnd = TouchToWorldspace(touch.touchEnd);
+
                 ProcessPlayerTouchData(touch);
 
                 ResetTouch(touch);
