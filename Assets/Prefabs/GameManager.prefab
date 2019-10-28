@@ -59,12 +59,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactables:
-  - type: 0
+  - helperText: Kitchen chair 1
+    type: 1
+    room: 0
     origin: {fileID: 0}
     occupied: 0
-  - type: 0
+  - helperText: Kitchen chair 2
+    type: 1
+    room: 0
     origin: {fileID: 0}
     occupied: 0
-  - type: 0
+  - helperText: Sofa L
+    type: 1
+    room: 0
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Sofa R
+    type: 1
+    room: 0
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Rest idle
+    type: 0
+    room: 0
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Rest idle
+    type: 0
+    room: 0
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Rest idle
+    type: 0
+    room: 0
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Rest chair
+    type: 0
+    room: 0
     origin: {fileID: 0}
     occupied: 0
