@@ -13,7 +13,16 @@ public class InteractableFurniture : MonoBehaviour
         {
             EMPTY, CHAIR
         }
-        public Type type = Type.CHAIR;
+        public enum Room
+        {
+            REST, TASK_1, TASK_2, TASK_3, PRESENTATION, MEETING
+        }
+
+        public string helperText = "";
+
+        public Type type = Type.EMPTY;
+        public Room room = Room.REST;
+
         public Transform origin;
 
         [HideInInspector]
@@ -27,12 +36,12 @@ public class InteractableFurniture : MonoBehaviour
         if (Instance == null) Instance = this;
     }
 
-    public Interactable GetInteractable()
+    public Interactable GetInteractable(Interactable.Room _room = Interactable.Room.REST)
     {
         List<int> freeObjs = new List<int>();
         for(int i = 0; i < interactables.Length; i++)
         {
-            if (!interactables[i].occupied)
+            if (!interactables[i].occupied && interactables[i].room == _room)
                 freeObjs.Add(i);
         }
 
