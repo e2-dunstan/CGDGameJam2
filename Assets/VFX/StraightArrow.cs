@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class StraightArrow : MonoBehaviour
 {
-    [SerializeField] private GameObject startloc;
-    [SerializeField] private GameObject endLoc;
+    public Vector3 startloc;
+    public Vector3 endLoc;
 
     // Original particle and instance
     public GameObject pathParticle;
@@ -20,12 +20,12 @@ public class StraightArrow : MonoBehaviour
     void Start()
     {
         pathPos = 0.0f;
-    }   
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if (pathParticleInst != null)
+        if (pathParticleInst != null && pathParticleInst.activeSelf)
         {
             instPS = pathParticleInst.GetComponent<ParticleSystem>();
             timer = instPS.sizeOverLifetime.sizeMultiplier;
@@ -46,7 +46,14 @@ public class StraightArrow : MonoBehaviour
         {
             pathParticleInst = Instantiate(pathParticle);
         }
-            
+        if (!pathParticleInst.activeSelf)
+        {
+            pathParticleInst.transform.position = startloc;
+            pathPos = 0.0f;
+            pathParticleInst.SetActive(true);
+
+        }
+
         if (pathPos < 1.35f)
         {
             pathPos += 0.035f;
@@ -61,15 +68,16 @@ public class StraightArrow : MonoBehaviour
             }
         }
         //Move along the path
-        pathParticleInst.transform.position = Vector3.Lerp(startloc.transform.position, endLoc.transform.position, pathPos);
+        pathParticleInst.transform.position = Vector3.Lerp(startloc, endLoc, pathPos);
 
     }
 
     public void Kill()
     {
-        if (pathParticleInst != null)
+        if (pathParticleInst.activeSelf)
         {
-            Destroy(pathParticleInst);
+            //Destroy(pathParticleInst);
+            pathParticleInst.SetActive(false);
             pathPos = 0.0f;
         }
     }

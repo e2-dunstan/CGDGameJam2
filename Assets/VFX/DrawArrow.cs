@@ -6,14 +6,13 @@ public class DrawArrow : MonoBehaviour
 {
     public Vector3 startloc;
     public Vector3 endLoc;
-    public bool onClick;
     public bool startPointSet;
     public bool endPointSet;
     public bool validMove;
 
     public bool killPS;
     public bool startPs;
-    Vector3[] points = new Vector3[2];
+    public Vector3[] points = new Vector3[2];
     private LineRenderer lr;
     float distLine = 0.0f;
 
@@ -22,10 +21,9 @@ public class DrawArrow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        startPs = false;
         lr = GetComponent<LineRenderer>();
         lr.enabled = false;
-        onClick = false;
-        startPointSet = false;
         endPointSet = false;
         validMove = false;
     }
@@ -35,18 +33,13 @@ public class DrawArrow : MonoBehaviour
     {
         killPS = false;
         //Once the player clicks a Dev
-        if (onClick && !startPointSet && !endPointSet)
-        {
-            //print("Set starting position!! " + startloc.transform.position);
-            startPointSet = true;
-        }
+        Debug.Log(startPointSet);
 
-        //Once the player drops a dev
-        if (onClick && !endPointSet && startPointSet && validMove)
-        {
-            //print("Set end position!! " + endLoc.transform.position);
-            endPointSet = true;
-        }
+        //print("Set starting position!! " + startloc.transform.position);
+        startloc = new Vector3(9, 6, 9);
+            points[0] = startloc;
+            points[1] = endLoc;
+
         //Start playing the animation once the player drops the dev
         if (startPointSet && endPointSet)
         {
@@ -74,9 +67,6 @@ public class DrawArrow : MonoBehaviour
         {
             distLine = 0.1f;
         }
-        points[0] = startloc;
-        points[1] = endLoc;
-        //print("Distance" + distance);
 
     }
 

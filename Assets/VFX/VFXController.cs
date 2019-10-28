@@ -38,6 +38,8 @@ public class VFXController : MonoBehaviour
             //Assign script references
             pathIndicator.drawArrow = pathIndicator.instance.GetComponent<DrawArrow>();
             pathIndicator.straightArrow = pathIndicator.instance.GetComponent<StraightArrow>();
+            pathIndicator.straightArrow.enabled = false;
+
             //Assign touch reference
             pathIndicator.touchRef = TouchInput.Instance.playerTouches[i];
 
@@ -48,7 +50,6 @@ public class VFXController : MonoBehaviour
         }
 
         //This will need modifying to allow for the path indicators
-        InitialiseSubScripts();
     }
 
     // Update is called once per frame
@@ -65,36 +66,46 @@ public class VFXController : MonoBehaviour
                 pathIndicators[i].instance.SetActive(false);
                 continue;
             }
-
-            //If it's not active, set it active
-            if (!pathIndicators[i].instance.activeInHierarchy)
+                //If it's not active, set it active
+                if (!pathIndicators[i].instance.activeInHierarchy)
                 pathIndicators[i].instance.SetActive(false);
 
             //update the positions here using pathIndicators[i].touchRef.worldStart/End and the references to the scripts
+            if (pathIndicators[i].touchRef.tracking)
+            {
+                pathIndicators[i].instance.SetActive(true);
+                pathIndicators[i].drawArrow.startPointSet = true;
+                pathIndicators[i].drawArrow.startloc = pathIndicators[i].touchRef.selectedChar.transform.position;
+                pathIndicators[i].drawArrow.endLoc = pathIndicators[i].touchRef.worldEnd;
+
+                //print("Drawing line!!! Start:" + pathIndicators[i].drawArrow.startloc + ", End: " + pathIndicators[i].drawArrow.endLoc);
+            }
         }
     }
 
     void InitialiseSubScripts()
     {
         fxStraightArrow = GetComponent<StraightArrow>();
-        fxStraightArrow.enabled = false;
         fxDrawArrow = GetComponent<DrawArrow>();
     }
 
     void DrawArrowManage()
     {
-        if (fxDrawArrow.killPS)
+        for (int i = 0; i < pathIndicators.Count; i++)
         {
-            fxStraightArrow.Kill();
-        }
+            if (pathIndicators[i].drawArrow.killPS)
+            {
+                pathIndicators[i].straightArrow.Kill();
+            }
 
-        if (fxDrawArrow.startPs)
-        {
-            fxStraightArrow.enabled = true;
-        }
-        else
-        {
-            fxStraightArrow.enabled = false;
+            if (pathIndicators[i].drawArrow.startPs)
+            {
+                pathIndicators[i].straightArrow.enabled = true;
+            }
+            else
+            {
+                pathIndicators[i].straightArrow.enabled = false;
+            }
         }
     }
 }
