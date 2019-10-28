@@ -52,6 +52,7 @@ GameObject:
   m_Component:
   - component: {fileID: 352679479455204883}
   - component: {fileID: 352679479455204892}
+  - component: {fileID: 7807214821094687209}
   m_Layer: 0
   m_Name: Room Trigger
   m_TagString: Untagged
@@ -86,6 +87,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &7807214821094687209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 352679479455204882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b319762eb645b4be29c7a05680f2ebf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2046640222646668597
 GameObject:
   m_ObjectHideFlags: 0
@@ -3716,15 +3729,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d11695e43d89ff24bb36886a4c039c14, type: 3}
---- !u!1 &4280006216720826917 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1792930433024800, guid: d11695e43d89ff24bb36886a4c039c14,
-    type: 3}
-  m_PrefabInstance: {fileID: 4279541506182381829}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4282117442202923029 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4186335368245520, guid: d11695e43d89ff24bb36886a4c039c14,
+    type: 3}
+  m_PrefabInstance: {fileID: 4279541506182381829}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4280006216720826917 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1792930433024800, guid: d11695e43d89ff24bb36886a4c039c14,
     type: 3}
   m_PrefabInstance: {fileID: 4279541506182381829}
   m_PrefabAsset: {fileID: 0}

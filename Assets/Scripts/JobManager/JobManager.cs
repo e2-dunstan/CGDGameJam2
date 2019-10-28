@@ -168,4 +168,15 @@ public class JobManager : MonoBehaviour
 
         return ActiveJobList;
     }
+
+    public void CompleteJob(string _jobID)
+    {
+        Job jobToBeRemoved = ActiveJobList.Where(x => x.taskID == _jobID).FirstOrDefault();
+
+        List<Job> tempJobList = ActiveJobList.Where(x => x.taskID != _jobID).ToList();
+
+        ActiveJobList = tempJobList;
+
+        jobsCompletedInPeriod++;
+    }
 }

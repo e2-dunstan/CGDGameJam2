@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3442704646598719576}
+  - component: {fileID: 512846562940231992}
   m_Layer: 0
   m_Name: Task Room 3
   m_TagString: Untagged
@@ -43,6 +44,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &512846562940231992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3442704646598719559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83a410ecbb3944280b9b7c7ae397412f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  job:
+    taskIconLocation: 
+    taskIcon: {fileID: 0}
+    taskName: 
+    taskID: 
+    taskDescription: 
+    taskTime: 0
+    taskDifficulty: 0
+    recommendedUnitCount: 0
+    isInQueue: 0
+    baseTaskScore: 0
+    timeUntilDeque: 0
+    isTaskActive: 0
+    currentActiveTime: 0
+    currentPlayersAssigned: 0
+    playerSpeedMultiplier: 0
+    timeUntilFailure: 0
 --- !u!1 &3442704647242049627
 GameObject:
   m_ObjectHideFlags: 0

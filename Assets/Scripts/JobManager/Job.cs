@@ -52,4 +52,11 @@ public class Job
             return false;
         }
     }
+
+    public void ResetJob()
+    {
+        isInQueue = false;
+        isTaskActive = false;
+        currentActiveTime = 0.0f;
+    }
 }

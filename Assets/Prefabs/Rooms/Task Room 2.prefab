@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4602488640800023747}
   - component: {fileID: 4602488640800023744}
+  - component: {fileID: 1930461379199078038}
   m_Layer: 0
   m_Name: Room Trigger
   m_TagString: Untagged
@@ -44,6 +45,35 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &1930461379199078038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4602488640800023746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83a410ecbb3944280b9b7c7ae397412f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  job:
+    taskIconLocation: 
+    taskIcon: {fileID: 0}
+    taskName: 
+    taskID: 
+    taskDescription: 
+    taskTime: 0
+    taskDifficulty: 0
+    recommendedUnitCount: 0
+    isInQueue: 0
+    baseTaskScore: 0
+    timeUntilDeque: 0
+    isTaskActive: 0
+    currentActiveTime: 0
+    currentPlayersAssigned: 0
+    playerSpeedMultiplier: 0
+    timeUntilFailure: 0
 --- !u!1 &4602488641518686127
 GameObject:
   m_ObjectHideFlags: 0
