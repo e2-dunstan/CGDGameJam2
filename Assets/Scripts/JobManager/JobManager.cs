@@ -18,6 +18,9 @@ public class JobManager : MonoBehaviour
     [SerializeField]
     private JobLoadManager jobLoadManager;
 
+    [SerializeField]
+    private MettingRoomJobManager mettingRoomJob;
+
     private bool jobsLoaded = false;
     public Jobs jobs { get; set; }
 
@@ -49,6 +52,11 @@ public class JobManager : MonoBehaviour
         else
         {
             Debug.Log("No Load Manager Assigned To JobManager");
+        }
+
+        if(mettingRoomJob == null)
+        {
+            Debug.Log("No MeetingRoomManager On JobManager");
         }
     }
 
@@ -98,7 +106,10 @@ public class JobManager : MonoBehaviour
         {
             foreach (var job in ActiveJobList)
             {
-               job.currentActiveTime += _dt;
+                if (job.isTaskActive)
+                {
+                    job.currentActiveTime += _dt;
+                }
 
                 //if (job.currentActiveTime > job.timeUntilDeque)
                 //{
@@ -135,15 +146,22 @@ public class JobManager : MonoBehaviour
     /// </summary>
     public Job GetRandomInactiveJobAndAddToQueue()
     {
-        List<Job> InactiveJobList = jobs.jobList.Where(x => !x.isTaskActive).ToList();
+        List<Job> InactiveJobList = jobs.jobList.Where(x => !x.isInQueue).ToList();
 
-        int randomIndex = Random.Range(0, InactiveJobList.Count - 1);
+        if (InactiveJobList.Count > 0)
+        {
+            int randomIndex = Random.Range(0, InactiveJobList.Count - 1);
 
-        InactiveJobList[randomIndex].isTaskActive = true;
+            InactiveJobList[randomIndex].isInQueue = true;
 
-        ActiveJobList.Add(InactiveJobList[randomIndex]);
+            ActiveJobList.Add(InactiveJobList[randomIndex]);
 
-        return InactiveJobList[randomIndex];
+            return InactiveJobList[randomIndex];
+        }
+        else
+        {
+            return null;
+        }
     }
 
     /// <summary>
@@ -151,15 +169,22 @@ public class JobManager : MonoBehaviour
     /// </summary>
     public Job GetRandomInactiveJobAndAddToQueue(Difficulty _difficulty)
     {
-        List<Job> InactiveJobList = jobs.jobList.Where(x => !x.isTaskActive && x.taskDifficulty == _difficulty).ToList();
+        List<Job> InactiveJobList = jobs.jobList.Where(x => !x.isInQueue && x.taskDifficulty == _difficulty).ToList();
 
-        int randomIndex = Random.Range(0, InactiveJobList.Count - 1);
+        if (InactiveJobList.Count > 0)
+        {
+            int randomIndex = Random.Range(0, InactiveJobList.Count - 1);
 
-        InactiveJobList[randomIndex].isTaskActive = true;
+            InactiveJobList[randomIndex].isInQueue = true;
 
-        ActiveJobList.Add(InactiveJobList[randomIndex]);
+            ActiveJobList.Add(InactiveJobList[randomIndex]);
 
-        return ActiveJobList[randomIndex];
+            return ActiveJobList[randomIndex];
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public List<Job> GetActiveJobs()
@@ -179,4 +204,15 @@ public class JobManager : MonoBehaviour
 
         jobsCompletedInPeriod++;
     }
+
+    public void AcceptJobAndAssignToEmployee()
+    {
+        mettingRoomJob.AcceptJobAndAssignToEmployee();
+    }
+
+    public void DeclineJobAndAssignToEmployee()
+    {
+        mettingRoomJob.DeclineJobAndAssignToEmployee();
+    }
 }
+

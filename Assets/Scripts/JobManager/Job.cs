@@ -35,6 +35,7 @@ public class Job
     //Amount by which task completion speed is effected for each extra person
     public int playerSpeedMultiplier;
     public int timeUntilFailure;
+    public bool isTaskCompleted = false;
 
     public bool InitJob()
     {

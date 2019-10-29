@@ -324,9 +324,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   progressImage: {fileID: 3015150854303577445}
   progressText: {fileID: 3015150854404160533}
-  taskTime: 30
-  currentTime: 40
-  numOfEmployees: 2
+  currentTime: 0
+  job:
+    taskIconLocation: 
+    taskIcon: {fileID: 0}
+    taskName: 
+    taskID: 
+    taskDescription: 
+    taskTime: 0
+    taskDifficulty: 0
+    recommendedUnitCount: 0
+    isInQueue: 0
+    baseTaskScore: 0
+    timeUntilDeque: 0
+    isTaskActive: 0
+    currentActiveTime: 0
+    currentPlayersAssigned: 0
+    playerSpeedMultiplier: 0
+    timeUntilFailure: 0
+    isTaskCompleted: 0
 --- !u!114 &8710048331251414369
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,8 +13,10 @@ public class JobUIManager : MonoBehaviour
     {
         HAS_TASK = 0,
         HAS_COMPLETED_TASK = 1,
-        PROGRESS_BAR = 2,
-        JOB_DESCRIPTION = 3
+        HAS_UNWANTED_TASK = 2,
+        PROGRESS_BAR = 3,
+        JOB_DESCRIPTION = 4,
+        JOB_ALERT = 5
     }
     void Awake()
     {
@@ -47,6 +49,14 @@ public class JobUIManager : MonoBehaviour
                     ActiveUIElements.Add(obj);
                     return obj;
                 }
+            case UIElement.HAS_COMPLETED_TASK:
+                {
+                    GameObject obj = Instantiate(gameObject.GetComponent<JobUIObjects>().completedJobUIElement);
+                    obj.transform.parent = gameObject.transform;
+                    obj.GetComponent<AttachUIToGameObject>().SetTargetObject(_gameObject);
+                    ActiveUIElements.Add(obj);
+                    return obj;
+                }
             case UIElement.PROGRESS_BAR:
                 {
                     GameObject obj = Instantiate(gameObject.GetComponent<JobUIObjects>().progressBar);
@@ -58,6 +68,22 @@ public class JobUIManager : MonoBehaviour
             case UIElement.JOB_DESCRIPTION:
                 {
                     GameObject obj = Instantiate(gameObject.GetComponent<JobUIObjects>().jobDescription);
+                    obj.transform.parent = gameObject.transform;
+                    obj.GetComponent<AttachUIToGameObject>().SetTargetObject(_gameObject);
+                    ActiveUIElements.Add(obj);
+                    return obj;
+                }
+            case UIElement.JOB_ALERT:
+                {
+                    GameObject obj = Instantiate(gameObject.GetComponent<JobUIObjects>().jobAlert);
+                    obj.transform.parent = gameObject.transform;
+                    obj.GetComponent<AttachUIToGameObject>().SetTargetObject(_gameObject);
+                    ActiveUIElements.Add(obj);
+                    return obj;
+                }
+            case UIElement.HAS_UNWANTED_TASK:
+                {
+                    GameObject obj = Instantiate(gameObject.GetComponent<JobUIObjects>().jobToBeDestroyedUIElement);
                     obj.transform.parent = gameObject.transform;
                     obj.GetComponent<AttachUIToGameObject>().SetTargetObject(_gameObject);
                     ActiveUIElements.Add(obj);

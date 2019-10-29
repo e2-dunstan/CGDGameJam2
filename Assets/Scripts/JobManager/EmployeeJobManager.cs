@@ -9,6 +9,10 @@ public class EmployeeJobManager : MonoBehaviour
 
     public bool hasJob = false;
 
+    GameObject hasJobUIElement = null;
+    GameObject hasJobToBeDestroyedUIElement = null;
+
+
     public void Awake()
     {
         //hasJobUIElement.SetActive(false);
@@ -19,11 +23,14 @@ public class EmployeeJobManager : MonoBehaviour
        //We may wish to manage the removal of jobs from a player here, if a deadline for a task is reached when in a players posession
     }
 
-    public void SetJob(Job _job)
+    public void SetJob(Job _job, JobUIManager.UIElement uIElement)
     {
         job = _job;
         hasJob = true;
-        JobUIManager.Instance.SpawnUIElement(JobUIManager.UIElement.HAS_TASK, gameObject);
+
+        
+        hasJobUIElement = JobUIManager.Instance.SpawnUIElement(uIElement, gameObject);
+
     }
 
     /// <summary>
@@ -34,7 +41,7 @@ public class EmployeeJobManager : MonoBehaviour
         hasJob = false;
         Job tempJobPointer = job;
         job = null;
-        JobUIManager.Instance.RemoveUIElementFromObject(JobUIManager.UIElement.HAS_TASK, gameObject);
+        Destroy(hasJobUIElement);
         return tempJobPointer;
     }
 }

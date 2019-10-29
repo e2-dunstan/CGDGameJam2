@@ -39,11 +39,13 @@ public class JobOfferBox : MonoBehaviour
 
     public void AcceptJob()
     {
-        //Give player job
+        Debug.Log("Accepted Job");
+        JobManager.Instance.AcceptJobAndAssignToEmployee();
     }
 
     public void DeclineJob()
     {
         //Remove job
+        JobManager.Instance.DeclineJobAndAssignToEmployee();
     }
 }

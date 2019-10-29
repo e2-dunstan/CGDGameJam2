@@ -9,33 +9,31 @@ public class TaskProgressBar : MonoBehaviour
     [SerializeField] private Text progressText;
 
     //To be made private
-    [SerializeField] private float taskTime;
     [SerializeField] private float currentTime;
-    [SerializeField] private int numOfEmployees;
 
     private bool taskDone;
 
-    public void SetTaskTime(float _seconds)
-    {
-        taskTime = _seconds;
-        currentTime = _seconds;
+    public Job job = null;
 
-        UpdateProgress();
-    }
-
+   
     public void SetNumOfEmployees(int _numOfEmployees)
     {
-        numOfEmployees = _numOfEmployees;
+        job.currentPlayersAssigned = _numOfEmployees;
+    }
+
+    public void SetJob(Job _job)
+    {
+        job = _job;
     }
 
     private void UpdateProgress()
     {
-        float percentage = 1.0f - (currentTime / taskTime);
+        float percentage = (currentTime / job.taskTime);
         percentage = Mathf.Clamp(percentage, 0.0f, 1.0f);
 
         if (percentage >= 1)
         {
-            taskDone = true;
+            job.isTaskCompleted = true;
         }
         
         progressImage.fillAmount = percentage;
@@ -44,12 +42,15 @@ public class TaskProgressBar : MonoBehaviour
 
     public bool IsTaskDone()
     {
-        return taskDone;
+        return job.isTaskCompleted;
     }
 
     private void Update()
     {
-        currentTime -= Time.deltaTime * numOfEmployees;
-        UpdateProgress();
+        if (job != null)
+        {
+            currentTime += Time.deltaTime * job.currentPlayersAssigned;
+            UpdateProgress();
+        }
     }
 }
