@@ -21,6 +21,9 @@ public class JobManager : MonoBehaviour
     [SerializeField]
     private MettingRoomJobManager mettingRoomJob;
 
+    [SerializeField]
+    private PresentationRoomManager presentationRoom;
+
     private bool jobsLoaded = false;
     public Jobs jobs { get; set; }
 
@@ -33,6 +36,7 @@ public class JobManager : MonoBehaviour
 
     [SerializeField]
     private float difficultyDeltaTime = 0.0f;
+    [SerializeField]
     private float timeBetweenRemovingJob = 30.0f;
 
     void Awake()
@@ -75,28 +79,31 @@ public class JobManager : MonoBehaviour
     /// </summary>
     private void UpdateCurrentDifficulty(float _dt)
     {
-        difficultyDeltaTime += _dt;
+        if (jobsCompletedInPeriod > 0)
+        {
+            difficultyDeltaTime += _dt;
 
-        if(difficultyDeltaTime > timeBetweenRemovingJob)
-        {
-            jobsCompletedInPeriod--;
-        }
+            if (difficultyDeltaTime > timeBetweenRemovingJob)
+            {
+                jobsCompletedInPeriod--;
+            }
 
-        if(jobsCompletedInPeriod < 2)
-        {
-            currentGameDifficulty = CurrentGameDifficulty.SUPER_EASY;
-        }
-        else if(jobsCompletedInPeriod < 4)
-        {
-            currentGameDifficulty = CurrentGameDifficulty.EASY;
-        }
-        else if(jobsCompletedInPeriod < 6)
-        {
-            currentGameDifficulty = CurrentGameDifficulty.MEDIUM;
-        }
-        else if(jobsCompletedInPeriod < 8)
-        {
-            currentGameDifficulty = CurrentGameDifficulty.HARD;
+            if (jobsCompletedInPeriod < 2)
+            {
+                currentGameDifficulty = CurrentGameDifficulty.SUPER_EASY;
+            }
+            else if (jobsCompletedInPeriod < 4)
+            {
+                currentGameDifficulty = CurrentGameDifficulty.EASY;
+            }
+            else if (jobsCompletedInPeriod < 6)
+            {
+                currentGameDifficulty = CurrentGameDifficulty.MEDIUM;
+            }
+            else if (jobsCompletedInPeriod < 8)
+            {
+                currentGameDifficulty = CurrentGameDifficulty.HARD;
+            }
         }
     }
 
@@ -202,6 +209,7 @@ public class JobManager : MonoBehaviour
 
         ActiveJobList = tempJobList;
 
+        jobToBeRemoved.ResetJob();
         jobsCompletedInPeriod++;
     }
 
@@ -213,6 +221,12 @@ public class JobManager : MonoBehaviour
     public void DeclineJobAndAssignToEmployee()
     {
         mettingRoomJob.DeclineJobAndAssignToEmployee();
+    }
+
+
+    public void AlertJobHasBeenCompleted()
+    {
+        presentationRoom.AlertJobHasBeenCompleted();
     }
 }
 

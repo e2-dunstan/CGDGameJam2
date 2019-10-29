@@ -16,7 +16,8 @@ public class JobUIManager : MonoBehaviour
         HAS_UNWANTED_TASK = 2,
         PROGRESS_BAR = 3,
         JOB_DESCRIPTION = 4,
-        JOB_ALERT = 5
+        JOB_ALERT = 5,
+        PRESENTATION_ROOM_ALERT = 6
     }
     void Awake()
     {
@@ -84,6 +85,14 @@ public class JobUIManager : MonoBehaviour
             case UIElement.HAS_UNWANTED_TASK:
                 {
                     GameObject obj = Instantiate(gameObject.GetComponent<JobUIObjects>().jobToBeDestroyedUIElement);
+                    obj.transform.parent = gameObject.transform;
+                    obj.GetComponent<AttachUIToGameObject>().SetTargetObject(_gameObject);
+                    ActiveUIElements.Add(obj);
+                    return obj;
+                }
+            case UIElement.PRESENTATION_ROOM_ALERT:
+                {
+                    GameObject obj = Instantiate(gameObject.GetComponent<JobUIObjects>().presentationRoomAlert);
                     obj.transform.parent = gameObject.transform;
                     obj.GetComponent<AttachUIToGameObject>().SetTargetObject(_gameObject);
                     ActiveUIElements.Add(obj);

@@ -12256,6 +12256,16 @@ PrefabInstance:
       propertyPath: mettingRoomJob
       value: 
       objectReference: {fileID: 1796491112}
+    - target: {fileID: 4896022386519435149, guid: aba32ca5903954e2c9d619ea554a4ed0,
+        type: 3}
+      propertyPath: presentationRoom
+      value: 
+      objectReference: {fileID: 1967438385}
+    - target: {fileID: 4896022386519435149, guid: aba32ca5903954e2c9d619ea554a4ed0,
+        type: 3}
+      propertyPath: difficultyDeltaTime
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aba32ca5903954e2c9d619ea554a4ed0, type: 3}
 --- !u!43 &1868439864
@@ -13180,6 +13190,18 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!114 &1967438385 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8370796560791534011, guid: d19c143a968bd9d4685fa5ebd2f16bf9,
+    type: 3}
+  m_PrefabInstance: {fileID: 960096969}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b319762eb645b4be29c7a05680f2ebf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1989404028 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8276433133732283170, guid: d19c143a968bd9d4685fa5ebd2f16bf9,
@@ -13762,5 +13784,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3786170705898070700, guid: 4d8b71e9af5c346858d7c5d1d49573b8,
+        type: 3}
+      propertyPath: presentationRoomAlert
+      value: 
+      objectReference: {fileID: 7418745394909543473, guid: b4f359a16df9ca548803c8b9ede4baa3,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d8b71e9af5c346858d7c5d1d49573b8, type: 3}

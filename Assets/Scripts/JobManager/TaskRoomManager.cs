@@ -27,7 +27,7 @@ public class TaskRoomManager : MonoBehaviour
 
         if(isTaskCompleted)
         {
-            
+            JobManager.Instance.AlertJobHasBeenCompleted();
                 GameObject employeeWithoutJob = employeesInRoom.Where(x => x.GetComponent<EmployeeJobManager>().hasJob != true).FirstOrDefault();
 
                 if (employeeWithoutJob != null)

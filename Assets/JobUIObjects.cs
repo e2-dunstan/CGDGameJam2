@@ -10,4 +10,5 @@ public class JobUIObjects : MonoBehaviour
     public GameObject progressBar = null;
     public GameObject jobDescription = null;
     public GameObject jobAlert = null;
+    public GameObject presentationRoomAlert = null;
 }

@@ -49,7 +49,7 @@ public class TaskProgressBar : MonoBehaviour
     {
         if (job != null)
         {
-            currentTime += Time.deltaTime * job.currentPlayersAssigned;
+            currentTime += (Time.deltaTime / job.recommendedUnitCount ) * (job.currentPlayersAssigned);
             UpdateProgress();
         }
     }
