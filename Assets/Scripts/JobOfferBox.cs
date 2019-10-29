@@ -39,13 +39,14 @@ public class JobOfferBox : MonoBehaviour
 
     public void AcceptJob()
     {
-        Debug.Log("Accepted Job");
+        Debug.Log("Accepted Job, Attempting To Asssign To A Valid Target");
         JobManager.Instance.AcceptJobAndAssignToEmployee();
     }
 
     public void DeclineJob()
     {
         //Remove job
+        Debug.Log("Declined Job, Attempting To Asssign To A Valid Target");
         JobManager.Instance.DeclineJobAndAssignToEmployee();
     }
 }

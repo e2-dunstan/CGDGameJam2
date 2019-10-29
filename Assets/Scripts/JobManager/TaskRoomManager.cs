@@ -9,7 +9,7 @@ public class TaskRoomManager : MonoBehaviour
     public GameObject progressBar = null;
 
     private bool isTaskCompleted = false;
-    private bool isJobInProgress = true;
+    private bool isJobInProgress = false;
 
     List<GameObject> employeesInRoom = new List<GameObject>();
 
@@ -34,9 +34,17 @@ public class TaskRoomManager : MonoBehaviour
                 {
                     employeeWithoutJob.GetComponent<EmployeeJobManager>().SetJob(job, JobUIManager.UIElement.HAS_COMPLETED_TASK);
                     Destroy(progressBar);
+                    job = null;
                     isTaskCompleted = false;
                     isJobInProgress = false;
                 }
+        }
+
+        //int numEmployeesWorking = employeesInRoom.Count(x => x.gameObject.GetComponent<Employee>().GetEmployeeState() == Employee.State.WORKING);
+
+        if (job != null)
+        {
+            job.currentPlayersAssigned = employeesInRoom.Count;
         }
     }
 
@@ -46,6 +54,32 @@ public class TaskRoomManager : MonoBehaviour
         employeesInRoom = newEmployeeList;
     }
 
+    private bool IsEmployeeAlreadyInRoom(GameObject _employee)
+    {
+        GameObject employee = employeesInRoom.Where(x => x.gameObject.GetInstanceID() == _employee.gameObject.GetInstanceID()).FirstOrDefault();
+
+        if(employee == null)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    int numEmployeesWorking = employeesInRoom.Count(x => x.gameObject.GetComponent<Employee>().GetEmployeeState() == Employee.State.WORKING);
+
+    //    Debug.Log(numEmployeesWorking);
+
+    //    if (job != null)
+    //    {
+    //        job.currentPlayersAssigned = numEmployeesWorking;
+    //    }
+    //}
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Employee"))
@@ -54,7 +88,7 @@ public class TaskRoomManager : MonoBehaviour
 
             employeesInRoom.Add(other.gameObject);
 
-            if (other.gameObject.GetComponent<EmployeeJobManager>().hasJob)
+            if (other.gameObject.GetComponent<EmployeeJobManager>().hasJob && isJobInProgress == false)
             {
                 other.GetComponent<Employee>().ChangeState(Employee.State.WORKING);
                 job = other.gameObject.GetComponent<EmployeeJobManager>().GetJob();
@@ -62,11 +96,10 @@ public class TaskRoomManager : MonoBehaviour
                 progressBar.GetComponent<TaskProgressBar>().SetJob(job);
                 job.isTaskActive = true;
                 isJobInProgress = true;
-                job.currentPlayersAssigned++;
             }
-            else if(isJobInProgress)
+            else if(isJobInProgress == true)
             {
-                job.currentPlayersAssigned++;
+                other.GetComponent<Employee>().ChangeState(Employee.State.WORKING);
             }
         }
     }
