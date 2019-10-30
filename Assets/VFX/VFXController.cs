@@ -10,6 +10,7 @@ public class VFXController : MonoBehaviour
     private DrawArrow fxDrawArrow;
 
     public GameObject pathIndicatorPrefab;
+    public ParticleSystem puff;
 
     public class PathIndicator
     {
@@ -19,6 +20,7 @@ public class VFXController : MonoBehaviour
         public TouchInput.PlayerTouch touchRef = null;
     }
     private List<PathIndicator> pathIndicators = new List<PathIndicator>();
+    private List<ParticleSystem> puffList = new List<ParticleSystem>();
 
 
 
@@ -29,6 +31,7 @@ public class VFXController : MonoBehaviour
 
     private void Start()
     {
+
         for(int i = 0; i < TouchInput.Instance.MaxTouches; i++)
         {
             //Initialise a new path indicator on start
@@ -48,6 +51,7 @@ public class VFXController : MonoBehaviour
 
             pathIndicators.Add(pathIndicator);
         }
+        CreateParticleSystemForAllEmployees(puff, puffList);
 
         //This will need modifying to allow for the path indicators
     }
@@ -57,30 +61,6 @@ public class VFXController : MonoBehaviour
     {
         DrawArrowManage();
         
-        //New code
-        for(int i = 0; i < pathIndicators.Count; i++)
-        {
-            if (!pathIndicators[i].touchRef.tracking)
-            {
-                //If this touch isn't being tracked, skip over this iteration and ensure it's disabled
-                pathIndicators[i].instance.SetActive(false);
-                continue;
-            }
-                //If it's not active, set it active
-                if (!pathIndicators[i].instance.activeInHierarchy)
-                pathIndicators[i].instance.SetActive(false);
-
-            //update the positions here using pathIndicators[i].touchRef.worldStart/End and the references to the scripts
-            if (pathIndicators[i].touchRef.tracking)
-            {
-                pathIndicators[i].instance.SetActive(true);
-                pathIndicators[i].drawArrow.startPointSet = true;
-                pathIndicators[i].drawArrow.startloc = pathIndicators[i].touchRef.selectedChar.transform.position;
-                pathIndicators[i].drawArrow.endLoc = pathIndicators[i].touchRef.worldEnd;
-
-                //print("Drawing line!!! Start:" + pathIndicators[i].drawArrow.startloc + ", End: " + pathIndicators[i].drawArrow.endLoc);
-            }
-        }
     }
 
     void InitialiseSubScripts()
@@ -91,9 +71,63 @@ public class VFXController : MonoBehaviour
 
     void DrawArrowManage()
     {
+        ArrowCommands();
+
         for (int i = 0; i < pathIndicators.Count; i++)
         {
-            if (pathIndicators[i].drawArrow.killPS)
+            if (!pathIndicators[i].touchRef.tracking)
+            {
+                if (pathIndicators[i].drawArrow.startPointSet)
+                {
+                    pathIndicators[i].drawArrow.endPointSet = true;
+                }
+
+                if (pathIndicators[i].straightArrow.isActiveAndEnabled)
+                {
+                    if (pathIndicators[i].straightArrow.target == null)
+                    {
+                        pathIndicators[i].straightArrow.target = pathIndicators[i].drawArrow.target;
+                    }
+                    pathIndicators[i].straightArrow.endLoc = pathIndicators[i].drawArrow.endLoc;
+                }
+                if (pathIndicators[i].straightArrow.reached)
+                {
+                    //If this touch isn't being tracked, skip over this iteration and ensure it's disabled
+                    pathIndicators[i].straightArrow.reached = false;
+                    pathIndicators[i].drawArrow.Reset();
+                    pathIndicators[i].instance.SetActive(false);
+                    continue;
+                }
+            }
+            //If it's not active, set it active
+            if (!pathIndicators[i].instance.activeInHierarchy)
+                pathIndicators[i].instance.SetActive(false);
+
+
+            //update the positions here using pathIndicators[i].touchRef.worldStart/End and the references to the scripts
+            if (pathIndicators[i].touchRef.tracking)
+            {
+                PlayParticleSystemOnAllEmployees(puffList);
+                pathIndicators[i].instance.SetActive(true);
+                pathIndicators[i].drawArrow.startLoc = new Vector3(
+                    pathIndicators[i].touchRef.selectedChar.transform.position.x,
+                    pathIndicators[i].touchRef.selectedChar.transform.position.y + 1,
+                    pathIndicators[i].touchRef.selectedChar.transform.position.z);
+
+                pathIndicators[i].drawArrow.endLoc = pathIndicators[i].touchRef.worldEnd;
+                pathIndicators[i].drawArrow.target = pathIndicators[i].touchRef.selectedChar.gameObject;
+                pathIndicators[i].drawArrow.startPointSet = true;
+
+                //print("Drawing line!!! Start:" + pathIndicators[i].drawArrow.startloc + ", End: " + pathIndicators[i].drawArrow.endLoc);
+            }
+        }
+    }
+
+    void ArrowCommands()
+    {
+        for (int i = 0; i < pathIndicators.Count; i++)
+        {
+            if (pathIndicators[i].drawArrow.killPS && pathIndicators[i].straightArrow.instanceActive)
             {
                 pathIndicators[i].straightArrow.Kill();
             }
@@ -105,6 +139,28 @@ public class VFXController : MonoBehaviour
             else
             {
                 pathIndicators[i].straightArrow.enabled = false;
+            }
+        }
+    }
+    public void CreateParticleSystemForAllEmployees(ParticleSystem _pSys, List <ParticleSystem>_list)
+    {
+        for (int i = 0; i < GameObject.FindGameObjectsWithTag("Employee").Length; i++)
+        {
+            ParticleSystem pSys = new ParticleSystem();
+
+            pSys = Instantiate(_pSys);
+            //pSys.Stop();
+            _list.Add(pSys);
+        }
+    }
+    public void PlayParticleSystemOnAllEmployees(List <ParticleSystem> _list )
+    {
+        for (int i =0; i < _list.Count; i++)
+        {
+            if (!_list[i].isPlaying)
+            {
+                _list[i].transform.position = GameObject.FindGameObjectsWithTag("Employee")[i].transform.position;
+                _list[i].Play();
             }
         }
     }

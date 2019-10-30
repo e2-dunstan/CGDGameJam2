@@ -6,7 +6,7 @@ public class StraightArrow : MonoBehaviour
 {
     public Vector3 startloc;
     public Vector3 endLoc;
-
+    public GameObject target;
     // Original particle and instance
     public GameObject pathParticle;
     private GameObject pathParticleInst;
@@ -15,11 +15,15 @@ public class StraightArrow : MonoBehaviour
     ParticleSystem.ShapeModule shapeOL;
     [SerializeField] private float pathPos;
     [SerializeField] float timer;
+    float defaultMultiplier;
     bool pulsed;
+    public bool instanceActive = false;
+    public bool reached = false;
     // Start is called before the first frame update
     void Start()
     {
         pathPos = 0.0f;
+        defaultMultiplier = instPS.sizeOverLifetime.sizeMultiplier;
     }
 
     // Update is called once per frame
@@ -27,24 +31,41 @@ public class StraightArrow : MonoBehaviour
     {
         if (pathParticleInst != null && pathParticleInst.activeSelf)
         {
+            instanceActive = true;
             instPS = pathParticleInst.GetComponent<ParticleSystem>();
             timer = instPS.sizeOverLifetime.sizeMultiplier;
             sizeOL = instPS.sizeOverLifetime;
             shapeOL = instPS.shape;
+        }
+        else
+        {
+            instanceActive = false;
         }
 
         if (pathPos >= 1.35f)
         {
             pathPos = 1.35f;
         }
-    }
+
+        if (target != null)
+        {
+            startloc = target.transform.position;
+            pathParticleInst.transform.LookAt(endLoc, Vector3.up);
+
+
+        }
+        else
+        {
+            Debug.Log("No Target!!!");
+        }
+        }
 
     private void FixedUpdate()
     {
 
         if (pathParticleInst == null)
         {
-            pathParticleInst = Instantiate(pathParticle);
+            pathParticleInst = Instantiate(pathParticle, target.transform);
         }
         if (!pathParticleInst.activeSelf)
         {
@@ -53,6 +74,9 @@ public class StraightArrow : MonoBehaviour
             pathParticleInst.SetActive(true);
 
         }
+        reached = (Vector3.Distance(startloc, endLoc) < 0.5f);
+        Debug.Log(reached);
+        enabled = !reached;
 
         if (pathPos < 1.35f)
         {
@@ -77,8 +101,11 @@ public class StraightArrow : MonoBehaviour
         if (pathParticleInst.activeSelf)
         {
             //Destroy(pathParticleInst);
-            pathParticleInst.SetActive(false);
+            sizeOL.sizeMultiplier = defaultMultiplier;
+            timer = instPS.sizeOverLifetime.sizeMultiplier;
+
             pathPos = 0.0f;
+            pathParticleInst.SetActive(false);
         }
     }
 

@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class DrawArrow : MonoBehaviour
 {
-    public Vector3 startloc;
+    public Vector3 startLoc;
     public Vector3 endLoc;
     public bool startPointSet;
     public bool endPointSet;
-    public bool validMove;
 
+    public GameObject target;
     public bool killPS;
     public bool startPs;
     public Vector3[] points = new Vector3[2];
     private LineRenderer lr;
     float distLine = 0.0f;
 
-    float min = 0.45f;
-    float max = 10.0f;
+    private float min = 0.65f;
+    private float max = 20.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +25,6 @@ public class DrawArrow : MonoBehaviour
         lr = GetComponent<LineRenderer>();
         lr.enabled = false;
         endPointSet = false;
-        validMove = false;
     }
 
     // Update is called once per frame
@@ -33,11 +32,10 @@ public class DrawArrow : MonoBehaviour
     {
         killPS = false;
         //Once the player clicks a Dev
-        Debug.Log(startPointSet);
+       // Debug.Log(startPointSet);
 
         //print("Set starting position!! " + startloc.transform.position);
-        startloc = new Vector3(9, 6, 9);
-            points[0] = startloc;
+            points[0] = startLoc;
             points[1] = endLoc;
 
         //Start playing the animation once the player drops the dev
@@ -50,7 +48,7 @@ public class DrawArrow : MonoBehaviour
             killPS = true;
             startPs = false;
         }
-        float distance = Vector3.Distance(startloc, endLoc);
+        float distance = Vector3.Distance(startLoc, endLoc);
         if (distance < min)
         {
             distLine = 1.0f;
@@ -90,5 +88,15 @@ public class DrawArrow : MonoBehaviour
             lr.endWidth = distLine;
             //print("DistLine" +distLine);
         }
+    }
+
+    public void Reset()
+    {
+        startPs = false;
+        startLoc = Vector3.zero;
+        endLoc = Vector3.zero;
+        lr.enabled = false;
+        startPointSet = false;
+        endPointSet = false;
     }
 }
