@@ -67,6 +67,11 @@ public class Employee : MonoBehaviour
         timeSitToWait = Random.Range(10, 30);
     }
 
+    private void OnEnable()
+    {
+        state = State.IDLE;
+    }
+
     private void Update()
     {
         if (state == State.WORKING) agent.enabled = false;
