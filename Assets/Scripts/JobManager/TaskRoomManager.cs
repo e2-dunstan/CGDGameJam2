@@ -110,6 +110,7 @@ public class TaskRoomManager : MonoBehaviour
             }
             else if(isJobInProgress == true)
             {
+                other.GetComponent<Employee>().currentRoom = GetComponent<RoomType>().roomType;
                 other.GetComponent<Employee>().ChangeState(Employee.State.WORKING);
             }
         }
@@ -121,6 +122,7 @@ public class TaskRoomManager : MonoBehaviour
         {
             if (employeesInRoom.Where(x => x.gameObject.GetInstanceID() == other.gameObject.GetInstanceID()).FirstOrDefault() != null)
             {
+                other.gameObject.GetComponent<Employee>().ChangeState(Employee.State.IDLE);
                 if (job != null)
                 {
                     job.currentPlayersAssigned--;
