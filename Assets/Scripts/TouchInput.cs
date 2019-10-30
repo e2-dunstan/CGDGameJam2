@@ -48,6 +48,14 @@ public class TouchInput : MonoBehaviour
 
     private void Update()
     {
+        foreach(PlayerTouch t in playerTouches)
+        {
+            if (t.tracking)
+            {
+                Debug.Log(t.worldEnd);
+            }
+        }
+
         // -- MOUSE INPUT -- //
         if (inputType == InputType.MOUSE)
         {
@@ -80,6 +88,7 @@ public class TouchInput : MonoBehaviour
         {
             playerTouches[0].moved = true;
             playerTouches[0].touchEnd = Input.mousePosition;
+            playerTouches[0].worldEnd = TouchToWorldspace(Input.mousePosition);
             //Debug.Log("mouse moved");
         }
         if (Input.GetMouseButtonUp(0) && mousePressed)
