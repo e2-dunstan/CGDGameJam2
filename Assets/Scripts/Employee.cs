@@ -37,6 +37,7 @@ public class Employee : MonoBehaviour
     private bool shouldRelaxAfterMoving = false;
     private InteractableFurniture.Interactable currentInteractable = null;
 
+
     public bool Selected
     {
         get; set;
@@ -113,7 +114,11 @@ public class Employee : MonoBehaviour
 
                 break;
             case State.WORKING:
-                FindWorkstation();
+                if (state != State.WORKING)
+                {
+                    agent.ResetPath();
+                    FindWorkstation();
+                }
                 break;
         }
         state = newState;
@@ -130,13 +135,18 @@ public class Employee : MonoBehaviour
 
     private IEnumerator GoToWorkstation()
     {
-        float lerpTime = 0.5f;
+        float lerpTime = 1.0f;
+
+        Vector3 from = transform.position;
 
         for (float t = 0; t < lerpTime; t += Time.deltaTime)
         {
-            transform.position = Vector3.Lerp(transform.position, currentInteractable.origin.position, t);
+            transform.position = Vector3.Lerp(from, currentInteractable.origin.position, t);
             yield return null;
         }
+
+        transform.position = currentInteractable.origin.position;
+
         yield return RotateTo(currentInteractable.origin.rotation);
 
         if (currentInteractable.type == InteractableFurniture.Interactable.Type.CHAIR)
@@ -254,14 +264,6 @@ public class Employee : MonoBehaviour
         }
 
         transform.rotation = rot;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.GetComponent<RoomType>() != null)
-        {
-            currentRoom = other.GetComponent<RoomType>().roomType;
-        }
     }
 
 
