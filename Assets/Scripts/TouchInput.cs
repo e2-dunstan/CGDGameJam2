@@ -31,6 +31,8 @@ public class TouchInput : MonoBehaviour
     private Employee toAssign = null;
     private bool mousePressed = false;
 
+    public LayerMask layerMask;
+
 
     private void Awake()
     {
@@ -69,7 +71,7 @@ public class TouchInput : MonoBehaviour
             playerTouches[0].tracking = true;
             toAssign = null;
 
-            Debug.Log("mouse pressed");
+            //Debug.Log("mouse pressed");
         }
         if (Input.GetMouseButton(0)
             && playerTouches[0].tracking
@@ -77,14 +79,15 @@ public class TouchInput : MonoBehaviour
             && Vector3.Distance(Input.mousePosition, playerTouches[0].touchStart) > 0)
         {
             playerTouches[0].moved = true;
-            Debug.Log("mouse moved");
+            playerTouches[0].touchEnd = Input.mousePosition;
+            //Debug.Log("mouse moved");
         }
         if (Input.GetMouseButtonUp(0) && mousePressed)
         {
             playerTouches[0].touchEnd = Input.mousePosition;
             ProcessPlayerTouchData(playerTouches[0]);
 
-            Debug.Log("mouse released");
+            //Debug.Log("mouse released");
 
             mousePressed = false;
             ResetTouch(playerTouches[0]);
@@ -119,7 +122,7 @@ public class TouchInput : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(pos);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, layerMask))
         {
             if (hit.transform.GetComponent<Employee>() != null)
             {
@@ -172,7 +175,7 @@ public class TouchInput : MonoBehaviour
 
         Ray ray = Camera.main.ScreenPointToRay(touchPos);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, layerMask))
         {
             world = hit.point;
             world.y = 0;

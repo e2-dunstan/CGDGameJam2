@@ -62,42 +62,127 @@ MonoBehaviour:
   interactables:
   - helperText: Kitchen chair 1
     type: 1
-    room: 0
+    room: 3
     origin: {fileID: 0}
     occupied: 0
   - helperText: Kitchen chair 2
     type: 1
-    room: 0
+    room: 3
     origin: {fileID: 0}
     occupied: 0
   - helperText: Sofa L
     type: 1
-    room: 0
+    room: 3
     origin: {fileID: 0}
     occupied: 0
   - helperText: Sofa R
     type: 1
-    room: 0
+    room: 3
     origin: {fileID: 0}
     occupied: 0
   - helperText: Rest idle
     type: 0
-    room: 0
+    room: 3
     origin: {fileID: 0}
     occupied: 0
   - helperText: Rest idle
     type: 0
-    room: 0
+    room: 3
     origin: {fileID: 0}
     occupied: 0
   - helperText: Rest idle
     type: 0
-    room: 0
+    room: 3
     origin: {fileID: 0}
     occupied: 0
   - helperText: Rest chair
+    type: 1
+    room: 3
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 1 Seat 1
+    type: 1
+    room: 0
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 1 Seat 2
+    type: 1
+    room: 0
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 1 Seat 3
+    type: 1
+    room: 0
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 1 Seat 4
+    type: 1
+    room: 0
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 1 Standing 1
     type: 0
     room: 0
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 2 Seat 1
+    type: 1
+    room: 1
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 2 Seat 2
+    type: 1
+    room: 1
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 2 Seat 3
+    type: 1
+    room: 1
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 2 Seat 4
+    type: 1
+    room: 1
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 2 Seat 5
+    type: 1
+    room: 1
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 3 Seat 1
+    type: 1
+    room: 2
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 3 Seat 2
+    type: 1
+    room: 2
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 3 Seat 3
+    type: 1
+    room: 2
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 3 Seat 4
+    type: 1
+    room: 2
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Task Room 3 Seat 5
+    type: 1
+    room: 2
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Meeting Room Stand
+    type: 0
+    room: 5
+    origin: {fileID: 0}
+    occupied: 0
+  - helperText: Presentation Room Stand
+    type: 0
+    room: 4
     origin: {fileID: 0}
     occupied: 0
 --- !u!1001 &4466210281614452010

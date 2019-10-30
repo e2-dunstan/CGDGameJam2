@@ -5,17 +5,39 @@ using System.Linq;
 
 public class JobManager : MonoBehaviour
 {
-    private float dt = 0.0f;
+    public enum  CurrentGameDifficulty
+    {
+        SUPER_EASY = 0,
+        EASY = 1,
+        MEDIUM = 2,
+        HARD = 3
+    }
 
     public static JobManager Instance;
 
     [SerializeField]
     private JobLoadManager jobLoadManager;
 
-    private bool jobsLoaded = false;
-    private Jobs jobs { get; set; }
+    [SerializeField]
+    private MettingRoomJobManager mettingRoomJob;
 
-    private List<Job> ActiveJobList = new List<Job>();
+    [SerializeField]
+    private PresentationRoomManager presentationRoom;
+
+    private bool jobsLoaded = false;
+    public Jobs jobs { get; set; }
+
+    public List<Job> ActiveJobList = new List<Job>();
+
+
+    //Difficulty related variables
+    public int jobsCompletedInPeriod = 0;
+    public CurrentGameDifficulty currentGameDifficulty = CurrentGameDifficulty.EASY;
+
+    [SerializeField]
+    private float difficultyDeltaTime = 0.0f;
+    [SerializeField]
+    private float timeBetweenRemovingJob = 30.0f;
 
     void Awake()
     {
@@ -35,6 +57,11 @@ public class JobManager : MonoBehaviour
         {
             Debug.Log("No Load Manager Assigned To JobManager");
         }
+
+        if(mettingRoomJob == null)
+        {
+            Debug.Log("No MeetingRoomManager On JobManager");
+        }
     }
 
     // Update is called once per frame
@@ -43,8 +70,41 @@ public class JobManager : MonoBehaviour
         if (jobsLoaded)
         {
             UpdateActiveJobsTimer(Time.deltaTime);
+            UpdateCurrentDifficulty(Time.deltaTime);
         }
 
+    }
+    /// <summary>
+    /// Since we wish for difficulty to be adaptive, change difficulty up depending upon current effectiveness in time period
+    /// </summary>
+    private void UpdateCurrentDifficulty(float _dt)
+    {
+        if (jobsCompletedInPeriod > 0)
+        {
+            difficultyDeltaTime += _dt;
+
+            if (difficultyDeltaTime > timeBetweenRemovingJob)
+            {
+                jobsCompletedInPeriod--;
+            }
+
+            if (jobsCompletedInPeriod < 2)
+            {
+                currentGameDifficulty = CurrentGameDifficulty.SUPER_EASY;
+            }
+            else if (jobsCompletedInPeriod < 4)
+            {
+                currentGameDifficulty = CurrentGameDifficulty.EASY;
+            }
+            else if (jobsCompletedInPeriod < 6)
+            {
+                currentGameDifficulty = CurrentGameDifficulty.MEDIUM;
+            }
+            else if (jobsCompletedInPeriod < 8)
+            {
+                currentGameDifficulty = CurrentGameDifficulty.HARD;
+            }
+        }
     }
 
     private void UpdateActiveJobsTimer(float _dt)
@@ -55,18 +115,28 @@ public class JobManager : MonoBehaviour
             {
                 if (job.isTaskActive)
                 {
-                    job.currentActiveTime += dt;
-
-                    if(job.currentActiveTime > job.timeUntilDeque)
-                    {
-                        job.isTaskActive = false;
-                        job.isInQueue = false;
-                        
-                        ActiveJobList = ActiveJobList.Where(x => x.taskID != job.taskID).ToList();
-                    }
+                    job.currentActiveTime += _dt;
                 }
+
+                //if (job.currentActiveTime > job.timeUntilDeque)
+                //{
+                //    job.isTaskActive = false;
+                //    job.isInQueue = false;
+
+                //    ActiveJobList = ActiveJobList.Where(x => x.taskID != job.taskID).ToList();
+                //}
             }
         }
+    }
+
+    /// <summary>
+    /// Get a job by ID
+    /// </summary>
+    /// <param name="_id"></param>
+    /// <returns></returns>
+    public Job GetJobById(string _id)
+    {
+        return jobs.jobList.Where(x => x.taskID == _id).FirstOrDefault();
     }
 
     //=================Helper Functions===============
@@ -83,15 +153,22 @@ public class JobManager : MonoBehaviour
     /// </summary>
     public Job GetRandomInactiveJobAndAddToQueue()
     {
-        List<Job> InactiveJobList = jobs.jobList.Where(x => !x.isTaskActive).ToList();
+        List<Job> InactiveJobList = jobs.jobList.Where(x => !x.isInQueue).ToList();
 
-        int randomIndex = Random.Range(0, ActiveJobList.Count - 1);
+        if (InactiveJobList.Count > 0)
+        {
+            int randomIndex = Random.Range(0, InactiveJobList.Count - 1);
 
-        InactiveJobList[randomIndex].isInQueue = true;
+            InactiveJobList[randomIndex].isInQueue = true;
 
-        ActiveJobList.Add(InactiveJobList[randomIndex]);
+            ActiveJobList.Add(InactiveJobList[randomIndex]);
 
-        return InactiveJobList[randomIndex];
+            return InactiveJobList[randomIndex];
+        }
+        else
+        {
+            return null;
+        }
     }
 
     /// <summary>
@@ -99,15 +176,22 @@ public class JobManager : MonoBehaviour
     /// </summary>
     public Job GetRandomInactiveJobAndAddToQueue(Difficulty _difficulty)
     {
-        List<Job> InactiveJobList = jobs.jobList.Where(x => !x.isTaskActive && x.taskDifficulty == _difficulty).ToList();
+        List<Job> InactiveJobList = jobs.jobList.Where(x => !x.isInQueue && x.taskDifficulty == _difficulty).ToList();
 
-        int randomIndex = Random.Range(0, ActiveJobList.Count - 1);
+        if (InactiveJobList.Count > 0)
+        {
+            int randomIndex = Random.Range(0, InactiveJobList.Count - 1);
 
-        InactiveJobList[randomIndex].isInQueue = true;
+            InactiveJobList[randomIndex].isInQueue = true;
 
-        ActiveJobList.Add(InactiveJobList[randomIndex]);
+            ActiveJobList.Add(InactiveJobList[randomIndex]);
 
-        return ActiveJobList[randomIndex];
+            return ActiveJobList[randomIndex];
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public List<Job> GetActiveJobs()
@@ -116,4 +200,33 @@ public class JobManager : MonoBehaviour
 
         return ActiveJobList;
     }
+
+    public void CompleteJob(string _jobID)
+    {
+        Job jobToBeRemoved = ActiveJobList.Where(x => x.taskID == _jobID).FirstOrDefault();
+
+        List<Job> tempJobList = ActiveJobList.Where(x => x.taskID != _jobID).ToList();
+
+        ActiveJobList = tempJobList;
+        
+        jobToBeRemoved.ResetJob();
+        jobsCompletedInPeriod++;
+    }
+
+    public void AcceptJobAndAssignToEmployee()
+    {
+        mettingRoomJob.AcceptJobAndAssignToEmployee();
+    }
+
+    public void DeclineJobAndAssignToEmployee()
+    {
+        mettingRoomJob.DeclineJobAndAssignToEmployee();
+    }
+
+
+    public void AlertJobHasBeenCompleted()
+    {
+        presentationRoom.AlertJobHasBeenCompleted();
+    }
 }
+
