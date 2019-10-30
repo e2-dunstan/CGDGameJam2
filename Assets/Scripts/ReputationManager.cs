@@ -29,7 +29,7 @@ public class ReputationManager : MonoBehaviour
     [SerializeField] private float taskCheckFrequency = 30.0f;
     [SerializeField] private float taskToStarMultiplier = 1.0f;
 
-    [SerializeField] private int completedTasksInTimeframe = 0;
+    private int completedTasksInTimeframe = 0;
     private int currentActiveEmployees;
     private float taskCheckTimer = 0.0f;
 
@@ -134,7 +134,7 @@ public class ReputationManager : MonoBehaviour
         {
             foreach (var employee in employeeArray)
             {
-                if (employee.gameObject.activeSelf)
+                if (employee.gameObject.activeSelf && !employee.GetComponent<EmployeeJobManager>().hasJob)
                 {
                     employee.gameObject.SetActive(false);
                     currentActiveCount--;

@@ -76,8 +76,8 @@ MonoBehaviour:
   - {fileID: 7963524833223646426}
   - {fileID: 6569810622469804368}
   - {fileID: 5569834140175468207}
-  taskCheckFrequency: 30
-  taskToStarMultiplier: 1
+  taskCheckFrequency: 25
+  taskToStarMultiplier: 1.25
 --- !u!1001 &722951874151274744
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -89,6 +89,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MaleEmployee (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6010144218293304134, guid: 7ff3f34038469bc48a5b0570d6f55881,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6010144218293304133, guid: 7ff3f34038469bc48a5b0570d6f55881,
         type: 3}
@@ -177,6 +182,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MaleEmployee
       objectReference: {fileID: 0}
+    - target: {fileID: 6010144218293304134, guid: 7ff3f34038469bc48a5b0570d6f55881,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6010144218293304133, guid: 7ff3f34038469bc48a5b0570d6f55881,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -263,6 +273,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FemaleEmployee
+      objectReference: {fileID: 0}
+    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3599722056387961814, guid: 13cc8ae77f5feb344bd5d938b22da83c,
         type: 3}
@@ -351,6 +366,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MaleEmployee (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 6010144218293304134, guid: 7ff3f34038469bc48a5b0570d6f55881,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6010144218293304133, guid: 7ff3f34038469bc48a5b0570d6f55881,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -437,6 +457,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MaleEmployee (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6010144218293304134, guid: 7ff3f34038469bc48a5b0570d6f55881,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6010144218293304133, guid: 7ff3f34038469bc48a5b0570d6f55881,
         type: 3}
@@ -525,6 +550,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FemaleEmployee (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3599722056387961814, guid: 13cc8ae77f5feb344bd5d938b22da83c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -611,6 +641,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FemaleEmployee (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3599722056387961814, guid: 13cc8ae77f5feb344bd5d938b22da83c,
         type: 3}
@@ -699,6 +734,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FemaleEmployee (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3599722056387961814, guid: 13cc8ae77f5feb344bd5d938b22da83c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -785,6 +825,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MaleEmployee (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6010144218293304134, guid: 7ff3f34038469bc48a5b0570d6f55881,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6010144218293304133, guid: 7ff3f34038469bc48a5b0570d6f55881,
         type: 3}
@@ -873,6 +918,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FemaleEmployee (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3599722056387961814, guid: 13cc8ae77f5feb344bd5d938b22da83c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -959,6 +1009,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MaleEmployee (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6010144218293304134, guid: 7ff3f34038469bc48a5b0570d6f55881,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6010144218293304133, guid: 7ff3f34038469bc48a5b0570d6f55881,
         type: 3}
@@ -1047,6 +1102,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FemaleEmployee (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3599722056387961814, guid: 13cc8ae77f5feb344bd5d938b22da83c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1134,6 +1194,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FemaleEmployee (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3599722056387961814, guid: 13cc8ae77f5feb344bd5d938b22da83c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1220,6 +1285,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MaleEmployee (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6010144218293304134, guid: 7ff3f34038469bc48a5b0570d6f55881,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6010144218293304133, guid: 7ff3f34038469bc48a5b0570d6f55881,
         type: 3}
