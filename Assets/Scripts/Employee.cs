@@ -37,6 +37,8 @@ public class Employee : MonoBehaviour
     private bool shouldRelaxAfterMoving = false;
     private InteractableFurniture.Interactable currentInteractable = null;
 
+    private Vector3 roomEntry = Vector3.zero;
+
 
     public bool Selected
     {
@@ -65,8 +67,16 @@ public class Employee : MonoBehaviour
         timeSitToWait = Random.Range(10, 30);
     }
 
+    private void OnEnable()
+    {
+        state = State.IDLE;
+    }
+
     private void Update()
     {
+        if (state == State.WORKING) agent.enabled = false;
+        else agent.enabled = true;
+
         moveSpeed = agent.velocity.magnitude / defaultMaxSpeed;
         anim.SetFloat("MoveSpeed", moveSpeed);
 
@@ -88,6 +98,11 @@ public class Employee : MonoBehaviour
 
     public void ChangeState(State newState)
     {
+        if(state == State.WORKING && newState != State.WORKING)
+        {
+            StartCoroutine(LerpFromTo(transform.position, roomEntry));
+        }
+
         switch (newState)
         {
             case State.IDLE:
@@ -97,13 +112,14 @@ public class Employee : MonoBehaviour
                     if (currentInteractable.type == InteractableFurniture.Interactable.Type.CHAIR)
                     {
                         anim.SetTrigger("Stand");
-                        MoveTo(transform.position + (transform.forward * 1));
+                        if (state != State.WORKING) MoveTo(transform.position + (transform.forward * 1));
                     }
 
                     currentInteractable = null;
                 }
                 break;
             case State.RELAXING:
+                if (currentInteractable == null) break;
 
                 StartCoroutine(RotateTo(currentInteractable.origin.rotation));
                 if (currentInteractable.type == InteractableFurniture.Interactable.Type.CHAIR)
@@ -135,23 +151,20 @@ public class Employee : MonoBehaviour
 
     private IEnumerator GoToWorkstation()
     {
-        float lerpTime = 1.0f;
+        roomEntry = transform.position;
 
-        Vector3 from = transform.position;
+        yield return LerpFromTo(roomEntry, currentInteractable.origin.position);
 
-        for (float t = 0; t < lerpTime; t += Time.deltaTime)
+        if (currentInteractable != null)
         {
-            transform.position = Vector3.Lerp(from, currentInteractable.origin.position, t);
-            yield return null;
+            yield return RotateTo(currentInteractable.origin.rotation);
+
+            if (currentInteractable.type == InteractableFurniture.Interactable.Type.CHAIR)
+                anim.SetTrigger("Sit");
         }
-
-        transform.position = currentInteractable.origin.position;
-
-        yield return RotateTo(currentInteractable.origin.rotation);
-
-        if (currentInteractable.type == InteractableFurniture.Interactable.Type.CHAIR)
-            anim.SetTrigger("Sit");
     }
+
+
 
     #region UPDATE STATES
 
@@ -235,6 +248,19 @@ public class Employee : MonoBehaviour
 
     #endregion
 
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (state == State.WORKING && other.GetComponent<RoomType>() != null)
+    //    {
+    //        Room _room = other.GetComponent<RoomType>().roomType;
+    //        if (_room != Room.RELAX)
+    //        {
+    //            currentRoom = _room;
+    //        }
+    //    }
+    //}
+
+
     private bool CanMove()
     {
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle")
@@ -266,6 +292,18 @@ public class Employee : MonoBehaviour
         transform.rotation = rot;
     }
 
+    private IEnumerator LerpFromTo(Vector3 from, Vector3 to)
+    {
+        float lerpTime = 1.0f;
+
+        for (float t = 0; t < lerpTime; t += Time.deltaTime)
+        {
+            transform.position = Vector3.Lerp(from, to, t);
+            yield return null;
+        }
+
+        transform.position = to;
+    }
 
     #region NAVMESH
     public void ProcessNewPath(TouchInput.PlayerTouch _touchInfo)
@@ -288,6 +326,8 @@ public class Employee : MonoBehaviour
 
     private IEnumerator GetPath()
     {
+        if (!agent.enabled) agent.enabled = true;
+
         path = new NavMeshPath();
         float timeToFindPath = 0;
         while (path.status != NavMeshPathStatus.PathComplete && !Selected)
