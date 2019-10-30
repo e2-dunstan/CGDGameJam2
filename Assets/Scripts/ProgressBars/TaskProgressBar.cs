@@ -15,7 +15,18 @@ public class TaskProgressBar : MonoBehaviour
 
     public Job job = null;
 
-   
+    private bool isPaused = false;
+
+    public void PauseProgress()
+    {
+        isPaused = true;
+    }
+
+    public void UnPauseProgress()
+    {
+        isPaused = false;
+    }
+
     public void SetNumOfEmployees(int _numOfEmployees)
     {
         job.currentPlayersAssigned = _numOfEmployees;
@@ -49,9 +60,13 @@ public class TaskProgressBar : MonoBehaviour
     {
         if (job != null)
         {
-            currentTime += (Time.deltaTime / job.recommendedUnitCount ) * (job.currentPlayersAssigned);
             job.completionTime += Time.deltaTime;
-            UpdateProgress();
+
+            if (!isPaused)
+            {
+                currentTime += (Time.deltaTime / job.recommendedUnitCount) * (job.currentPlayersAssigned);
+                UpdateProgress();
+            }
         }
     }
 }
