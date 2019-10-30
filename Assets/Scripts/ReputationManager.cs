@@ -29,7 +29,7 @@ public class ReputationManager : MonoBehaviour
     [SerializeField] private float taskCheckFrequency = 30.0f;
     [SerializeField] private float taskToStarMultiplier = 1.0f;
 
-    private int completedTasksInTimeframe = 0;
+    [SerializeField] private int completedTasksInTimeframe = 0;
     private int currentActiveEmployees;
     private float taskCheckTimer = 0.0f;
 
@@ -44,6 +44,7 @@ public class ReputationManager : MonoBehaviour
         taskCheckTimer = taskCheckFrequency;
         currentActiveEmployees = minActiveEmployees;
         currentStarRating = minStarRating;
+        InitialiseEmployees();
     }
 
     void Update()
@@ -56,6 +57,20 @@ public class ReputationManager : MonoBehaviour
             {
                 AdjustReputation();
                 UpdateActiveEmployees();
+            }
+        }
+    }
+
+    private void InitialiseEmployees()
+    {
+        int counter = minActiveEmployees;
+        foreach (var employee in employeeArray)
+        {
+            if (!employee.gameObject.activeSelf)
+            {
+                employee.gameObject.SetActive(true);
+                counter--;
+                if (counter == 0) { return; }
             }
         }
     }
@@ -95,6 +110,7 @@ public class ReputationManager : MonoBehaviour
         //If we need to add or remove employees loop over the employees in the local array add / remove them then break out once the required value has been reached
         if(currentActiveCount == newEmployeeAmount)
         {
+            currentActiveEmployees = currentActiveCount;
             return;
         }
         else if(currentActiveCount < newEmployeeAmount)
@@ -108,6 +124,7 @@ public class ReputationManager : MonoBehaviour
 
                     if(currentActiveCount == newEmployeeAmount)
                     {
+                        currentActiveEmployees = currentActiveCount;
                         return;
                     }
                 }     
@@ -124,6 +141,7 @@ public class ReputationManager : MonoBehaviour
 
                     if (currentActiveCount == newEmployeeAmount)
                     {
+                        currentActiveEmployees = currentActiveCount;
                         return;
                     }
                 }
