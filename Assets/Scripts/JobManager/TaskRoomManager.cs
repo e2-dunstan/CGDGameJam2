@@ -13,6 +13,8 @@ public class TaskRoomManager : MonoBehaviour
 
     List<GameObject> employeesInRoom = new List<GameObject>();
 
+    public bool roomUsesEvents = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,13 +29,16 @@ public class TaskRoomManager : MonoBehaviour
                 isTaskCompleted = progressBar.GetComponent<TaskProgressBar>().IsTaskDone();
             }
 
-            if (CheckIfJobHasRequirements())
+            if (roomUsesEvents)
             {
-                progressBar.GetComponent<TaskProgressBar>().PauseProgress();
-            }
-            else
-            {
-                progressBar.GetComponent<TaskProgressBar>().UnPauseProgress();
+                if (CheckIfJobHasRequirements())
+                {
+                    progressBar.GetComponent<TaskProgressBar>().PauseProgress();
+                }
+                else
+                {
+                    progressBar.GetComponent<TaskProgressBar>().UnPauseProgress();
+                }
             }
 
             if(progressBar.GetComponent<TaskProgressBar>().active)
@@ -189,7 +194,9 @@ public class TaskRoomManager : MonoBehaviour
 
             employeesInRoom.Add(other.gameObject);
 
-            if (other.gameObject.GetComponent<EmployeeJobManager>().hasJob && isJobInProgress == false)
+            if (other.gameObject.GetComponent<EmployeeJobManager>().hasJob
+                && isJobInProgress == false
+                && !other.gameObject.GetComponent<EmployeeJobManager>().GetJob().isTaskCompleted)
             {
                 other.GetComponent<Employee>().currentRoom = GetComponent<RoomType>().roomType;
                 other.GetComponent<Employee>().ChangeState(Employee.State.WORKING);

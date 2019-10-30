@@ -134,7 +134,7 @@ public class JobManager : MonoBehaviour
                         {
                             case 0:
                                 {
-                                    int randomNumber = Random.Range(3, 5);
+                                    int randomNumber = Random.Range(2, 3);
                                     Job.GenericInt genericInt = new Job.GenericInt(randomNumber);
                                     job.eventList.Add<Job.GenericInt>(Event.REQUIRE_NUMBER_OF_PEOPLE, genericInt);
                                     break;
