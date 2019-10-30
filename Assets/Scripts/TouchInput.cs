@@ -80,6 +80,7 @@ public class TouchInput : MonoBehaviour
         {
             playerTouches[0].moved = true;
             playerTouches[0].touchEnd = Input.mousePosition;
+            playerTouches[0].worldEnd = TouchToWorldspace(Input.mousePosition);
             //Debug.Log("mouse moved");
         }
         if (Input.GetMouseButtonUp(0) && mousePressed)
