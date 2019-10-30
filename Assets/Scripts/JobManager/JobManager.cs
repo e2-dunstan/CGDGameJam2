@@ -37,7 +37,12 @@ public class JobManager : MonoBehaviour
     [SerializeField]
     private float difficultyDeltaTime = 0.0f;
     [SerializeField]
-    private float timeBetweenRemovingJob = 30.0f;
+    private float timeBetweenRemoving = 30.0f;
+
+
+    //Event timer
+    public float timeBetweenChaos = 20.0f;
+    private float chaosDt = 0.0f;
 
     void Awake()
     {
@@ -71,6 +76,7 @@ public class JobManager : MonoBehaviour
         {
             UpdateActiveJobsTimer(Time.deltaTime);
             UpdateCurrentDifficulty(Time.deltaTime);
+            CauseMeSomeChaosPls(Time.deltaTime);
         }
 
     }
@@ -83,9 +89,10 @@ public class JobManager : MonoBehaviour
         {
             difficultyDeltaTime += _dt;
 
-            if (difficultyDeltaTime > timeBetweenRemovingJob)
+            if (difficultyDeltaTime > timeBetweenRemoving)
             {
                 jobsCompletedInPeriod--;
+                difficultyDeltaTime = 0.0f;
             }
 
             if (jobsCompletedInPeriod < 2)
@@ -104,6 +111,60 @@ public class JobManager : MonoBehaviour
             {
                 currentGameDifficulty = CurrentGameDifficulty.HARD;
             }
+        }
+    }
+
+    //Function will cause an event to happen to all active jobs, job won't continue until this condition is met
+    private void CauseMeSomeChaosPls(float _dt)
+    {
+
+        chaosDt += _dt;
+
+        if (chaosDt > timeBetweenChaos)
+        {
+            foreach (var job in ActiveJobList)
+            {
+                if (job.isTaskActive)
+                {
+                    if (job.eventList.genericEventList.Count < 1)
+                    {
+                        int randomEvent = Random.Range(0, 3);
+
+                        switch(randomEvent)
+                        {
+                            case 0:
+                                {
+                                    int randomNumber = Random.Range(3, 5);
+                                    Job.GenericInt genericInt = new Job.GenericInt(randomNumber);
+                                    job.eventList.Add<Job.GenericInt>(Event.REQUIRE_NUMBER_OF_PEOPLE, genericInt);
+                                    break;
+                                }
+                            case 1:
+                                { 
+                                    int randomNumber = Random.Range(1, 2);
+                                    Job.GenericInt genericInt = new Job.GenericInt(randomNumber);
+                                    job.eventList.Add<Job.GenericInt>(Event.REQUIRE_BLUE_PERSON, genericInt);
+                                    break;
+                                }
+                            case 2:
+                                {
+                                    int randomNumber = Random.Range(1, 2);
+                                    Job.GenericInt genericInt = new Job.GenericInt(randomNumber);
+                                    job.eventList.Add<Job.GenericInt>(Event.REQUIRE_PINK_PERSON, genericInt);
+                                    break;
+                                }
+                            case 3:
+                                {
+                                    Job.GenericGameObject genericObj = new Job.GenericGameObject(null);
+                                    job.eventList.Add<Job.GenericGameObject>(Event.REQUIRE_ITEM, genericObj);
+                                    break;
+                                }
+                        }
+                    }
+                }
+            }
+
+            chaosDt = 0.0f;
         }
     }
 
