@@ -72,6 +72,11 @@ public class Employee : MonoBehaviour
         state = State.IDLE;
     }
 
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
     private void Update()
     {
         if (state == State.WORKING) agent.enabled = false;

@@ -31,6 +31,7 @@ public class PresentationRoomManager : MonoBehaviour
                 Job job = other.gameObject.GetComponent<EmployeeJobManager>().GetJobAndRemoveUIElement();
 
                 JobManager.Instance.CompleteJob(job.taskID);
+                ReputationManager.Instance.JobCompleted(Mathf.FloorToInt(job.baseTaskScore), job.taskTime, job.completionTime);
 
                 numberOfJobsCompleted--;
 
