@@ -41,7 +41,7 @@ public class JobManager : MonoBehaviour
 
 
     //Event timer
-    private float timeBetweenChaos = 2.0f;
+    public float timeBetweenChaos = 20.0f;
     private float chaosDt = 0.0f;
 
     void Awake()
@@ -117,6 +117,7 @@ public class JobManager : MonoBehaviour
     //Function will cause an event to happen to all active jobs, job won't continue until this condition is met
     private void CauseMeSomeChaosPls(float _dt)
     {
+
         chaosDt += _dt;
 
         if (chaosDt > timeBetweenChaos)
