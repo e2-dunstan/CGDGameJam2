@@ -274,7 +274,7 @@ public class Employee : MonoBehaviour
 
         Ray ray = Camera.main.ScreenPointToRay(_touchInfo.touchEnd);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, TouchInput.Instance.layerMask))
         {
             MoveTo(hit.point);
         }
