@@ -30,7 +30,14 @@ public class MettingRoomJobManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        dt += Time.deltaTime;
+        if (jobs.Count < maxNumberOfJobsAtOnce)
+        {
+            dt += Time.deltaTime;
+        }
+        else
+        {
+            dt = 0.0f;
+        }
 
         if (dt > timeBetweenJobs && jobs.Count < maxNumberOfJobsAtOnce)
         {
@@ -50,8 +57,10 @@ public class MettingRoomJobManager : MonoBehaviour
             {
                 Debug.LogError("No More Jobs In JSON File, Ask Ben");
             }
+
         }
 
+        //Spawn UI relative to someone being in the room
         if(numberOfEmployeesInRoom > 0 && JobUIElement != null)
         {
             JobUIElement.SetActive(true);

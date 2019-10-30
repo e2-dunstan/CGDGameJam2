@@ -31,6 +31,7 @@ public class Job
     //Job Values Post Obtaining in Game
     public bool isTaskActive = false;
     public float currentActiveTime;
+    public float completionTime = 0.0f;
     public int currentPlayersAssigned;
     //Amount by which task completion speed is effected for each extra person
     public int playerSpeedMultiplier;
@@ -74,5 +75,6 @@ public class Job
         currentActiveTime = 0.0f;
         isTaskCompleted = false;
         currentPlayersAssigned = 0;
+        completionTime = 0.0f;
     }
 }
