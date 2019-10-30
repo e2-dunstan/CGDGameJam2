@@ -22,7 +22,10 @@ public class TaskRoomManager : MonoBehaviour
     {
         if(progressBar != null)
         {
-            isTaskCompleted = progressBar.GetComponent<TaskProgressBar>().IsTaskDone();
+            if(progressBar.GetComponent<TaskProgressBar>().active)
+            {
+                isTaskCompleted = progressBar.GetComponent<TaskProgressBar>().IsTaskDone();
+            }
         }
 
         if(isTaskCompleted)
@@ -33,7 +36,7 @@ public class TaskRoomManager : MonoBehaviour
                 if (employeeWithoutJob != null)
                 {
                     employeeWithoutJob.GetComponent<EmployeeJobManager>().SetJob(job, JobUIManager.UIElement.HAS_COMPLETED_TASK);
-                    Destroy(progressBar);
+                    progressBar.GetComponent<TaskProgressBar>().CloseProgressBar();
                     job = null;
                     isTaskCompleted = false;
                     isJobInProgress = false;

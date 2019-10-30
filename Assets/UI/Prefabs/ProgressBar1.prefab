@@ -325,6 +325,7 @@ MonoBehaviour:
   progressImage: {fileID: 3015150854303577445}
   progressText: {fileID: 3015150854404160533}
   currentTime: 0
+  spawnDuration: 1
   job:
     taskIconLocation: 
     taskIcon: {fileID: 0}
@@ -339,6 +340,7 @@ MonoBehaviour:
     timeUntilDeque: 0
     isTaskActive: 0
     currentActiveTime: 0
+    completionTime: 0
     currentPlayersAssigned: 0
     playerSpeedMultiplier: 0
     timeUntilFailure: 0

@@ -124,7 +124,7 @@ public class MettingRoomJobManager : MonoBehaviour
             int randomJob = Random.Range(0, jobs.Count - 1);
             employeeWithoutJob.GetComponent<EmployeeJobManager>().SetJob(jobs[randomJob], JobUIManager.UIElement.HAS_TASK);
             RemoveJobFromList(jobs[randomJob]);
-            Destroy(JobUIElement);
+            JobUIElement.GetComponent<JobOfferBox>().CloseJobOfferBox();
             return true;
         }
         else
@@ -142,7 +142,7 @@ public class MettingRoomJobManager : MonoBehaviour
             int randomJob = Random.Range(0, jobs.Count - 1);
             employeeWithoutJob.GetComponent<EmployeeJobManager>().SetJob(jobs[randomJob], JobUIManager.UIElement.HAS_UNWANTED_TASK);
             RemoveJobFromList(jobs[randomJob]);
-            Destroy(JobUIElement);
+            JobUIElement.GetComponent<JobOfferBox>().CloseJobOfferBox();
             return true;
         }
         else
