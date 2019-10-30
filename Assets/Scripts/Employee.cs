@@ -42,6 +42,11 @@ public class Employee : MonoBehaviour
         get; set;
     }
 
+    public State GetEmployeeState()
+    {
+        return state;
+    }
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();

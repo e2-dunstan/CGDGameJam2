@@ -31,14 +31,29 @@ public class Job
     //Job Values Post Obtaining in Game
     public bool isTaskActive = false;
     public float currentActiveTime;
+    public float completionTime = 0.0f;
     public int currentPlayersAssigned;
     //Amount by which task completion speed is effected for each extra person
     public int playerSpeedMultiplier;
     public int timeUntilFailure;
-
+    public bool isTaskCompleted = false;
+    
     public bool InitJob()
     {
         taskID = Guid.NewGuid().ToString();
+
+        switch (taskDifficulty)
+        {
+            case Difficulty.EASY:
+                recommendedUnitCount = 1;
+                break;
+            case Difficulty.MEDIUM:
+                recommendedUnitCount = 2;
+                break;
+            case Difficulty.HARD:
+                recommendedUnitCount = 3;
+                break;
+        }
 
         Debug.Log(taskIconLocation);
         taskIcon = Resources.Load<Sprite>(taskIconLocation);
@@ -58,5 +73,8 @@ public class Job
         isInQueue = false;
         isTaskActive = false;
         currentActiveTime = 0.0f;
+        isTaskCompleted = false;
+        currentPlayersAssigned = 0;
+        completionTime = 0.0f;
     }
 }
