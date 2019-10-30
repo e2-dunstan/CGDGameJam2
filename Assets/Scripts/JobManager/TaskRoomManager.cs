@@ -55,6 +55,7 @@ public class TaskRoomManager : MonoBehaviour
         {
             employeeWithoutJob.GetComponent<EmployeeJobManager>().SetJob(job, JobUIManager.UIElement.HAS_COMPLETED_TASK);
             progressBar.GetComponent<TaskProgressBar>().CloseProgressBar();
+            ParticleSystemHandler.Instance.EmitTaskCompleteParticle(this.transform.position);
             job = null;
             isTaskCompleted = false;
             isJobInProgress = false;
