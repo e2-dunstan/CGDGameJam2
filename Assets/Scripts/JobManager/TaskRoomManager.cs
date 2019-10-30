@@ -22,7 +22,10 @@ public class TaskRoomManager : MonoBehaviour
     {
         if(progressBar != null)
         {
-            isTaskCompleted = progressBar.GetComponent<TaskProgressBar>().IsTaskDone();
+            if (progressBar.GetComponent<TaskProgressBar>().active)
+            {
+                isTaskCompleted = progressBar.GetComponent<TaskProgressBar>().IsTaskDone();
+            }
 
             if (CheckIfJobHasRequirements())
             {
@@ -31,7 +34,11 @@ public class TaskRoomManager : MonoBehaviour
             else
             {
                 progressBar.GetComponent<TaskProgressBar>().UnPauseProgress();
+            }
 
+            if(progressBar.GetComponent<TaskProgressBar>().active)
+            {
+                isTaskCompleted = progressBar.GetComponent<TaskProgressBar>().IsTaskDone();
             }
         }
 
@@ -59,65 +66,69 @@ public class TaskRoomManager : MonoBehaviour
     {
         bool conditionRequired = false;
 
-        if (job.eventList.genericEventList.Count > 0)
+        if (job != null)
         {
-            foreach(var jobEvent in job.eventList.genericEventList)
+            if (job.eventList.genericEventList.Count > 0)
             {
-
-                switch(jobEvent.GetEvent())
+                foreach (var jobEvent in job.eventList.genericEventList)
                 {
-                    case Event.REQUIRE_NUMBER_OF_PEOPLE:
+                   
+                        switch (jobEvent.GetEvent())
                         {
-                            if (employeesInRoom.Count < jobEvent.GetValue<Job.GenericInt>("Test").number)
-                            {
-                                Debug.Log("The employees are stuck, the task needs more people assigned! Need: " + jobEvent.GetValue<Job.GenericInt>("Test").number + "People");
+                            case Event.REQUIRE_NUMBER_OF_PEOPLE:
+                                {
+                                    if (employeesInRoom.Count < jobEvent.GetValue<Job.GenericInt>("Test").number)
+                                    {
+                                        Debug.Log("The employees are stuck, the task needs more people assigned! Need: " + jobEvent.GetValue<Job.GenericInt>("Test").number + "People");
 
-                                conditionRequired = true;
-                            }
-                            else
-                            {
-                                //Remove from event list becaues condition has been met
+                                        conditionRequired = true;
+                                    }
+                                    else
+                                    {
+                                        //Remove from event list becaues condition has been met
+                                        job.RemoveEventFromEventList(jobEvent);
+                                    }
+                                    break;
+                                }
+                            case Event.REQUIRE_PINK_PERSON:
+                                {
+                                    int numberOfFemalesInRoom = employeesInRoom.Where(x => x.GetComponent<Employee>().gender == Employee.Gender.FEMALE).Count();
+                                    if (numberOfFemalesInRoom < jobEvent.GetValue<Job.GenericInt>("Test").number)
+                                    {
+                                        Debug.Log("Need " + jobEvent.GetValue<Job.GenericInt>("Test").number + "Pink Persons");
+                                        conditionRequired = true;
+                                    }
+                                    else
+                                    {
+                                        //Remove from event list becaues condition has been met
+                                        job.RemoveEventFromEventList(jobEvent);
+                                    }
+                                    break;
+                                }
+                            case Event.REQUIRE_BLUE_PERSON:
+                                {
+                                    int numberOfMalesInRoom = employeesInRoom.Where(x => x.GetComponent<Employee>().gender == Employee.Gender.MALE).Count();
+                                    if (numberOfMalesInRoom < jobEvent.GetValue<Job.GenericInt>("Test").number)
+                                    {
+                                        Debug.Log("Need " + jobEvent.GetValue<Job.GenericInt>("Test").number + "Blue Persons");
+                                        conditionRequired = true;
+                                    }
+                                    else
+                                    {
+                                        //Remove from event list becaues condition has been met
+                                        job.RemoveEventFromEventList(jobEvent);
+                                    }
+                                    break;
+                                }
+                            case Event.REQUIRE_ITEM:
                                 job.RemoveEventFromEventList(jobEvent);
-                            }
-                            break;
-                        }
-                    case Event.REQUIRE_FEMALES:
-                        {
-                            int numberOfFemalesInRoom = employeesInRoom.Where(x => x.GetComponent<Employee>().gender == Employee.Gender.FEMALE).Count();
-                            if (numberOfFemalesInRoom < jobEvent.GetValue<Job.GenericInt>("Test").number)
-                            {
-                                Debug.Log("Need " + jobEvent.GetValue<Job.GenericInt>("Test").number + "Females");
-                                conditionRequired = true;
-                            }
-                            else
-                            {
-                                //Remove from event list becaues condition has been met
-                                job.RemoveEventFromEventList(jobEvent);
-                            }
-                            break;
-                        }
-                    case Event.REQUIRE_MALES:
-                        {
-                            int numberOfMalesInRoom = employeesInRoom.Where(x => x.GetComponent<Employee>().gender == Employee.Gender.MALE).Count();
-                            if (numberOfMalesInRoom < jobEvent.GetValue<Job.GenericInt>("Test").number)
-                            {
-                                Debug.Log("Need " + jobEvent.GetValue<Job.GenericInt>("Test").number + "Males");
-                                conditionRequired = true;
-                            }
-                            else
-                            {
-                                //Remove from event list becaues condition has been met
-                                job.RemoveEventFromEventList(jobEvent);
-                            }
-                            break;
-                        }
-                    case Event.REQUIRE_ITEM:
-                        job.RemoveEventFromEventList(jobEvent);
-                        Debug.Log("Item Required In Room To Continue! Go Bring One");
-                        return false;
-                        //CheckIfItemIsInRoom
+                                Debug.Log("Item Required In Room To Continue! Go Bring One");
+                                return false;
+                                //CheckIfItemIsInRoom
 
-                }
+                        }
+                    }
+                
             }
         }
 
@@ -130,7 +141,8 @@ public class TaskRoomManager : MonoBehaviour
         if (employeeWithoutJob != null)
         {
             employeeWithoutJob.GetComponent<EmployeeJobManager>().SetJob(job, JobUIManager.UIElement.HAS_COMPLETED_TASK);
-            Destroy(progressBar);
+            progressBar.GetComponent<TaskProgressBar>().CloseProgressBar();
+            ParticleSystemHandler.Instance.EmitTaskCompleteParticle(this.transform.position);
             job = null;
             isTaskCompleted = false;
             isJobInProgress = false;

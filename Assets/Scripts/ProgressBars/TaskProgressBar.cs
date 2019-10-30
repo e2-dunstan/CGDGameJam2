@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Pixelplacement;
 
 public class TaskProgressBar : MonoBehaviour
 {
@@ -11,9 +12,13 @@ public class TaskProgressBar : MonoBehaviour
     //To be made private
     [SerializeField] private float currentTime;
 
+    [SerializeField] float spawnDuration = 1.0f;
+
     private bool taskDone;
 
+    public bool active;
     public Job job = null;
+
 
     private bool isPaused = false;
 
@@ -25,6 +30,22 @@ public class TaskProgressBar : MonoBehaviour
     public void UnPauseProgress()
     {
         isPaused = false;
+    }
+
+    Vector3 startScale = new Vector3(0, 1, 0);
+    Vector3 endScale = new Vector3(1, 1, 1);
+
+    private void Awake()
+    {
+        startScale = new Vector3(0, this.transform.localScale.y, 1);
+        endScale = this.transform.localScale;
+        active = true;
+    }
+
+    private void OnEnable()
+    {
+        float delay = 0.0f;
+        Tween.LocalScale(this.transform, startScale, endScale, spawnDuration, delay, Tween.EaseInOut, Tween.LoopType.None);
     }
 
     public void SetNumOfEmployees(int _numOfEmployees)
@@ -46,7 +67,7 @@ public class TaskProgressBar : MonoBehaviour
         {
             job.isTaskCompleted = true;
         }
-        
+
         progressImage.fillAmount = percentage;
         progressText.text = (int)(percentage * 100) + "%";
     }
@@ -68,5 +89,17 @@ public class TaskProgressBar : MonoBehaviour
                 UpdateProgress();
             }
         }
+    }
+
+    public void CloseProgressBar()
+    {
+        active = false;
+        float delay = 0.0f;
+        Tween.LocalScale(this.transform, endScale, startScale, 0.75f, delay, Tween.EaseInOut, Tween.LoopType.None, null, DestroyBar);
+    }
+
+    private void DestroyBar()
+    {
+        Destroy(this.gameObject);
     }
 }
