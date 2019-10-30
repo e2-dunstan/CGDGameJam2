@@ -143,14 +143,14 @@ public class JobManager : MonoBehaviour
                                 { 
                                     int randomNumber = Random.Range(1, 2);
                                     Job.GenericInt genericInt = new Job.GenericInt(randomNumber);
-                                    job.eventList.Add<Job.GenericInt>(Event.REQUIRE_FEMALES, genericInt);
+                                    job.eventList.Add<Job.GenericInt>(Event.REQUIRE_BLUE_PERSON, genericInt);
                                     break;
                                 }
                             case 2:
                                 {
                                     int randomNumber = Random.Range(1, 2);
                                     Job.GenericInt genericInt = new Job.GenericInt(randomNumber);
-                                    job.eventList.Add<Job.GenericInt>(Event.REQUIRE_MALES, genericInt);
+                                    job.eventList.Add<Job.GenericInt>(Event.REQUIRE_PINK_PERSON, genericInt);
                                     break;
                                 }
                             case 3:

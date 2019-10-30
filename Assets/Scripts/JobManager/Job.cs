@@ -18,8 +18,8 @@ public enum Event
 {
     REQUIRE_NUMBER_OF_PEOPLE = 0,
     REQUIRE_ITEM = 1,
-    REQUIRE_FEMALES = 2,
-    REQUIRE_MALES = 3
+    REQUIRE_PINK_PERSON = 2,
+    REQUIRE_BLUE_PERSON = 3
 }
 
 [System.Serializable]
