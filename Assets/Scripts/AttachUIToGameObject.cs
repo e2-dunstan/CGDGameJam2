@@ -12,4 +12,14 @@ public class AttachUIToGameObject : MonoBehaviour
         Vector3 UIposition = Camera.main.WorldToScreenPoint(targetObject.transform.position);
         this.transform.position = UIposition;
     }
+
+    public void SetTargetObject(GameObject _obj)
+    {
+        targetObject = _obj;
+    }
+
+    public GameObject GetTargetObject()
+    {
+        return targetObject;
+    }
 }

@@ -1,10 +1,10 @@
 {
   "jobList": [{
-  "taskIconLocation": "UISprite",
+  "taskIconLocation": "Submit",
   "taskName": "Make Pirates",
-  "taskDescription": null,
-  "taskTime": 0.0,
-  "taskDifficulty": 0,
+  "taskDescription": "SHITS AND GIGGLES",
+  "taskTime": 10.0,
+  "taskDifficulty": 2,
   "recommendedUnitCount": 0,
   "isInQueue": false,
   "baseTaskScore": 0.0,
@@ -16,11 +16,11 @@
   "timeUntilFailure": 0
   },
   {
-  "taskIconLocation": "UISprite",
+  "taskIconLocation": "Submit",
   "taskName": "Commit",
-  "taskDescription": null,
-  "taskTime": 0.0,
-  "taskDifficulty": 0,
+  "taskDescription": "SHITS AND GIGGLES",
+  "taskTime": 10.0,
+  "taskDifficulty": 1,
   "recommendedUnitCount": 0,
   "isInQueue": false,
   "baseTaskScore": 0.0,
@@ -32,10 +32,10 @@
   "timeUntilFailure": 0
   },
   {
-  "taskIconLocation": "UISprite",
+  "taskIconLocation": "Submit",
   "taskName": "Make Meme",
-  "taskDescription": null,
-  "taskTime": 0.0,
+  "taskDescription": "SHITS AND GIGGLES",
+  "taskTime": 10.0,
   "taskDifficulty": 0,
   "recommendedUnitCount": 0,
   "isInQueue": false,
@@ -48,11 +48,11 @@
   "timeUntilFailure": 0
   },
   {
-  "taskIconLocation": "UISprite",
+  "taskIconLocation": "Submit",
   "taskName": "Make Something Else",
-  "taskDescription": null,
-  "taskTime": 0.0,
-  "taskDifficulty": 0,
+  "taskDescription": "SHITS AND GIGGLES",
+  "taskTime": 10.0,
+  "taskDifficulty": 1,
   "recommendedUnitCount": 0,
   "isInQueue": false,
   "baseTaskScore": 0.0,

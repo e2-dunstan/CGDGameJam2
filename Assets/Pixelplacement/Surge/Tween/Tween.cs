@@ -75,16 +75,6 @@ namespace Pixelplacement
             return tween;
         }
 
-        ///// <summary>
-        ///// Moves a Transform along a spline path from a start percentage to an end percentage.
-        ///// </summary>
-        //public static TweenSystem.TweenBase Spline(Spline spline, Transform target, float startPercentage, float endPercentage, bool faceDirection, float duration, float delay, AnimationCurve easeCurve = null, LoopType loop = LoopType.None, Action startCallback = null, Action completeCallback = null, bool obeyTimescale = true)
-        //{
-        //    TweenSystem.SplinePercentage tween = new TweenSystem.SplinePercentage(spline, target, startPercentage, endPercentage, faceDirection, duration, delay, obeyTimescale, easeCurve, loop, startCallback, completeCallback);
-        //    SendTweenForProcessing(tween, true);
-        //    return tween;
-        //}
-
         /// <summary>
         /// Changes the alpha of a Canvas object.
         /// </summary>
