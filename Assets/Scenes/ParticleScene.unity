@@ -2470,6 +2470,14 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1708410767, guid: 9bf8b9a64fe16f941b3d682f9a88e2aa, type: 3}
+      propertyPath: pulseCurve.m_Curve.Array.data[1].value
+      value: 1.0002737
+      objectReference: {fileID: 0}
+    - target: {fileID: 1708410767, guid: 9bf8b9a64fe16f941b3d682f9a88e2aa, type: 3}
+      propertyPath: pulseCurve.m_Curve.Array.data[1].time
+      value: 0.5004919
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9bf8b9a64fe16f941b3d682f9a88e2aa, type: 3}
 --- !u!224 &1708410765 stripped
