@@ -13002,6 +13002,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9bf8b9a64fe16f941b3d682f9a88e2aa, type: 3}
+--- !u!114 &2027114781 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1708410767, guid: 9bf8b9a64fe16f941b3d682f9a88e2aa,
+    type: 3}
+  m_PrefabInstance: {fileID: 2027114780}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3480f9ce9b67240a067df78a3e44ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2047264952
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14452,6 +14464,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7851899264590233355, guid: 9050eff8fda70e441a8462cd3ad0b435,
+        type: 3}
+      propertyPath: timerObject
+      value: 
+      objectReference: {fileID: 2027114781}
     - target: {fileID: 4986660880402371623, guid: 9050eff8fda70e441a8462cd3ad0b435,
         type: 3}
       propertyPath: m_Name
@@ -14637,16 +14654,6 @@ PrefabInstance:
       propertyPath: interactables.Array.data[24].origin
       value: 
       objectReference: {fileID: 2133732534}
-    - target: {fileID: 4986660880402371622, guid: 9050eff8fda70e441a8462cd3ad0b435,
-        type: 3}
-      propertyPath: layerMask.m_Bits
-      value: 256
-      objectReference: {fileID: 0}
-    - target: {fileID: 8098372375447038360, guid: 9050eff8fda70e441a8462cd3ad0b435,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9050eff8fda70e441a8462cd3ad0b435, type: 3}
 --- !u!1001 &5097342366045869116
