@@ -6,13 +6,16 @@ public class ReputationManager : MonoBehaviour
 {
     public static ReputationManager Instance;
 
+    [Header("Script References")]
+    [SerializeField] private ReputationStarsUI repUi;
+
     //Depending on your current Star rating set employees active or inactive
     //Rating will also be used in job manager to throw out harder to complete jobs
     [Header("General Settings")]
-    [SerializeField] private int minActiveEmployees = 3;
+    [SerializeField] private int minActiveEmployees = 4;
     [SerializeField] private int maxActiveEmployees = 10;
     [SerializeField] private int minStarRating = 1;
-    [SerializeField] private int maxStartRating = 3;
+    [SerializeField] private int maxStarRating = 3;
     [SerializeField] private Employee[] employeeArray;
 
     private int currentStarRating;
@@ -26,12 +29,14 @@ public class ReputationManager : MonoBehaviour
 
     //Checks tasks by the task frequency sees how many were completed in that time frame and adjust rep accordingly
     [Header("Reputation Settings")]
-    [SerializeField] private float taskCheckFrequency = 30.0f;
-    [SerializeField] private float taskToStarMultiplier = 1.0f;
+    [SerializeField] private float reputationDecayMultiplier = 0.25f;
+    [SerializeField] private float taskCompletionBase = 1.0f;
+    [SerializeField] private float easyTaskMultiplier = 1.0f;
+    [SerializeField] private float mediumTaskMultiplier = 1.25f;
+    [SerializeField] private float hardTaskMultiplier = 1.75f;
 
-    public int completedTasksInTimeframe = 0;
     private int currentActiveEmployees;
-    private float taskCheckTimer = 0.0f;
+    private float currentStarRatingFloat;
 
     private void Awake()
     {
@@ -41,23 +46,21 @@ public class ReputationManager : MonoBehaviour
 
     void Start()
     {
-        taskCheckTimer = taskCheckFrequency;
         currentActiveEmployees = minActiveEmployees;
         currentStarRating = minStarRating;
+        currentStarRatingFloat = minStarRating;
         InitialiseEmployees();
     }
 
     void Update()
     {
-        if(taskCheckTimer > 0)
-        {
-            taskCheckTimer -= Time.deltaTime;
+        //Decrease current reputation every update
+        currentStarRatingFloat -= Time.deltaTime * reputationDecayMultiplier;
+        currentStarRatingFloat = currentStarRatingFloat < 0 ? 0 : currentStarRatingFloat;
 
-            if(taskCheckTimer < 0)
-            {
-                AdjustReputation();
-                UpdateActiveEmployees();
-            }
+        if(currentStarRatingFloat < currentStarRating)
+        {
+            UpdateReputation();
         }
     }
 
@@ -75,26 +78,21 @@ public class ReputationManager : MonoBehaviour
         }
     }
 
-    private void AdjustReputation()
+    private void UpdateReputation()
     {
-        taskCheckTimer = taskCheckFrequency;
+        //This will get called when either a projects score has been added to the reputation or if its been removed
+        currentStarRating = Mathf.FloorToInt(currentStarRatingFloat) > maxStarRating ? maxStarRating : Mathf.FloorToInt(currentStarRatingFloat);
+        UpdateActiveEmployees();
 
-        for (int i = maxStartRating; i > minStarRating; i--)
+        if (repUi != null)
         {
-            if(completedTasksInTimeframe  >= i * taskToStarMultiplier)
-            {
-                currentStarRating = i;
-                completedTasksInTimeframe = 0;
-                return;
-            }
+            repUi.SetReputation(currentStarRating);
         }
-        currentStarRating = minStarRating;
-        completedTasksInTimeframe = 0;
     }
 
     private void UpdateActiveEmployees()
     {
-        float lerp = Mathf.InverseLerp(minStarRating, maxStartRating, currentStarRating);
+        float lerp = Mathf.InverseLerp(minStarRating, maxStarRating, currentStarRating);
         int newEmployeeAmount = Mathf.FloorToInt(Mathf.Lerp(minActiveEmployees, maxActiveEmployees, lerp));
 
         int currentActiveCount = 0;
@@ -149,17 +147,32 @@ public class ReputationManager : MonoBehaviour
         }
     }
 
-    public void JobCompleted(int baseScoreForJob, float recommendedTimeToComplete, float actualTimeToComplete)
+    public void JobCompleted(int baseScoreForJob, float recommendedTimeToComplete, float actualTimeToComplete, Difficulty jobDifficulty)
     {
-        //Looks at tasks if they took 100% longer or 100% quicker then scale between 0.2 and 2.0x multipliers
         totalTasksCompleted++;
-        completedTasksInTimeframe++;
+
+        //Add to score based on the diffculty of the job
         float multiplier = actualTimeToComplete > recommendedTimeToComplete ?
             1 - Mathf.InverseLerp(recommendedTimeToComplete, (recommendedTimeToComplete * 2.0f), actualTimeToComplete) :
             1 + Mathf.InverseLerp(0.0f, recommendedTimeToComplete, actualTimeToComplete);
 
         multiplier = multiplier < 0.2f ? 0.2f : multiplier;
         currentScore += Mathf.FloorToInt(baseScoreForJob * multiplier);
+
+        //Add to the reputation based on the difficult of the job and update the current reputation
+        switch (jobDifficulty)
+        {
+            case Difficulty.EASY:
+                currentStarRatingFloat += taskCompletionBase * easyTaskMultiplier;
+                break;
+            case Difficulty.MEDIUM:
+                currentStarRatingFloat += taskCompletionBase * mediumTaskMultiplier;
+                break;
+            case Difficulty.HARD:
+                currentStarRatingFloat += taskCompletionBase * hardTaskMultiplier;
+                break;
+        }
+        UpdateReputation();
     }
 
     public void Reset()
@@ -168,5 +181,6 @@ public class ReputationManager : MonoBehaviour
         currentScore = 0;
         totalTasksCompleted = 0;
         currentActiveEmployees = minActiveEmployees;
+        currentStarRatingFloat = minStarRating;
     }
 }
