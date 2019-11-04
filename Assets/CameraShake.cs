@@ -4,36 +4,50 @@ using UnityEngine;
 
 public class CameraShake : MonoBehaviour
 {
-
-    Vector3 startPoint;
-    Vector3 minPoint;
-    Vector3 maxPoint;
-    Vector3 lastPoint;
-    Vector3 newPoint;
+    public Vector3 lookAtPos;
+    List<Vector3> startPoints = new List<Vector3>();
+    List<Vector3> maxPoints = new List<Vector3>();
+    List<Vector3> minPoints = new List<Vector3>();
+    List<Vector3> newPoints = new List<Vector3>();
+    List<Vector3> lastPoints = new List<Vector3>();
     float time = 0.0f;
     float timeout = 0.0f;
-    public float count = 0.0f;
-    public float intense = 0.0f;
+    float intense = 0.0f;
 
 
 
     // Start is called before the first frame update
+    void Awake()
+    {
+        //startPoint = gameObject.transform.position;
+        //lastPoint = startPoint;
+        ////minPoint = startPoint - new Vector3(3, 0, 1);
+        ////maxPoint = startPoint + new Vector3(3, 0, 1);
+        //minPoint = startPoint - gameObject.transform.right;
+        //maxPoint = startPoint + gameObject.transform.right;
+        ////newPoint.x = Random.Range(minPoint.x, maxPoint.x);
+        ////newPoint.y = Random.Range(minPoint.y, maxPoint.y);
+        //newPoint = maxPoint;
+    }
+
     void Start()
     {
-        startPoint = gameObject.transform.position;
-        lastPoint = startPoint;
-        //minPoint = startPoint - new Vector3(3, 0, 1);
-        //maxPoint = startPoint + new Vector3(3, 0, 1);
-        minPoint = startPoint - gameObject.transform.right;
-        maxPoint = startPoint + gameObject.transform.right;
-        //newPoint.x = Random.Range(minPoint.x, maxPoint.x);
-        //newPoint.y = Random.Range(minPoint.y, maxPoint.y);
-        newPoint = maxPoint;
+        startPoints.Add(gameObject.transform.position);
+        startPoints.Add(lookAtPos);
+        lastPoints.Add(startPoints[0]);
+        lastPoints.Add(startPoints[1]);
+        minPoints.Add(startPoints[0] - transform.right * 0.5f);
+        minPoints.Add(startPoints[1] - transform.right * 0.5f);
+        maxPoints.Add(startPoints[0] + transform.right * 0.5f);
+        maxPoints.Add(startPoints[1] + transform.right * 0.5f);
+        newPoints.Add(maxPoints[0]);
+        newPoints.Add(maxPoints[1]);
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(minPoints[0]);
         if (timeout >= 0.0f)
         {
             Shake();
@@ -41,45 +55,41 @@ public class CameraShake : MonoBehaviour
         }
         else
         {
-            gameObject.transform.position = startPoint;
+            gameObject.transform.position = startPoints[0];
+            //lookAtPos = startPoints[1];
         }
 
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    timeout = count;
-        //}
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SetIntenLength(10.0f, 0.25f);
+        }
         //Pixelplacement.Tween.Value();
     }
 
     private void Shake()
     {
-
-        //Debug.Log("MinPoint: " + minPoint);
-        //Debug.Log("MaxPoint: " + maxPoint);
-        // Debug.Log("NewPoint: " + newPoint);
-        //Debug.Log("LastPoint: " + lastPoint);
-        if (gameObject.transform.position == newPoint)
+        if (gameObject.transform.position == newPoints[0])
         {
-            lastPoint = newPoint;
-            if (newPoint == maxPoint)
+            lastPoints[0] = newPoints[0];
+            //lastPoints[1] = newPoints[1];
+            if (newPoints[0] == maxPoints[0])
             {
-                newPoint = minPoint;
-                Debug.Log("NewPoint: " + newPoint);
-                Debug.Log("maxPoint: " + maxPoint);
+                newPoints[0] = minPoints[0];
+               // newPoints[1] = minPoints[1];
             }
             else
             {
-                newPoint = maxPoint;
-                Debug.Log("NewPoint: " + newPoint);
-                Debug.Log("minPoint: " + minPoint);
+                newPoints[0] = maxPoints[0];
+              //  newPoints[1] = maxPoints[1];
             }
             time = 0.0f;
         }
         time += (Time.deltaTime * intense);
-        gameObject.transform.position = Vector3.Lerp(lastPoint, newPoint, time);
+        gameObject.transform.position = Vector3.Lerp(lastPoints[0], newPoints[0], time);
+       // lookAtPos = Vector3.Lerp(lastPoints[1], newPoints[1], time);
     }
 
-    public void Shake(float _intense = 5.0f, float _length = 0.25f)
+    public void SetIntenLength(float _intense = 5.0f, float _length = 0.25f)
     {
         intense = _intense;
         timeout = _length;
@@ -87,13 +97,25 @@ public class CameraShake : MonoBehaviour
 
     public Vector3 StartPoint
     {
-        get { return startPoint; }
+        get { return startPoints[0]; }
         set
         {
-            startPoint = value;
-            minPoint = startPoint - gameObject.transform.right;
-            maxPoint = startPoint + gameObject.transform.right;
-            newPoint = maxPoint;
+            //startPoints[0] = value;
+            //minPoints = startPoint - gameObject.transform.right;
+            //maxPoint = startPoint + gameObject.transform.right;
+            //newPoint = maxPoint;
         }
+    }
+    public Vector3 GetStartPoint(int i)
+    {
+        return startPoints[i];
+    }
+    public void SetStartPoint(int i, Vector3 sP)
+    {
+        startPoints[i] = sP;
+        minPoints[i] = startPoints[i] - transform.right * 0.5f;
+        maxPoints[i] = startPoints[i] + transform.right * 0.5f;
+        newPoints[i] = maxPoints[i];
+        lastPoints[i] = startPoints[i];
     }
 }
