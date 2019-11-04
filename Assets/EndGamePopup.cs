@@ -25,4 +25,10 @@ public class EndGamePopup : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
+
+    public void SetupScoreAndTaskCount(int _score, int _completedTasks)
+    {
+        scoreValueText.text = _score.ToString();
+        taskValueText.text = _completedTasks.ToString();
+    }
 }

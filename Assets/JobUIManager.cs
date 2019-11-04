@@ -7,6 +7,8 @@ public class JobUIManager : MonoBehaviour
 {
     public static JobUIManager Instance;
 
+    [SerializeField] private GameObject uiAnchor;
+
     private List<GameObject> ActiveUIElements = new List<GameObject>();
 
     public enum UIElement
@@ -44,56 +46,56 @@ public class JobUIManager : MonoBehaviour
         {
             case UIElement.HAS_TASK:
                 {
-                    GameObject obj = Instantiate(gameObject.GetComponent<JobUIObjects>().hasJobUIElement);
-                    obj.transform.parent = gameObject.transform;
+                    GameObject obj = Instantiate(gameObject.GetComponent<JobUIObjects>().hasJobUIElement, uiAnchor.transform);
+                    //obj.transform.parent = gameObject.transform;
                     obj.GetComponent<AttachUIToGameObject>().SetTargetObject(_gameObject);
                     ActiveUIElements.Add(obj);
                     return obj;
                 }
             case UIElement.HAS_COMPLETED_TASK:
                 {
-                    GameObject obj = Instantiate(gameObject.GetComponent<JobUIObjects>().completedJobUIElement);
-                    obj.transform.parent = gameObject.transform;
+                    GameObject obj = Instantiate(gameObject.GetComponent<JobUIObjects>().completedJobUIElement, uiAnchor.transform);
+                    //obj.transform.parent = gameObject.transform;
                     obj.GetComponent<AttachUIToGameObject>().SetTargetObject(_gameObject);
                     ActiveUIElements.Add(obj);
                     return obj;
                 }
             case UIElement.PROGRESS_BAR:
                 {
-                    GameObject obj = Instantiate(gameObject.GetComponent<JobUIObjects>().progressBar);
-                    obj.transform.parent = gameObject.transform;
+                    GameObject obj = Instantiate(gameObject.GetComponent<JobUIObjects>().progressBar, uiAnchor.transform);
+                    //obj.transform.parent = gameObject.transform;
                     obj.GetComponent<AttachUIToGameObject>().SetTargetObject(_gameObject);
                     ActiveUIElements.Add(obj);
                     return obj;
                 }
             case UIElement.JOB_DESCRIPTION:
                 {
-                    GameObject obj = Instantiate(gameObject.GetComponent<JobUIObjects>().jobDescription);
-                    obj.transform.parent = gameObject.transform;
+                    GameObject obj = Instantiate(gameObject.GetComponent<JobUIObjects>().jobDescription, uiAnchor.transform);
+                    //obj.transform.parent = gameObject.transform;
                     obj.GetComponent<AttachUIToGameObject>().SetTargetObject(_gameObject);
                     ActiveUIElements.Add(obj);
                     return obj;
                 }
             case UIElement.JOB_ALERT:
                 {
-                    GameObject obj = Instantiate(gameObject.GetComponent<JobUIObjects>().jobAlert);
-                    obj.transform.parent = gameObject.transform;
+                    GameObject obj = Instantiate(gameObject.GetComponent<JobUIObjects>().jobAlert, uiAnchor.transform);
+                    //obj.transform.parent = gameObject.transform;
                     obj.GetComponent<AttachUIToGameObject>().SetTargetObject(_gameObject);
                     ActiveUIElements.Add(obj);
                     return obj;
                 }
             case UIElement.HAS_UNWANTED_TASK:
                 {
-                    GameObject obj = Instantiate(gameObject.GetComponent<JobUIObjects>().jobToBeDestroyedUIElement);
-                    obj.transform.parent = gameObject.transform;
+                    GameObject obj = Instantiate(gameObject.GetComponent<JobUIObjects>().jobToBeDestroyedUIElement, uiAnchor.transform);
+                    //obj.transform.parent = gameObject.transform;
                     obj.GetComponent<AttachUIToGameObject>().SetTargetObject(_gameObject);
                     ActiveUIElements.Add(obj);
                     return obj;
                 }
             case UIElement.PRESENTATION_ROOM_ALERT:
                 {
-                    GameObject obj = Instantiate(gameObject.GetComponent<JobUIObjects>().presentationRoomAlert);
-                    obj.transform.parent = gameObject.transform;
+                    GameObject obj = Instantiate(gameObject.GetComponent<JobUIObjects>().presentationRoomAlert, uiAnchor.transform);
+                    //obj.transform.parent = gameObject.transform;
                     obj.GetComponent<AttachUIToGameObject>().SetTargetObject(_gameObject);
                     ActiveUIElements.Add(obj);
                     return obj;
