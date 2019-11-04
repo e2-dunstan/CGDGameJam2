@@ -33,10 +33,15 @@ public class EmployeeJobManager : MonoBehaviour
 
     }
 
+    public Job GetJob()
+    {
+        return job;
+    }
+
     /// <summary>
     /// Will get the job off the employee, and remove the reference on the player
     /// </summary>
-    public Job GetJob()
+    public Job GetJobAndRemoveUIElement()
     {
         hasJob = false;
         Job tempJobPointer = job;

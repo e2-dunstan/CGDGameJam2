@@ -26,15 +26,19 @@ public class PresentationRoomManager : MonoBehaviour
         {
             Debug.Log("Employee entered presentation room");
 
-            Job job = other.gameObject.GetComponent<EmployeeJobManager>().GetJob();
-
-            JobManager.Instance.CompleteJob(job.taskID);
-
-            numberOfJobsCompleted--;
-
-            if (numberOfJobsCompleted == 0)
+            if (other.gameObject.GetComponent<EmployeeJobManager>().hasJob && other.gameObject.GetComponent<EmployeeJobManager>().GetJob().isTaskCompleted)
             {
-                alertUIElement.SetActive(false);
+                Job job = other.gameObject.GetComponent<EmployeeJobManager>().GetJobAndRemoveUIElement();
+
+                JobManager.Instance.CompleteJob(job.taskID);
+                ReputationManager.Instance.JobCompleted(Mathf.FloorToInt(job.baseTaskScore), job.taskTime, job.completionTime);
+
+                numberOfJobsCompleted--;
+
+                if (numberOfJobsCompleted == 0)
+                {
+                    alertUIElement.SetActive(false);
+                }
             }
         }
     }

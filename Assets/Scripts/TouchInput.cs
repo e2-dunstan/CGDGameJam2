@@ -48,14 +48,6 @@ public class TouchInput : MonoBehaviour
 
     private void Update()
     {
-        foreach(PlayerTouch t in playerTouches)
-        {
-            if (t.tracking)
-            {
-                Debug.Log(t.worldEnd);
-            }
-        }
-
         // -- MOUSE INPUT -- //
         if (inputType == InputType.MOUSE)
         {

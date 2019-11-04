@@ -6,12 +6,14 @@ using System.Linq;
 public class TaskRoomManager : MonoBehaviour
 {
     public Job job = null;
-    public GameObject progressBar = null;
+    private GameObject progressBar = null;
 
     private bool isTaskCompleted = false;
     private bool isJobInProgress = false;
 
     List<GameObject> employeesInRoom = new List<GameObject>();
+
+    public bool roomUsesEvents = false;
 
     // Start is called before the first frame update
     void Start()
@@ -22,11 +24,32 @@ public class TaskRoomManager : MonoBehaviour
     {
         if(progressBar != null)
         {
-            isTaskCompleted = progressBar.GetComponent<TaskProgressBar>().IsTaskDone();
+            if (progressBar.GetComponent<TaskProgressBar>().active)
+            {
+                isTaskCompleted = progressBar.GetComponent<TaskProgressBar>().IsTaskDone();
+            }
+
+            if (roomUsesEvents)
+            {
+                if (CheckIfJobHasRequirements())
+                {
+                    progressBar.GetComponent<TaskProgressBar>().PauseProgress();
+                }
+                else
+                {
+                    progressBar.GetComponent<TaskProgressBar>().UnPauseProgress();
+                }
+            }
+
+            if(progressBar.GetComponent<TaskProgressBar>().active)
+            {
+                isTaskCompleted = progressBar.GetComponent<TaskProgressBar>().IsTaskDone();
+            }
         }
 
         if(isTaskCompleted)
         {
+
             JobManager.Instance.AlertJobHasBeenCompleted();
             CompleteJobAndAssignToEmployee();
 
@@ -44,6 +67,78 @@ public class TaskRoomManager : MonoBehaviour
         }
     }
 
+    private bool CheckIfJobHasRequirements()
+    {
+        bool conditionRequired = false;
+
+        if (job != null)
+        {
+            if (job.eventList.genericEventList.Count > 0)
+            {
+                foreach (var jobEvent in job.eventList.genericEventList)
+                {
+                   
+                        switch (jobEvent.GetEvent())
+                        {
+                            case Event.REQUIRE_NUMBER_OF_PEOPLE:
+                                {
+                                    if (employeesInRoom.Count < jobEvent.GetValue<Job.GenericInt>("Test").number)
+                                    {
+                                        Debug.Log("The employees are stuck, the task needs more people assigned! Need: " + jobEvent.GetValue<Job.GenericInt>("Test").number + "People");
+
+                                        conditionRequired = true;
+                                    }
+                                    else
+                                    {
+                                        //Remove from event list becaues condition has been met
+                                        job.RemoveEventFromEventList(jobEvent);
+                                    }
+                                    break;
+                                }
+                            case Event.REQUIRE_PINK_PERSON:
+                                {
+                                    int numberOfFemalesInRoom = employeesInRoom.Where(x => x.GetComponent<Employee>().gender == Employee.Gender.FEMALE).Count();
+                                    if (numberOfFemalesInRoom < jobEvent.GetValue<Job.GenericInt>("Test").number)
+                                    {
+                                        Debug.Log("Need " + jobEvent.GetValue<Job.GenericInt>("Test").number + "Pink Persons");
+                                        conditionRequired = true;
+                                    }
+                                    else
+                                    {
+                                        //Remove from event list becaues condition has been met
+                                        job.RemoveEventFromEventList(jobEvent);
+                                    }
+                                    break;
+                                }
+                            case Event.REQUIRE_BLUE_PERSON:
+                                {
+                                    int numberOfMalesInRoom = employeesInRoom.Where(x => x.GetComponent<Employee>().gender == Employee.Gender.MALE).Count();
+                                    if (numberOfMalesInRoom < jobEvent.GetValue<Job.GenericInt>("Test").number)
+                                    {
+                                        Debug.Log("Need " + jobEvent.GetValue<Job.GenericInt>("Test").number + "Blue Persons");
+                                        conditionRequired = true;
+                                    }
+                                    else
+                                    {
+                                        //Remove from event list becaues condition has been met
+                                        job.RemoveEventFromEventList(jobEvent);
+                                    }
+                                    break;
+                                }
+                            case Event.REQUIRE_ITEM:
+                                job.RemoveEventFromEventList(jobEvent);
+                                Debug.Log("Item Required In Room To Continue! Go Bring One");
+                                return false;
+                                //CheckIfItemIsInRoom
+
+                        }
+                    }
+                
+            }
+        }
+
+        return conditionRequired;
+    }
     private void CompleteJobAndAssignToEmployee()
     {
         GameObject employeeWithoutJob = employeesInRoom.Where(x => x.GetComponent<EmployeeJobManager>().hasJob != true).FirstOrDefault();
@@ -51,7 +146,8 @@ public class TaskRoomManager : MonoBehaviour
         if (employeeWithoutJob != null)
         {
             employeeWithoutJob.GetComponent<EmployeeJobManager>().SetJob(job, JobUIManager.UIElement.HAS_COMPLETED_TASK);
-            Destroy(progressBar);
+            progressBar.GetComponent<TaskProgressBar>().CloseProgressBar();
+            ParticleSystemHandler.Instance.EmitTaskCompleteParticle(this.transform.position);
             job = null;
             isTaskCompleted = false;
             isJobInProgress = false;
@@ -98,11 +194,13 @@ public class TaskRoomManager : MonoBehaviour
 
             employeesInRoom.Add(other.gameObject);
 
-            if (other.gameObject.GetComponent<EmployeeJobManager>().hasJob && isJobInProgress == false)
+            if (other.gameObject.GetComponent<EmployeeJobManager>().hasJob
+                && isJobInProgress == false
+                && !other.gameObject.GetComponent<EmployeeJobManager>().GetJob().isTaskCompleted)
             {
                 other.GetComponent<Employee>().currentRoom = GetComponent<RoomType>().roomType;
                 other.GetComponent<Employee>().ChangeState(Employee.State.WORKING);
-                job = other.gameObject.GetComponent<EmployeeJobManager>().GetJob();
+                job = other.gameObject.GetComponent<EmployeeJobManager>().GetJobAndRemoveUIElement();
                 progressBar = JobUIManager.Instance.SpawnUIElement(JobUIManager.UIElement.PROGRESS_BAR, gameObject);
                 progressBar.GetComponent<TaskProgressBar>().SetJob(job);
                 job.isTaskActive = true;
