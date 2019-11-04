@@ -25,6 +25,7 @@ public class GameTimeManager : MonoBehaviour
     void Start()
     {
         ResetTimer();
+        timerPaused = false;
     }
 
     void Update()
@@ -38,8 +39,7 @@ public class GameTimeManager : MonoBehaviour
                 timer = 0;
                 TimerComplete();
             }
-
-            timerObject.
+            timerObject.UpdateTimer(gameDuration, timer);
         }
     }
 
@@ -61,5 +61,6 @@ public class GameTimeManager : MonoBehaviour
     private void TimerComplete()
     {
         //TODO add calls here to end the game
+        Debug.Log("Game over has been called");
     }
 }

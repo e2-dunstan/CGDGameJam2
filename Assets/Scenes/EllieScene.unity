@@ -13000,6 +13000,34 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1708410767, guid: 9bf8b9a64fe16f941b3d682f9a88e2aa, type: 3}
+      propertyPath: startColour.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1708410767, guid: 9bf8b9a64fe16f941b3d682f9a88e2aa, type: 3}
+      propertyPath: endColour.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1708410767, guid: 9bf8b9a64fe16f941b3d682f9a88e2aa, type: 3}
+      propertyPath: startColour.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1708410767, guid: 9bf8b9a64fe16f941b3d682f9a88e2aa, type: 3}
+      propertyPath: startColour.g
+      value: 0.8156863
+      objectReference: {fileID: 0}
+    - target: {fileID: 1708410767, guid: 9bf8b9a64fe16f941b3d682f9a88e2aa, type: 3}
+      propertyPath: endColour.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1708410767, guid: 9bf8b9a64fe16f941b3d682f9a88e2aa, type: 3}
+      propertyPath: endColour.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1708410767, guid: 9bf8b9a64fe16f941b3d682f9a88e2aa, type: 3}
+      propertyPath: endColour.b
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9bf8b9a64fe16f941b3d682f9a88e2aa, type: 3}
 --- !u!114 &2027114781 stripped
@@ -14469,6 +14497,11 @@ PrefabInstance:
       propertyPath: timerObject
       value: 
       objectReference: {fileID: 2027114781}
+    - target: {fileID: 7851899264590233355, guid: 9050eff8fda70e441a8462cd3ad0b435,
+        type: 3}
+      propertyPath: gameDuration
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 4986660880402371623, guid: 9050eff8fda70e441a8462cd3ad0b435,
         type: 3}
       propertyPath: m_Name
