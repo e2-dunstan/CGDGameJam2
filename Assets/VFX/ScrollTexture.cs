@@ -6,7 +6,7 @@ public class ScrollTexture : MonoBehaviour
 {
     private Material mat;
     private float offset = 0;
-    private float scrollSpeed = 0.5f;
+    public float scrollSpeed = 0.5f;
 
     // Start is called before the first frame update
     void Start()
