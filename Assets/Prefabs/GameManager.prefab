@@ -204,6 +204,7 @@ MonoBehaviour:
   timerObject: {fileID: 0}
   gameDuration: 120
   timerPaused: 1
+  sceneName: MainMenu
 --- !u!1001 &4466210281614452010
 PrefabInstance:
   m_ObjectHideFlags: 0

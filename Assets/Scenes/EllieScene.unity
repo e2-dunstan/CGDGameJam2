@@ -14497,11 +14497,6 @@ PrefabInstance:
       propertyPath: timerObject
       value: 
       objectReference: {fileID: 2027114781}
-    - target: {fileID: 7851899264590233355, guid: 9050eff8fda70e441a8462cd3ad0b435,
-        type: 3}
-      propertyPath: gameDuration
-      value: 30
-      objectReference: {fileID: 0}
     - target: {fileID: 4986660880402371623, guid: 9050eff8fda70e441a8462cd3ad0b435,
         type: 3}
       propertyPath: m_Name

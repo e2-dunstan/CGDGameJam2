@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameTimeManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class GameTimeManager : MonoBehaviour
     [Header("Timer Settings")]
     [SerializeField] private float gameDuration = 120.0f;
     [SerializeField] private bool timerPaused = true;
+    [SerializeField] private string sceneName = "MainMenu";
 
     private float timer;
 
@@ -62,5 +64,10 @@ public class GameTimeManager : MonoBehaviour
     {
         //TODO add calls here to end the game
         Debug.Log("Game over has been called");
+    }
+
+    public void ReturnToMenu()
+    {
+        SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 }
