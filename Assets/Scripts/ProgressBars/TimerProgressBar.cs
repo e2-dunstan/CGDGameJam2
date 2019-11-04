@@ -47,8 +47,11 @@ public class TimerProgressBar : MonoBehaviour
 
     private void PulseText()
     {
+        Vector3 startScale = new Vector3(1.0f, 1.0f, 1.0f);
+        Vector3 endScale = new Vector3(1.1f, 1.1f, 1.1f);
+
         Tween.Cancel(progressText.GetInstanceID());
-        Tween.LocalScale(progressText.rectTransform, progressText.transform.localScale * 1.1f, 0.75f, 0, pulseCurve, Tween.LoopType.None);
+        Tween.LocalScale(progressText.transform, startScale, endScale, 0.75f, 0, pulseCurve, Tween.LoopType.None);
         Tween.Color(progressText, Color.black, Color.red, 0.75f, 0f, pulseCurve, Tween.LoopType.None);
     }
 
