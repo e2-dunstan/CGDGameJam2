@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4084553177742459187}
   - component: {fileID: 1917085568489075070}
-  - component: {fileID: 1784562118543950392}
+  - component: {fileID: 5768547480966227547}
   - component: {fileID: 9214818885099817015}
   m_Layer: 0
   m_Name: PathIndicator
@@ -45,15 +45,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7759118a0cef0594db8651a2a3d12627, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startloc: {x: 0, y: 0, z: 0}
-  endLoc: {x: 0, y: 0, z: 0}
-  onClick: 0
+  startLoc: {x: 0, y: 0, z: 0}
+  endDragLoc: {x: 0, y: 0, z: 0}
   startPointSet: 0
   endPointSet: 0
-  validMove: 0
-  killPS: 0
-  startPs: 0
---- !u!114 &1784562118543950392
+  targetEmployee: {fileID: 0}
+  target: {fileID: 0}
+  pathPoints: []
+  reached: 0
+--- !u!114 &5768547480966227547
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -62,15 +62,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5428815430616076774}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 060c62b1305de414a967a4df74b0fa71, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d0093b87232c6e4399ee43cbdfb6096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startloc: {x: 0, y: 0, z: 0}
-  endLoc: {x: 0, y: 0, z: 0}
-  pathParticle: {fileID: 8461686966301384248, guid: 047362d3bb76808458f0efd9d25e7e35,
-    type: 3}
-  pathPos: 0
-  timer: 0
+  scrollSpeed: 0.5
 --- !u!120 &9214818885099817015
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -80,15 +75,15 @@ LineRenderer:
   m_GameObject: {fileID: 5428815430616076774}
   m_Enabled: 0
   m_CastShadows: 0
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 0
   m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a9df91bbc6b2fb540a555a987307cf6a, type: 2}
+  - {fileID: 2100000, guid: 372173e7b2412b346859ed5b7ce67cd6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -40,12 +40,8 @@ public class VFXController : MonoBehaviour
             pathIndicator.instance = Instantiate(pathIndicatorPrefab, transform);
             //Assign script references
             pathIndicator.drawArrow = pathIndicator.instance.GetComponent<DrawArrow>();
-            pathIndicator.straightArrow = pathIndicator.instance.GetComponent<StraightArrow>();
-            pathIndicator.straightArrow.enabled = false;
-
             //Assign touch reference
             pathIndicator.touchRef = TouchInput.Instance.playerTouches[i];
-
             //Disable the object by default
             pathIndicator.instance.SetActive(false);
 
@@ -60,18 +56,9 @@ public class VFXController : MonoBehaviour
     void Update()
     {
         DrawArrowManage();
-        
     }
-
-    void InitialiseSubScripts()
-    {
-        fxStraightArrow = GetComponent<StraightArrow>();
-        fxDrawArrow = GetComponent<DrawArrow>();
-    }
-
     void DrawArrowManage()
     {
-        ArrowCommands();
 
         for (int i = 0; i < pathIndicators.Count; i++)
         {
@@ -82,29 +69,10 @@ public class VFXController : MonoBehaviour
                 {
                     pathIndicators[i].drawArrow.endPointSet = true;
                 }
-                //Wait for the script to activate, then set target
-                if (pathIndicators[i].straightArrow.isActiveAndEnabled)
-                {
-                        pathIndicators[i].straightArrow.target = pathIndicators[i].drawArrow.target;
-                        pathIndicators[i].straightArrow.transform.parent = pathIndicators[i].drawArrow.target.transform;
-
-                        for (int j = 0; j < pathIndicators[i].drawArrow.empT.EmployeeNavMeshPath.corners.Length; j++)
-                        {
-                            if (pathIndicators[i].drawArrow.empT.EmployeeNavMeshAgent.hasPath)
-                            {
-                                pathIndicators[i].straightArrow.path.Add(pathIndicators[i].drawArrow.empT.EmployeeNavMeshPath.corners[j]);
-                            }
-                        }
-                    pathIndicators[i].straightArrow.endLoc = pathIndicators[i].drawArrow.endLoc;
-                }
                 //End the loop
-                if (pathIndicators[i].straightArrow.reachedLastPoint)
+                if (pathIndicators[i].drawArrow.reached)
                 {
                     //If this touch isn't being tracked, skip over this iteration and ensure it's disabled
-                    pathIndicators[i].straightArrow.path.Clear();
-                    pathIndicators[i].straightArrow.path = new List<Vector3>();
-
-                    pathIndicators[i].straightArrow.reachedLastPoint = false;
                     pathIndicators[i].drawArrow.Reset();
                     pathIndicators[i].instance.SetActive(false);
                     continue;
@@ -118,15 +86,10 @@ public class VFXController : MonoBehaviour
             //update the positions here using pathIndicators[i].touchRef.worldStart/End and the references to the scripts
             if (pathIndicators[i].touchRef.tracking)
             {
-                PlayParticleSystemOnAllEmployees(puffList);
                 pathIndicators[i].instance.SetActive(true);
-                pathIndicators[i].drawArrow.startLoc = new Vector3(
-                    pathIndicators[i].touchRef.selectedChar.transform.position.x,
-                    pathIndicators[i].touchRef.selectedChar.transform.position.y + 1,
-                    pathIndicators[i].touchRef.selectedChar.transform.position.z);
 
-                pathIndicators[i].drawArrow.endLoc = pathIndicators[i].touchRef.worldEnd;
-                pathIndicators[i].drawArrow.empT = pathIndicators[i].touchRef.selectedChar;
+                pathIndicators[i].drawArrow.targetEmployee = pathIndicators[i].touchRef.selectedChar;
+                pathIndicators[i].drawArrow.endDragLoc = pathIndicators[i].touchRef.worldEnd;
                 pathIndicators[i].drawArrow.startPointSet = true;
 
                 //print("Drawing line!!! Start:" + pathIndicators[i].drawArrow.startloc + ", End: " + pathIndicators[i].drawArrow.endLoc);
@@ -134,25 +97,6 @@ public class VFXController : MonoBehaviour
         }
     }
 
-    void ArrowCommands()
-    {
-        for (int i = 0; i < pathIndicators.Count; i++)
-        {
-            if (pathIndicators[i].drawArrow.killPS && pathIndicators[i].straightArrow.instanceActive)
-            {
-                pathIndicators[i].straightArrow.Kill();
-            }
-
-            if (pathIndicators[i].drawArrow.startPs)
-            {
-                pathIndicators[i].straightArrow.enabled = true;
-            }
-            else
-            {
-                pathIndicators[i].straightArrow.enabled = false;
-            }
-        }
-    }
     public void CreateParticleSystemForAllEmployees(ParticleSystem _pSys, List <ParticleSystem>_list)
     {
         for (int i = 0; i < GameObject.FindGameObjectsWithTag("Employee").Length; i++)

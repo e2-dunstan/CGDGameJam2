@@ -9908,7 +9908,8 @@ MonoBehaviour:
     playerSpeedMultiplier: 0
     timeUntilFailure: 0
     isTaskCompleted: 0
-  progressBar: {fileID: 0}
+  roomUsesEvents: 0
+  requiredItem: {fileID: 0}
 --- !u!43 &702685513
 Mesh:
   m_ObjectHideFlags: 0
@@ -10389,10 +10390,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5097342366045869139}
     m_Modifications:
-    - target: {fileID: 1000416394853376, guid: aa6c5f105fddca84dac732069110c0c2, type: 3}
-      propertyPath: m_Name
-      value: BASML_Props_Wall_Lamp (4)
-      objectReference: {fileID: 0}
     - target: {fileID: 4905803124184752, guid: aa6c5f105fddca84dac732069110c0c2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 17.637
@@ -10448,6 +10445,10 @@ PrefabInstance:
     - target: {fileID: 4905803124184752, guid: aa6c5f105fddca84dac732069110c0c2, type: 3}
       propertyPath: m_LocalScale.z
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000416394853376, guid: aa6c5f105fddca84dac732069110c0c2, type: 3}
+      propertyPath: m_Name
+      value: BASML_Props_Wall_Lamp (4)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa6c5f105fddca84dac732069110c0c2, type: 3}
@@ -10631,10 +10632,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5097342366045869139}
     m_Modifications:
-    - target: {fileID: 1000416394853376, guid: aa6c5f105fddca84dac732069110c0c2, type: 3}
-      propertyPath: m_Name
-      value: BASML_Props_Wall_Lamp (7)
-      objectReference: {fileID: 0}
     - target: {fileID: 4905803124184752, guid: aa6c5f105fddca84dac732069110c0c2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -8.84
@@ -10690,6 +10687,10 @@ PrefabInstance:
     - target: {fileID: 4905803124184752, guid: aa6c5f105fddca84dac732069110c0c2, type: 3}
       propertyPath: m_LocalScale.z
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000416394853376, guid: aa6c5f105fddca84dac732069110c0c2, type: 3}
+      propertyPath: m_Name
+      value: BASML_Props_Wall_Lamp (7)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa6c5f105fddca84dac732069110c0c2, type: 3}
@@ -12809,10 +12810,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5097342366045869139}
     m_Modifications:
-    - target: {fileID: 1000416394853376, guid: aa6c5f105fddca84dac732069110c0c2, type: 3}
-      propertyPath: m_Name
-      value: BASML_Props_Wall_Lamp (5)
-      objectReference: {fileID: 0}
     - target: {fileID: 4905803124184752, guid: aa6c5f105fddca84dac732069110c0c2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 17.637
@@ -12868,6 +12865,10 @@ PrefabInstance:
     - target: {fileID: 4905803124184752, guid: aa6c5f105fddca84dac732069110c0c2, type: 3}
       propertyPath: m_LocalScale.z
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000416394853376, guid: aa6c5f105fddca84dac732069110c0c2, type: 3}
+      propertyPath: m_Name
+      value: BASML_Props_Wall_Lamp (5)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa6c5f105fddca84dac732069110c0c2, type: 3}
@@ -13638,14 +13639,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5097342366045869140}
     m_Modifications:
-    - target: {fileID: 100002, guid: f4383bc7fc56a1e44b009cab877fd6c7, type: 3}
-      propertyPath: m_Name
-      value: torchere_1 (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 100002, guid: f4383bc7fc56a1e44b009cab877fd6c7, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: f4383bc7fc56a1e44b009cab877fd6c7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.87
@@ -13706,7 +13699,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: f4383bc7fc56a1e44b009cab877fd6c7, type: 3}
+    - target: {fileID: 100002, guid: f4383bc7fc56a1e44b009cab877fd6c7, type: 3}
+      propertyPath: m_Name
+      value: torchere_1 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: f4383bc7fc56a1e44b009cab877fd6c7, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
@@ -13733,6 +13730,10 @@ PrefabInstance:
     - target: {fileID: 2300000, guid: f4383bc7fc56a1e44b009cab877fd6c7, type: 3}
       propertyPath: m_ReceiveShadows
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f4383bc7fc56a1e44b009cab877fd6c7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f4383bc7fc56a1e44b009cab877fd6c7, type: 3}
@@ -17315,14 +17316,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5097342366045869140}
     m_Modifications:
-    - target: {fileID: 100002, guid: f4383bc7fc56a1e44b009cab877fd6c7, type: 3}
-      propertyPath: m_Name
-      value: torchere_1 (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 100002, guid: f4383bc7fc56a1e44b009cab877fd6c7, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: f4383bc7fc56a1e44b009cab877fd6c7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.87
@@ -17383,7 +17376,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: f4383bc7fc56a1e44b009cab877fd6c7, type: 3}
+    - target: {fileID: 100002, guid: f4383bc7fc56a1e44b009cab877fd6c7, type: 3}
+      propertyPath: m_Name
+      value: torchere_1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: f4383bc7fc56a1e44b009cab877fd6c7, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
@@ -17410,6 +17407,10 @@ PrefabInstance:
     - target: {fileID: 2300000, guid: f4383bc7fc56a1e44b009cab877fd6c7, type: 3}
       propertyPath: m_ReceiveShadows
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f4383bc7fc56a1e44b009cab877fd6c7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f4383bc7fc56a1e44b009cab877fd6c7, type: 3}
@@ -18831,10 +18832,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5097342366045869139}
     m_Modifications:
-    - target: {fileID: 1000416394853376, guid: aa6c5f105fddca84dac732069110c0c2, type: 3}
-      propertyPath: m_Name
-      value: BASML_Props_Wall_Lamp (6)
-      objectReference: {fileID: 0}
     - target: {fileID: 4905803124184752, guid: aa6c5f105fddca84dac732069110c0c2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -17.626
@@ -18891,6 +18888,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1000416394853376, guid: aa6c5f105fddca84dac732069110c0c2, type: 3}
+      propertyPath: m_Name
+      value: BASML_Props_Wall_Lamp (6)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa6c5f105fddca84dac732069110c0c2, type: 3}
 --- !u!1001 &2095460911
@@ -18900,10 +18901,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5097342366045869139}
     m_Modifications:
-    - target: {fileID: 1000416394853376, guid: aa6c5f105fddca84dac732069110c0c2, type: 3}
-      propertyPath: m_Name
-      value: BASML_Props_Wall_Lamp (8)
-      objectReference: {fileID: 0}
     - target: {fileID: 4905803124184752, guid: aa6c5f105fddca84dac732069110c0c2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -13.66
@@ -18959,6 +18956,10 @@ PrefabInstance:
     - target: {fileID: 4905803124184752, guid: aa6c5f105fddca84dac732069110c0c2, type: 3}
       propertyPath: m_LocalScale.z
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000416394853376, guid: aa6c5f105fddca84dac732069110c0c2, type: 3}
+      propertyPath: m_Name
+      value: BASML_Props_Wall_Lamp (8)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa6c5f105fddca84dac732069110c0c2, type: 3}
@@ -19220,6 +19221,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5881550226248964990, guid: 9050eff8fda70e441a8462cd3ad0b435,
+        type: 3}
+      propertyPath: puff
+      value: 
+      objectReference: {fileID: 561031682}
+    - target: {fileID: 4986660880402371622, guid: 9050eff8fda70e441a8462cd3ad0b435,
+        type: 3}
+      propertyPath: layerMask.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
     - target: {fileID: 4986660879741083519, guid: 9050eff8fda70e441a8462cd3ad0b435,
         type: 3}
       propertyPath: interactables.Array.data[0].origin
@@ -19345,21 +19356,11 @@ PrefabInstance:
       propertyPath: interactables.Array.data[24].origin
       value: 
       objectReference: {fileID: 2133732534}
-    - target: {fileID: 4986660880402371622, guid: 9050eff8fda70e441a8462cd3ad0b435,
-        type: 3}
-      propertyPath: layerMask.m_Bits
-      value: 256
-      objectReference: {fileID: 0}
     - target: {fileID: 8098372375447038360, guid: 9050eff8fda70e441a8462cd3ad0b435,
         type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5881550226248964990, guid: 9050eff8fda70e441a8462cd3ad0b435,
-        type: 3}
-      propertyPath: puff
-      value: 
-      objectReference: {fileID: 561031682}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9050eff8fda70e441a8462cd3ad0b435, type: 3}
 --- !u!1001 &5097342366045869116
