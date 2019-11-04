@@ -14,16 +14,12 @@ public class ReputationStarsUI : MonoBehaviour
 
     [SerializeField] star[] starArray;
 
-    public int tempRep;
-
-    // Start is called before the first frame update
-    void Update()
+    private void Start()
     {
-        SetReputation(tempRep);
+        SetReputation(0);
     }
 
-    // Update is called once per frame
-    void SetReputation(int reputation)
+    public void SetReputation(int reputation)
     {
         for (int i = 0; i < starArray.Length; i++)
         {
