@@ -10,6 +10,7 @@ public class TaskRoomManager : MonoBehaviour
 
     private bool isTaskCompleted = false;
     private bool isJobInProgress = false;
+    private bool hasCompletedJobBeenNotifiedToPresentationRoom = false;
 
     List<GameObject> employeesInRoom = new List<GameObject>();
 
@@ -53,8 +54,12 @@ public class TaskRoomManager : MonoBehaviour
 
         if(isTaskCompleted)
         {
+            if (!hasCompletedJobBeenNotifiedToPresentationRoom)
+            {
+                JobManager.Instance.AlertJobHasBeenCompleted();
+                hasCompletedJobBeenNotifiedToPresentationRoom = true;
+            }
 
-            JobManager.Instance.AlertJobHasBeenCompleted();
             CompleteJobAndAssignToEmployee();
 
             foreach(var employee in employeesInRoom)
@@ -163,6 +168,7 @@ public class TaskRoomManager : MonoBehaviour
             job = null;
             isTaskCompleted = false;
             isJobInProgress = false;
+            hasCompletedJobBeenNotifiedToPresentationRoom = false;
         }
     }
 
