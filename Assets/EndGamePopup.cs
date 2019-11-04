@@ -19,4 +19,9 @@ public class EndGamePopup : MonoBehaviour
         Vector3 endScale = new Vector3(1, 1, 1);
         Tween.LocalScale(this.transform, startScale, endScale, spawnDuration, delay, spawnCurve, Tween.LoopType.None);
     }
+
+    public void ReturnToMenu()
+    {
+
+    }
 }
