@@ -4,30 +4,27 @@ using UnityEngine;
 
 public class DrawArrow : MonoBehaviour
 {
-    public Vector3 startloc;
+    public Vector3 startLoc;
     public Vector3 endLoc;
-    public bool onClick;
     public bool startPointSet;
     public bool endPointSet;
-    public bool validMove;
 
+    public GameObject target;
     public bool killPS;
     public bool startPs;
-    Vector3[] points = new Vector3[2];
+    public Vector3[] points = new Vector3[2];
     private LineRenderer lr;
     float distLine = 0.0f;
 
-    float min = 0.45f;
-    float max = 10.0f;
+    private float min = 0.65f;
+    private float max = 20.0f;
     // Start is called before the first frame update
     void Start()
     {
+        startPs = false;
         lr = GetComponent<LineRenderer>();
         lr.enabled = false;
-        onClick = false;
-        startPointSet = false;
         endPointSet = false;
-        validMove = false;
     }
 
     // Update is called once per frame
@@ -35,18 +32,12 @@ public class DrawArrow : MonoBehaviour
     {
         killPS = false;
         //Once the player clicks a Dev
-        if (onClick && !startPointSet && !endPointSet)
-        {
-            //print("Set starting position!! " + startloc.transform.position);
-            startPointSet = true;
-        }
+       // Debug.Log(startPointSet);
 
-        //Once the player drops a dev
-        if (onClick && !endPointSet && startPointSet && validMove)
-        {
-            //print("Set end position!! " + endLoc.transform.position);
-            endPointSet = true;
-        }
+        //print("Set starting position!! " + startloc.transform.position);
+            points[0] = startLoc;
+            points[1] = endLoc;
+
         //Start playing the animation once the player drops the dev
         if (startPointSet && endPointSet)
         {
@@ -57,7 +48,7 @@ public class DrawArrow : MonoBehaviour
             killPS = true;
             startPs = false;
         }
-        float distance = Vector3.Distance(startloc, endLoc);
+        float distance = Vector3.Distance(startLoc, endLoc);
         if (distance < min)
         {
             distLine = 1.0f;
@@ -74,9 +65,6 @@ public class DrawArrow : MonoBehaviour
         {
             distLine = 0.1f;
         }
-        points[0] = startloc;
-        points[1] = endLoc;
-        //print("Distance" + distance);
 
     }
 
@@ -100,5 +88,16 @@ public class DrawArrow : MonoBehaviour
             lr.endWidth = distLine;
             //print("DistLine" +distLine);
         }
+    }
+
+    public void Reset()
+    {
+        startPs = false;
+        startLoc = Vector3.zero;
+        endLoc = Vector3.zero;
+        lr.enabled = false;
+        startPointSet = false;
+        endPointSet = false;
+        target = null;
     }
 }
