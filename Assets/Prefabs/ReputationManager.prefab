@@ -79,9 +79,9 @@ MonoBehaviour:
   - {fileID: 5569834140175468207}
   reputationDecayMultiplier: 0.02
   taskCompletionBase: 0.6
-  easyTaskMultiplier: 0.8
-  mediumTaskMultiplier: 1.1
-  hardTaskMultiplier: 1.35
+  easyTaskMultiplier: 0.9
+  mediumTaskMultiplier: 1.25
+  hardTaskMultiplier: 1.45
 --- !u!1001 &722951874151274744
 PrefabInstance:
   m_ObjectHideFlags: 0
