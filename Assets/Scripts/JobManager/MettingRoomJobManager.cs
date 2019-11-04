@@ -31,6 +31,7 @@ public class MettingRoomJobManager : MonoBehaviour
     void Update()
     {
         int numberOfEmployeesInRoomWithJob = employeesInRoom.Count(x => x.GetComponent<EmployeeJobManager>().hasJob);
+        int numberOfActiveEmployeesInRoom = employeesInRoom.Count(x => x.activeSelf);
 
         if (jobs.Count < maxNumberOfJobsAtOnce)
         {
@@ -41,7 +42,7 @@ public class MettingRoomJobManager : MonoBehaviour
             dt = 0.0f;
         }
 
-        if (dt > timeBetweenJobs && jobs.Count < maxNumberOfJobsAtOnce && numberOfEmployeesInRoomWithJob == 0)
+        if (dt > timeBetweenJobs && jobs.Count < maxNumberOfJobsAtOnce && numberOfEmployeesInRoomWithJob == 0 && numberOfActiveEmployeesInRoom > 0)
         {
             //Instantiate UI element at gamePos
             //Give UI element this job
@@ -63,7 +64,7 @@ public class MettingRoomJobManager : MonoBehaviour
         }
 
         //Spawn UI relative to someone being in the room
-        if(numberOfEmployeesInRoom > 0 && JobUIElement != null && numberOfEmployeesInRoomWithJob == 0)
+        if(numberOfEmployeesInRoom > 0 && JobUIElement != null && numberOfEmployeesInRoomWithJob == 0 && numberOfActiveEmployeesInRoom > 0)
         {
             JobUIElement.SetActive(true);
             AlertUIElement.SetActive(false);
