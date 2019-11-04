@@ -1,7 +1,12 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/UISprites/WindowSprites.meta
 guid: 873d70f11325ba44b88ff6fa8af78473
 folderAsset: yes
 DefaultImporter:
+=======
+guid: f5b537d4b2e7349fcad22a7665a0ae20
+PrefabImporter:
+>>>>>>> origin/develop:Assets/Prefabs/InteractablePrefabs/Item_Controller.prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
