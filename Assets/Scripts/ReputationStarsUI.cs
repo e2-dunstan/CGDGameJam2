@@ -23,7 +23,7 @@ public class ReputationStarsUI : MonoBehaviour
     }
 
     // Update is called once per frame
-    void SetReputation(int reputation)
+    public void SetReputation(int reputation)
     {
         for (int i = 0; i < starArray.Length; i++)
         {
