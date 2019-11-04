@@ -30,6 +30,8 @@ public class MettingRoomJobManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        int numberOfEmployeesInRoomWithJob = employeesInRoom.Count(x => x.GetComponent<EmployeeJobManager>().hasJob);
+
         if (jobs.Count < maxNumberOfJobsAtOnce)
         {
             dt += Time.deltaTime;
@@ -39,7 +41,7 @@ public class MettingRoomJobManager : MonoBehaviour
             dt = 0.0f;
         }
 
-        if (dt > timeBetweenJobs && jobs.Count < maxNumberOfJobsAtOnce)
+        if (dt > timeBetweenJobs && jobs.Count < maxNumberOfJobsAtOnce && numberOfEmployeesInRoomWithJob == 0)
         {
             //Instantiate UI element at gamePos
             //Give UI element this job
@@ -61,7 +63,7 @@ public class MettingRoomJobManager : MonoBehaviour
         }
 
         //Spawn UI relative to someone being in the room
-        if(numberOfEmployeesInRoom > 0 && JobUIElement != null)
+        if(numberOfEmployeesInRoom > 0 && JobUIElement != null && numberOfEmployeesInRoomWithJob == 0)
         {
             JobUIElement.SetActive(true);
             AlertUIElement.SetActive(false);
@@ -135,19 +137,25 @@ public class MettingRoomJobManager : MonoBehaviour
 
     public bool DeclineJobAndAssignToEmployee()
     {
-        GameObject employeeWithoutJob = employeesInRoom.Where(x => x.GetComponent<EmployeeJobManager>().hasJob != true).FirstOrDefault();
+        int randomJob = Random.Range(0, jobs.Count - 1);
+        JobManager.Instance.CompleteJob(jobs[randomJob].taskID);
+        RemoveJobFromList(jobs[randomJob]);
+        JobUIElement.GetComponent<JobOfferBox>().CloseJobOfferBox();
 
-        if (employeeWithoutJob != null)
-        {
-            int randomJob = Random.Range(0, jobs.Count - 1);
-            employeeWithoutJob.GetComponent<EmployeeJobManager>().SetJob(jobs[randomJob], JobUIManager.UIElement.HAS_UNWANTED_TASK);
-            RemoveJobFromList(jobs[randomJob]);
-            JobUIElement.GetComponent<JobOfferBox>().CloseJobOfferBox();
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return true;
+        //GameObject employeeWithoutJob = employeesInRoom.Where(x => x.GetComponent<EmployeeJobManager>().hasJob != true).FirstOrDefault();
+
+        //if (employeeWithoutJob != null)
+        //{
+        //    int randomJob = Random.Range(0, jobs.Count - 1);
+        //    employeeWithoutJob.GetComponent<EmployeeJobManager>().SetJob(jobs[randomJob], JobUIManager.UIElement.HAS_UNWANTED_TASK);
+        //    RemoveJobFromList(jobs[randomJob]);
+        //    JobUIElement.GetComponent<JobOfferBox>().CloseJobOfferBox();
+        //    return true;
+        //}
+        //else
+        //{
+        //    return false;
+        //}
     }
 }
