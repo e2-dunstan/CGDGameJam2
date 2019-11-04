@@ -6,6 +6,9 @@ using UnityEditor;
 
 public class Employee : MonoBehaviour
 {
+    //go to idle
+    //
+
     public enum Gender
     {
         MALE, FEMALE
@@ -109,18 +112,22 @@ public class Employee : MonoBehaviour
         if(state == State.WORKING && newState != State.WORKING)
         {
             StartCoroutine(LerpFromTo(transform.position, roomEntry));
+            if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Idle")
+            && !anim.GetCurrentAnimatorStateInfo(0).IsName("Motion"))
+                anim.SetTrigger("Stand");
         }
 
         switch (newState)
         {
             case State.IDLE:
-                if (currentInteractable != null)
+                if (currentInteractable != null && currentRoom != Room.TASK_1 && currentRoom != Room.TASK_2 && currentRoom != Room.TASK_3)
                 {
                     currentInteractable.occupied = false;
                     if (currentInteractable.type == InteractableFurniture.Interactable.Type.CHAIR)
                     {
                         anim.SetTrigger("Stand");
-                        if (state != State.WORKING) MoveTo(transform.position + (transform.forward * 1));
+                        if (state != State.WORKING) 
+                            MoveTo(transform.position + (transform.forward * 1));
                     }
 
                     currentInteractable = null;
@@ -268,13 +275,23 @@ public class Employee : MonoBehaviour
     //    }
     //}
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.GetComponent<RoomType>() != null)
+        {
+            currentRoom = other.gameObject.GetComponent<RoomType>().roomType;
+            if (currentRoom != Room.RELAX)
+                anim.SetBool("Pant", false);
+        }
+    }
+
 
     private bool CanMove()
     {
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle")
-            || anim.GetCurrentAnimatorStateInfo(0).IsName("Motion")
-            || anim.GetCurrentAnimatorStateInfo(0).IsName("female_idle_pant")
-            || anim.GetCurrentAnimatorStateInfo(0).IsName("male_idle_pant"))
+            || anim.GetCurrentAnimatorStateInfo(0).IsName("Motion"))
+            //|| anim.GetCurrentAnimatorStateInfo(0).IsName("female_idle_pant")
+            //|| anim.GetCurrentAnimatorStateInfo(0).IsName("male_idle_pant"))
         {
             return true;
         }

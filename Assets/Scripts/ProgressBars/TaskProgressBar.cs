@@ -46,6 +46,7 @@ public class TaskProgressBar : MonoBehaviour
     {
         float delay = 0.0f;
         Tween.LocalScale(this.transform, startScale, endScale, spawnDuration, delay, Tween.EaseInOut, Tween.LoopType.None);
+        progressImage.color = Color.yellow;
     }
 
     public void SetNumOfEmployees(int _numOfEmployees)
@@ -63,13 +64,15 @@ public class TaskProgressBar : MonoBehaviour
         float percentage = (currentTime / job.taskTime);
         percentage = Mathf.Clamp(percentage, 0.0f, 1.0f);
 
+        progressImage.fillAmount = percentage;
+        progressText.text = (int)(percentage * 100) + "%";
+
         if (percentage >= 1)
         {
             job.isTaskCompleted = true;
+            progressText.text = "Done";
+            progressImage.color = Color.green;
         }
-
-        progressImage.fillAmount = percentage;
-        progressText.text = (int)(percentage * 100) + "%";
     }
 
     public bool IsTaskDone()
