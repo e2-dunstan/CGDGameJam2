@@ -27,6 +27,9 @@ public class ReputationManager : MonoBehaviour
     private int totalTasksCompleted = 0;
     public int TotalTasksCompleted { get => totalTasksCompleted; private set => totalTasksCompleted = value; }
 
+    private bool reputationDecay = true;
+    public bool ReputationDecay { get => reputationDecay; set => reputationDecay = value; }
+
     //Checks tasks by the task frequency sees how many were completed in that time frame and adjust rep accordingly
     [Header("Reputation Settings")]
     [SerializeField] private float reputationDecayMultiplier = 0.25f;
@@ -37,6 +40,7 @@ public class ReputationManager : MonoBehaviour
 
     private int currentActiveEmployees;
     private float currentStarRatingFloat;
+
 
     private void Awake()
     {
@@ -55,12 +59,15 @@ public class ReputationManager : MonoBehaviour
     void Update()
     {
         //Decrease current reputation every update
-        currentStarRatingFloat -= Time.deltaTime * reputationDecayMultiplier;
-        currentStarRatingFloat = currentStarRatingFloat < 0 ? 0 : currentStarRatingFloat;
-
-        if(currentStarRatingFloat < currentStarRating)
+        if (reputationDecay)
         {
-            UpdateReputation();
+            currentStarRatingFloat -= Time.deltaTime * reputationDecayMultiplier;
+            currentStarRatingFloat = currentStarRatingFloat < 0 ? 0 : currentStarRatingFloat;
+
+            if (currentStarRatingFloat < currentStarRating)
+            {
+                UpdateReputation();
+            }
         }
     }
 

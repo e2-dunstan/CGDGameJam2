@@ -10,6 +10,7 @@ public class GameTimeManager : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private TimerProgressBar timerObject;
+    [SerializeField] private EndGamePopup endPopupObject;
 
     [Header("Timer Settings")]
     [SerializeField] private float gameDuration = 120.0f;
@@ -62,12 +63,8 @@ public class GameTimeManager : MonoBehaviour
 
     private void TimerComplete()
     {
-        //TODO add calls here to end the game
-        Debug.Log("Game over has been called");
-    }
-
-    public void ReturnToMenu()
-    {
-        SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+        ReputationManager.Instance.ReputationDecay = false;
+        endPopupObject.SetupScoreAndTaskCount(ReputationManager.Instance.CurrentScore, ReputationManager.Instance.TotalTasksCompleted);
+        endPopupObject.gameObject.SetActive(true);
     }
 }
