@@ -124,17 +124,18 @@ public class JobManager : MonoBehaviour
         {
             foreach (var job in ActiveJobList)
             {
-                if (job.isTaskActive)
+                if (job.isTaskActive && job.isTaskCompleted != true)
                 {
                     if (job.eventList.genericEventList.Count < 1)
                     {
+                        //int randomEvent = Random.Range(0, 4);
                         int randomEvent = Random.Range(0, 3);
 
-                        switch(randomEvent)
+                        switch (randomEvent)
                         {
                             case 0:
                                 {
-                                    int randomNumber = Random.Range(3, 5);
+                                    int randomNumber = Random.Range(2, 3);
                                     Job.GenericInt genericInt = new Job.GenericInt(randomNumber);
                                     job.eventList.Add<Job.GenericInt>(Event.REQUIRE_NUMBER_OF_PEOPLE, genericInt);
                                     break;
@@ -155,7 +156,8 @@ public class JobManager : MonoBehaviour
                                 }
                             case 3:
                                 {
-                                    Job.GenericGameObject genericObj = new Job.GenericGameObject(null);
+                                    GameObject tempObj = ItemManager.Instance.GetRandomItem();
+                                    Job.GenericGameObject genericObj = new Job.GenericGameObject(tempObj);
                                     job.eventList.Add<Job.GenericGameObject>(Event.REQUIRE_ITEM, genericObj);
                                     break;
                                 }

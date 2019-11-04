@@ -13,6 +13,12 @@ public class TaskRoomManager : MonoBehaviour
 
     List<GameObject> employeesInRoom = new List<GameObject>();
 
+    public bool roomUsesEvents = false;
+
+    [SerializeField]
+    private GameObject requiredItem = null;
+    private bool isItemInRoom = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,13 +33,16 @@ public class TaskRoomManager : MonoBehaviour
                 isTaskCompleted = progressBar.GetComponent<TaskProgressBar>().IsTaskDone();
             }
 
-            if (CheckIfJobHasRequirements())
+            if (roomUsesEvents)
             {
-                progressBar.GetComponent<TaskProgressBar>().PauseProgress();
-            }
-            else
-            {
-                progressBar.GetComponent<TaskProgressBar>().UnPauseProgress();
+                if (CheckIfJobHasRequirements())
+                {
+                    progressBar.GetComponent<TaskProgressBar>().PauseProgress();
+                }
+                else
+                {
+                    progressBar.GetComponent<TaskProgressBar>().UnPauseProgress();
+                }
             }
 
             if(progressBar.GetComponent<TaskProgressBar>().active)
@@ -121,11 +130,19 @@ public class TaskRoomManager : MonoBehaviour
                                     break;
                                 }
                             case Event.REQUIRE_ITEM:
-                                job.RemoveEventFromEventList(jobEvent);
+                            if (!isItemInRoom)
+                            {
+                                requiredItem = jobEvent.GetValue<Job.GenericGameObject>("TEST").gameObj;
                                 Debug.Log("Item Required In Room To Continue! Go Bring One");
-                                return false;
-                                //CheckIfItemIsInRoom
-
+                                conditionRequired = true;
+                            }
+                            else
+                            {
+                                isItemInRoom = false;
+                                requiredItem = null;
+                                job.RemoveEventFromEventList(jobEvent);
+                            }
+                            break;
                         }
                     }
                 
@@ -189,7 +206,9 @@ public class TaskRoomManager : MonoBehaviour
 
             employeesInRoom.Add(other.gameObject);
 
-            if (other.gameObject.GetComponent<EmployeeJobManager>().hasJob && isJobInProgress == false)
+            if (other.gameObject.GetComponent<EmployeeJobManager>().hasJob
+                && isJobInProgress == false
+                && !other.gameObject.GetComponent<EmployeeJobManager>().GetJob().isTaskCompleted)
             {
                 other.GetComponent<Employee>().currentRoom = GetComponent<RoomType>().roomType;
                 other.GetComponent<Employee>().ChangeState(Employee.State.WORKING);
@@ -203,6 +222,18 @@ public class TaskRoomManager : MonoBehaviour
             {
                 other.GetComponent<Employee>().currentRoom = GetComponent<RoomType>().roomType;
                 other.GetComponent<Employee>().ChangeState(Employee.State.WORKING);
+            }
+        }
+
+        if(other.gameObject.CompareTag("Item"))
+        {
+            if (requiredItem != null)
+            {
+                if (other.gameObject.GetInstanceID() == requiredItem.GetInstanceID())
+                {
+                    Destroy(other.gameObject);
+                    isItemInRoom = true;
+                }
             }
         }
     }
