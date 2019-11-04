@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using Pixelplacement;
 
 public class EndGamePopup : MonoBehaviour
@@ -22,6 +23,6 @@ public class EndGamePopup : MonoBehaviour
 
     public void ReturnToMenu()
     {
-
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
 }
