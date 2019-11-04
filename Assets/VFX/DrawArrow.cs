@@ -9,6 +9,7 @@ public class DrawArrow : MonoBehaviour
     public bool startPointSet;
     public bool endPointSet;
 
+    public Employee empT;
     public GameObject target;
     public bool killPS;
     public bool startPs;
@@ -31,6 +32,10 @@ public class DrawArrow : MonoBehaviour
     void Update()
     {
         killPS = false;
+        if (empT != null)
+        {
+            target = empT.gameObject;
+        }
         //Once the player clicks a Dev
        // Debug.Log(startPointSet);
 

@@ -85,17 +85,26 @@ public class VFXController : MonoBehaviour
                 //Wait for the script to activate, then set target
                 if (pathIndicators[i].straightArrow.isActiveAndEnabled)
                 {
-                    if (pathIndicators[i].straightArrow.target != pathIndicators[i].drawArrow.target)
-                    {
                         pathIndicators[i].straightArrow.target = pathIndicators[i].drawArrow.target;
-                    }
+                        pathIndicators[i].straightArrow.transform.parent = pathIndicators[i].drawArrow.target.transform;
+
+                        for (int j = 0; j < pathIndicators[i].drawArrow.empT.EmployeeNavMeshPath.corners.Length; j++)
+                        {
+                            if (pathIndicators[i].drawArrow.empT.EmployeeNavMeshAgent.hasPath)
+                            {
+                                pathIndicators[i].straightArrow.path.Add(pathIndicators[i].drawArrow.empT.EmployeeNavMeshPath.corners[j]);
+                            }
+                        }
                     pathIndicators[i].straightArrow.endLoc = pathIndicators[i].drawArrow.endLoc;
                 }
                 //End the loop
-                if (pathIndicators[i].straightArrow.reached)
+                if (pathIndicators[i].straightArrow.reachedLastPoint)
                 {
                     //If this touch isn't being tracked, skip over this iteration and ensure it's disabled
-                    pathIndicators[i].straightArrow.reached = false;
+                    pathIndicators[i].straightArrow.path.Clear();
+                    pathIndicators[i].straightArrow.path = new List<Vector3>();
+
+                    pathIndicators[i].straightArrow.reachedLastPoint = false;
                     pathIndicators[i].drawArrow.Reset();
                     pathIndicators[i].instance.SetActive(false);
                     continue;
@@ -117,7 +126,7 @@ public class VFXController : MonoBehaviour
                     pathIndicators[i].touchRef.selectedChar.transform.position.z);
 
                 pathIndicators[i].drawArrow.endLoc = pathIndicators[i].touchRef.worldEnd;
-                pathIndicators[i].drawArrow.target = pathIndicators[i].touchRef.selectedChar.gameObject;
+                pathIndicators[i].drawArrow.empT = pathIndicators[i].touchRef.selectedChar;
                 pathIndicators[i].drawArrow.startPointSet = true;
 
                 //print("Drawing line!!! Start:" + pathIndicators[i].drawArrow.startloc + ", End: " + pathIndicators[i].drawArrow.endLoc);
