@@ -14064,6 +14064,146 @@ PrefabInstance:
       propertyPath: repUi
       value: 
       objectReference: {fileID: 1832832104}
+    - target: {fileID: 6860911374597307494, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: m_AngularSpeed
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 4160478288471061321, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5801262948559943961, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: m_AngularSpeed
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 3893396602266138166, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8827751559860892221, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: m_AngularSpeed
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 5214102176085540993, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7676806744810313397, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: m_AngularSpeed
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 6365609407476065289, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7713689504273481965, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: m_AngularSpeed
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 974644226377945026, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7373129838245634931, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: m_AngularSpeed
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 6092474803568366031, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1775777967387996960, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: m_AngularSpeed
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 3060930073426346396, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1227524368096531058, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: m_AngularSpeed
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 2582609742769987790, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1046421937736987935, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: m_AngularSpeed
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 7498358466020964912, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 644708712904810111, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: m_AngularSpeed
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 7960201771959161168, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 864091544888770825, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: m_AngularSpeed
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 7888046845216575014, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 374033919834277116, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: m_AngularSpeed
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 4030328961587770944, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 197600909042214191, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: m_AngularSpeed
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 3485869617962964883, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3264470028836253546, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: m_AngularSpeed
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460504926510932037, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43cd205dc236189419b96420f82e5599, type: 3}
 --- !u!114 &2123211188 stripped

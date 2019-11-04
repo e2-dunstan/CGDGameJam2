@@ -77,7 +77,7 @@ MonoBehaviour:
   - {fileID: 7963524833223646426}
   - {fileID: 6569810622469804368}
   - {fileID: 5569834140175468207}
-  taskCheckFrequency: 50
+  taskCheckFrequency: 30
   taskToStarMultiplier: 0.8
 --- !u!1001 &722951874151274744
 PrefabInstance:
