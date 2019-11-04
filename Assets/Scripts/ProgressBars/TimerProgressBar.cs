@@ -11,47 +11,37 @@ public class TimerProgressBar : MonoBehaviour
 
     [SerializeField] AnimationCurve pulseCurve;
 
+    [SerializeField] Color startColour;
+    [SerializeField] Color endColour;
+
     float startTime;
     float currentTime;
 
     int previousTime;
 
-    bool timerDone;
-
-    private void Start()
+    public void UpdateTimer(float _startTime, float _currentTime)
     {
-        SetTimer(120);
-    }
-    public void SetTimer(float _seconds)
-    {
-        currentTime = _seconds;
-        startTime = currentTime;
-        previousTime = 0;
+        float timerPercentage = Mathf.Clamp(_currentTime / _startTime, 0.0f, 1.0f);
+        progressImage.fillAmount = timerPercentage;
+        progressImage.color = Color.Lerp(startColour, endColour, 1.0f - timerPercentage);
+        progressText.text = FormatTime(_currentTime);
 
-        UpdateProgress();
-    }
-
-    private void UpdateProgress()
-    {
-        progressImage.fillAmount = Mathf.Clamp(currentTime / startTime, 0.0f, 1.0f);
-        progressText.text = FormatTime(currentTime);
-
-        if((int)currentTime != previousTime)
+        if((int)_currentTime != previousTime)
         {
-            if ((int)currentTime == 60)
+            if ((int)_currentTime == 60)
             {
                 PulseText();
             }
-            else if ((int)currentTime == 30)
+            else if ((int)_currentTime == 30)
             {
                 PulseText();
             }
-            else if ((int)currentTime <= 10)
+            else if ((int)_currentTime <= 10)
             {
                 PulseText();
             }
 
-            previousTime = (int)currentTime;
+            previousTime = (int)_currentTime;
         }
     }
 
@@ -67,22 +57,5 @@ public class TimerProgressBar : MonoBehaviour
         int minutes = (int)_time / 60;
         int seconds = (int)_time - 60 * minutes;
         return string.Format("{0:00}:{1:00}", minutes, seconds);
-    }
-    private void Update()
-    {
-        currentTime -= Time.deltaTime;
-
-        if (currentTime <= 0 && !timerDone)
-        {
-            timerDone = true;
-        }
-        else
-        {
-            UpdateProgress();
-        }
-    }
-    public bool HasTimerEnded()
-    {
-        return timerDone;
     }
 }
