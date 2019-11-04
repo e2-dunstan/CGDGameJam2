@@ -24,6 +24,8 @@ public class Employee : MonoBehaviour
     private NavMeshAgent agent;
     private NavMeshPath path;
 
+    public NavMeshPath EmployeeNavMeshPath { get => path; private set => path = value; }
+
     private Animator anim;
     private float moveSpeed = 0;
     private float currentMaxSpeed = 1.0f;

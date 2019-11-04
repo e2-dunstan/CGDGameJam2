@@ -6,6 +6,9 @@ public class ReputationManager : MonoBehaviour
 {
     public static ReputationManager Instance;
 
+    [Header("Script References")]
+    [SerializeField] private ReputationStarsUI repUi;
+
     //Depending on your current Star rating set employees active or inactive
     //Rating will also be used in job manager to throw out harder to complete jobs
     [Header("General Settings")]
@@ -89,6 +92,12 @@ public class ReputationManager : MonoBehaviour
             }
         }
         currentStarRating = minStarRating;
+
+        if(repUi != null)
+        {
+            repUi.SetReputation(currentStarRating);
+        }
+
         completedTasksInTimeframe = 0;
     }
 
