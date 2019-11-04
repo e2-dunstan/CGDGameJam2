@@ -67,7 +67,7 @@ public class TaskRoomManager : MonoBehaviour
 
         if (job != null)
         {
-            job.currentPlayersAssigned = employeesInRoom.Count;
+            job.currentPlayersAssigned = employeesInRoom.Count(x => x.activeSelf);
         }
     }
 
@@ -153,7 +153,7 @@ public class TaskRoomManager : MonoBehaviour
     }
     private void CompleteJobAndAssignToEmployee()
     {
-        GameObject employeeWithoutJob = employeesInRoom.Where(x => x.GetComponent<EmployeeJobManager>().hasJob != true).FirstOrDefault();
+        GameObject employeeWithoutJob = employeesInRoom.Where(x => x.GetComponent<EmployeeJobManager>().hasJob != true && x.activeSelf == true).FirstOrDefault();
 
         if (employeeWithoutJob != null)
         {

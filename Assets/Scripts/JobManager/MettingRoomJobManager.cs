@@ -93,9 +93,20 @@ public class MettingRoomJobManager : MonoBehaviour
         employeesInRoom = newEmployeeList;
     }
 
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (other.gameObject.CompareTag("Employee"))
+    //    {
+    //        employeesInRoom = new List<GameObject>();
+    //        employeesInRoom.Add(other.gameObject);
+
+    //        employeesInRoom.Count();
+    //    }
+    //}
+
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Employee"))
+        if (other.gameObject.CompareTag("Employee"))
         {
             Debug.Log("Employee entered meeting room");
             numberOfEmployeesInRoom++;
@@ -106,7 +117,7 @@ public class MettingRoomJobManager : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.gameObject.CompareTag("Employee"))
+        if (other.gameObject.CompareTag("Employee"))
         {
             numberOfEmployeesInRoom--;
 
@@ -119,7 +130,7 @@ public class MettingRoomJobManager : MonoBehaviour
 
     public bool AcceptJobAndAssignToEmployee()
     {
-        GameObject employeeWithoutJob = employeesInRoom.Where(x => x.GetComponent<EmployeeJobManager>().hasJob != true).FirstOrDefault();
+        GameObject employeeWithoutJob = employeesInRoom.Where(x => x.GetComponent<EmployeeJobManager>().hasJob != true && x.activeSelf).FirstOrDefault();
 
         if(employeeWithoutJob != null)
         {

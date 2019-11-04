@@ -29,7 +29,7 @@ public class ReputationManager : MonoBehaviour
     [SerializeField] private float taskCheckFrequency = 30.0f;
     [SerializeField] private float taskToStarMultiplier = 1.0f;
 
-    private int completedTasksInTimeframe = 0;
+    public int completedTasksInTimeframe = 0;
     private int currentActiveEmployees;
     private float taskCheckTimer = 0.0f;
 
