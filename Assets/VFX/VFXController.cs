@@ -77,19 +77,21 @@ public class VFXController : MonoBehaviour
         {
             if (!pathIndicators[i].touchRef.tracking)
             {
+                //If the startpoint is set, trigger the particle system
                 if (pathIndicators[i].drawArrow.startPointSet)
                 {
                     pathIndicators[i].drawArrow.endPointSet = true;
                 }
-
+                //Wait for the script to activate, then set target
                 if (pathIndicators[i].straightArrow.isActiveAndEnabled)
                 {
-                    if (pathIndicators[i].straightArrow.target == null)
+                    if (pathIndicators[i].straightArrow.target != pathIndicators[i].drawArrow.target)
                     {
                         pathIndicators[i].straightArrow.target = pathIndicators[i].drawArrow.target;
                     }
                     pathIndicators[i].straightArrow.endLoc = pathIndicators[i].drawArrow.endLoc;
                 }
+                //End the loop
                 if (pathIndicators[i].straightArrow.reached)
                 {
                     //If this touch isn't being tracked, skip over this iteration and ensure it's disabled

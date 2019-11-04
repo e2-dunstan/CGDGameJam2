@@ -98,5 +98,6 @@ public class DrawArrow : MonoBehaviour
         lr.enabled = false;
         startPointSet = false;
         endPointSet = false;
+        target = null;
     }
 }
