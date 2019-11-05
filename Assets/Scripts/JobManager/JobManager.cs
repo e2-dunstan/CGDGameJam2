@@ -147,6 +147,7 @@ public class JobManager : MonoBehaviour
                                     int randomNumber = Random.Range(1, 2);
                                     Job.GenericInt genericInt = new Job.GenericInt(randomNumber);
                                     job.eventList.Add<Job.GenericInt>(Event.REQUIRE_BLUE_PERSON, genericInt);
+                                    AudioManager.Instance.Play(AudioManager.SoundsType.MISC, (int)AudioManager.MiscSounds.ERROR, 0.1f);
                                     break;
                                 }
                             case 2:
@@ -154,6 +155,7 @@ public class JobManager : MonoBehaviour
                                     int randomNumber = Random.Range(1, 2);
                                     Job.GenericInt genericInt = new Job.GenericInt(randomNumber);
                                     job.eventList.Add<Job.GenericInt>(Event.REQUIRE_PINK_PERSON, genericInt);
+                                    AudioManager.Instance.Play(AudioManager.SoundsType.MISC, (int)AudioManager.MiscSounds.ERROR, 0.1f);
                                     break;
                                 }
                             case 3:
@@ -161,6 +163,7 @@ public class JobManager : MonoBehaviour
                                     GameObject tempObj = ItemManager.Instance.GetRandomItem();
                                     Job.GenericGameObject genericObj = new Job.GenericGameObject(tempObj);
                                     job.eventList.Add<Job.GenericGameObject>(Event.REQUIRE_ITEM, genericObj);
+                                    AudioManager.Instance.Play(AudioManager.SoundsType.MISC, (int)AudioManager.MiscSounds.ERROR, 0.1f);
                                     break;
                                 }
                         }

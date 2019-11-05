@@ -53,6 +53,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 1c0f7b83477d30547ad558293ea14401, type: 3}
   miscSounds:
   - {fileID: 8300000, guid: cac12a9a16941ce41a04c60c5ed9a546, type: 3}
+  - {fileID: 8300000, guid: 55a0bf9132f7b9f4ea0d884e26841bb5, type: 3}
   loopedSounds:
   - {fileID: 8300000, guid: e4c0680dd95d60142a1781fdd906f21e, type: 3}
   - {fileID: 8300000, guid: 2130702ddca8689469d54dc4d01591f4, type: 3}
