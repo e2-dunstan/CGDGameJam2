@@ -62,7 +62,7 @@ public class TouchInput : MonoBehaviour
             {
                 if (currentRoomHoveredOver != Room.NONE)
                 {
-                    RoomHighlightManager.Instance.SetRoomHighlight(currentRoomHoveredOver, false);
+                    DisableAllOutlines();
                     currentRoomHoveredOver = Room.NONE;
                 }
             }
@@ -71,13 +71,22 @@ public class TouchInput : MonoBehaviour
         else if (inputType == InputType.TOUCH && Input.touchCount > 0)
         {
             UpdateTouchInput();
+            int numTracking = 0;
             foreach(PlayerTouch t in playerTouches)
             {
                 if (t.tracking && t.moved)
                 {
                     RoomOutline(t);
+                    numTracking++;
                 }
-
+            }
+            if (numTracking <= 0)
+            {
+                if (currentRoomHoveredOver != Room.NONE)
+                {
+                    DisableAllOutlines();
+                    currentRoomHoveredOver = Room.NONE;
+                }
             }
         }
     }
@@ -293,12 +302,17 @@ public class TouchInput : MonoBehaviour
         }
         else
         {
-            RoomHighlightManager.Instance.SetRoomHighlight(Room.MEETING, false);
-            RoomHighlightManager.Instance.SetRoomHighlight(Room.RELAX, false);
-            RoomHighlightManager.Instance.SetRoomHighlight(Room.PRESENTATION, false);
-            RoomHighlightManager.Instance.SetRoomHighlight(Room.TASK_1, false);
-            RoomHighlightManager.Instance.SetRoomHighlight(Room.TASK_2, false);
-            RoomHighlightManager.Instance.SetRoomHighlight(Room.TASK_3, false);
+            DisableAllOutlines();
         }
+    }
+
+    private void DisableAllOutlines()
+    {
+        RoomHighlightManager.Instance.SetRoomHighlight(Room.MEETING, false);
+        RoomHighlightManager.Instance.SetRoomHighlight(Room.RELAX, false);
+        RoomHighlightManager.Instance.SetRoomHighlight(Room.PRESENTATION, false);
+        RoomHighlightManager.Instance.SetRoomHighlight(Room.TASK_1, false);
+        RoomHighlightManager.Instance.SetRoomHighlight(Room.TASK_2, false);
+        RoomHighlightManager.Instance.SetRoomHighlight(Room.TASK_3, false);
     }
 }
