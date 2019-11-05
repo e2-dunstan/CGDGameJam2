@@ -25,6 +25,7 @@ public class Employee : MonoBehaviour
     private NavMeshPath path;
 
     public NavMeshPath EmployeeNavMeshPath { get => path; private set => path = value; }
+    public NavMeshAgent EmployeeNavMeshAgent { get => agent; private set => agent = value; }
 
     private Animator anim;
     private float moveSpeed = 0;
@@ -76,6 +77,8 @@ public class Employee : MonoBehaviour
     private void OnEnable()
     {
         state = State.IDLE;
+
+        InitialiseParticleSystems();
     }
 
     private void OnDisable()
@@ -103,6 +106,10 @@ public class Employee : MonoBehaviour
                 if (currentInteractable != null && currentInteractable.type == InteractableFurniture.Interactable.Type.CHAIR
                     && !IsSitting())
                     anim.SetTrigger("Sit");
+                VFXController.Instance.PlayParticleSystemOnEmployee(
+                    gameObject,
+                    VFXController.Instance.idlePSList,
+                    0, 4);
                 break;
         }
     }
@@ -113,6 +120,9 @@ public class Employee : MonoBehaviour
         {
             //StartCoroutine(LerpFromTo(transform.position, roomEntry));
             anim.SetTrigger("Stand");
+            VFXController.Instance.StopParticleSystemOnEmployee(
+                gameObject,
+                VFXController.Instance.idlePSList);
         }
 
         switch (newState)
@@ -255,6 +265,9 @@ public class Employee : MonoBehaviour
 
     private void UpdateMoving()
     {
+        VFXController.Instance.PlayParticleSystemOnEmployee(
+            gameObject,
+            VFXController.Instance.runningPSList);
         //if (CanMove())
         //{
         //    currentMaxSpeed = defaultMaxSpeed;
@@ -358,6 +371,20 @@ public class Employee : MonoBehaviour
     public float GetMoveSpeed()
     {
         return anim.speed;
+    }
+    void InitialiseParticleSystems()
+    {
+        VFXController.Instance.CreateParticleSystemForEmployee(
+            VFXController.Instance.runningPS,
+            VFXController.Instance.runningPSList);
+
+        VFXController.Instance.CreateParticleSystemForEmployee(
+            VFXController.Instance.idlePS,
+            VFXController.Instance.idlePSList);
+
+        VFXController.Instance.CreateParticleSystemForEmployee(
+            VFXController.Instance.pulsePS,
+            VFXController.Instance.pulsePSList);
     }
 
     #region NAVMESH

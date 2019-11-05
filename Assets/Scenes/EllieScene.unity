@@ -2185,14 +2185,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 321046752, guid: 4d8b71e9af5c346858d7c5d1d49573b8, type: 3}
-      propertyPath: pulseCurve.m_Curve.Array.data[1].value
-      value: 1.0031478
-      objectReference: {fileID: 0}
-    - target: {fileID: 321046752, guid: 4d8b71e9af5c346858d7c5d1d49573b8, type: 3}
-      propertyPath: pulseCurve.m_Curve.Array.data[1].time
-      value: 0.5004919
-      objectReference: {fileID: 0}
     - target: {fileID: 6584711598680845586, guid: 4d8b71e9af5c346858d7c5d1d49573b8,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -2202,6 +2194,14 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 321046752, guid: 4d8b71e9af5c346858d7c5d1d49573b8, type: 3}
+      propertyPath: pulseCurve.m_Curve.Array.data[1].value
+      value: 1.0031478
+      objectReference: {fileID: 0}
+    - target: {fileID: 321046752, guid: 4d8b71e9af5c346858d7c5d1d49573b8, type: 3}
+      propertyPath: pulseCurve.m_Curve.Array.data[1].time
+      value: 0.5004919
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d8b71e9af5c346858d7c5d1d49573b8, type: 3}
@@ -10211,6 +10211,11 @@ PrefabInstance:
       propertyPath: interactables.Array.data[24].origin
       value: 
       objectReference: {fileID: 2133732534}
+    - target: {fileID: 8098372375447038360, guid: 9050eff8fda70e441a8462cd3ad0b435,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7851899264590233355, guid: 9050eff8fda70e441a8462cd3ad0b435,
         type: 3}
       propertyPath: timerObject
@@ -14270,7 +14275,7 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1632544144}
-    - target: {fileID: 2543301033861445845, guid: d19c143a968bd9d4685fa5ebd2f16bf9,
+    - target: {fileID: 5100367390692504194, guid: d19c143a968bd9d4685fa5ebd2f16bf9,
         type: 3}
       propertyPath: roomUsesEvents
       value: 1

@@ -7,6 +7,7 @@ public class StraightArrow : MonoBehaviour
     //Line point values
     public Vector3 startloc;
     public Vector3 endLoc;
+    private int position = 0;
     public List<Vector3> path;
     public GameObject target;
 
@@ -16,7 +17,6 @@ public class StraightArrow : MonoBehaviour
     private ParticleSystem instPS;
     ParticleSystem.SizeOverLifetimeModule sizeOL;
     ParticleSystem.ShapeModule shapeOL;
-    ParticleSystem.MainModule mOL;
 
     //Duration and checks
     [SerializeField] private float pathPos;
@@ -24,8 +24,8 @@ public class StraightArrow : MonoBehaviour
     float defaultMultiplier;
     bool pulsed;
     public bool instanceActive = false;
-    public bool reached = false;
-
+    public bool reachedLastPoint = false;
+    private bool reachedNextPoint = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,7 +42,6 @@ public class StraightArrow : MonoBehaviour
             timer = instPS.sizeOverLifetime.sizeMultiplier;
             sizeOL = instPS.sizeOverLifetime;
             shapeOL = instPS.shape;
-            mOL = instPS.main;
 
             if (defaultMultiplier == 0)
             {
@@ -83,12 +82,12 @@ public class StraightArrow : MonoBehaviour
 
         if (pathParticleInst == null)
         {
-            pathParticleInst = Instantiate(pathParticle, transform);
+            pathParticleInst = Instantiate(pathParticle, target.transform);
         }
 
-        reached = (Vector3.Distance(startloc, endLoc) < 0.5f);
-        Debug.Log(reached);
-        enabled = !reached;
+        reachedLastPoint = (Vector3.Distance(target.transform.position, endLoc) < 0.5f);
+        Debug.Log(reachedLastPoint);
+        enabled = !reachedLastPoint;
 
         if (pathPos < 1.35f)
         {
@@ -98,29 +97,38 @@ public class StraightArrow : MonoBehaviour
         {
             timer -= 0.05f;
             sizeOL.sizeMultiplier = timer;
-            mOL.duration = timer;
             if (timer < 0.05f)
             {
                 Kill();
             }
         }
-        //Move along the path
 
-        pathParticleInst.transform.position = Vector3.Lerp(startloc, endLoc, pathPos);
-
+        if (path.Count > 0)
+        {
+            if ((Vector3.Distance(pathParticleInst.transform.position, path[position + 1]) < 0.1f))
+            {
+                position++;
+                pathParticleInst.transform.position = startloc;
+            }
+            //Move along the path
+            pathParticleInst.transform.position = Vector3.Lerp(startloc, path[(position + 1)], pathPos);
+        }
     }
 
     public void Kill()
     {
         if (pathParticleInst.activeSelf)
         {
+            transform.parent = null;
+            instPS.Stop();
             sizeOL.sizeMultiplier = defaultMultiplier;
             timer = instPS.sizeOverLifetime.sizeMultiplier;
             target = null;
-            pathParticleInst.transform.position = Vector3.zero;
-
             pathPos = 0.0f;
             pathParticleInst.SetActive(false);
+            position = 0;
+            path.Clear();
+            path = new List<Vector3>();
         }
     }
 

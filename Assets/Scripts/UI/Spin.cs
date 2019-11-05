@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class Spin : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private float speed = 100;
 
-    // Update is called once per frame
     void Update()
     {
-        
+        transform.eulerAngles += new Vector3(0, 0, Time.deltaTime * speed);
     }
 }
