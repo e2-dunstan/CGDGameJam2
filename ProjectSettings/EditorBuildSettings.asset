@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 4387e92c6840b07409ced91594b77bd4
+  - enabled: 1
+    path: Assets/Scenes/EllieScene.unity
+    guid: deaf00bc79bbc5549b5f5178cd611c04
   m_configObjects: {}

@@ -9,8 +9,11 @@ public class AttachUIToGameObject : MonoBehaviour
 
     private void LateUpdate()
     {
-        Vector3 UIposition = Camera.main.WorldToScreenPoint(targetObject.transform.position);
-        this.transform.position = UIposition;
+        if(targetObject != null)
+        {
+            Vector3 UIposition = Camera.main.WorldToScreenPoint(targetObject.transform.position);
+            this.transform.position = UIposition;
+        }
     }
 
     public void SetTargetObject(GameObject _obj)
