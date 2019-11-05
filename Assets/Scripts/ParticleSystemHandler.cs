@@ -7,6 +7,8 @@ public class ParticleSystemHandler : MonoBehaviour
     public static ParticleSystemHandler Instance;
 
     [SerializeField] ParticleSystem taskCompleteParticle;
+    [SerializeField] ParticleSystem taskSubmitStarParticle;
+    [SerializeField] ParticleSystem taskSubmitSparkParticle;
 
     void Awake()
     {
@@ -18,5 +20,13 @@ public class ParticleSystemHandler : MonoBehaviour
     {
         taskCompleteParticle.gameObject.transform.position = position;
         taskCompleteParticle.Play();
+    }
+
+    public void EmitTaskSubmitParticle(Vector3 position)
+    {
+        taskSubmitStarParticle.gameObject.transform.position = position;
+        taskSubmitSparkParticle.gameObject.transform.position = position;
+        taskSubmitStarParticle.Play();
+        taskSubmitSparkParticle.Play();
     }
 }

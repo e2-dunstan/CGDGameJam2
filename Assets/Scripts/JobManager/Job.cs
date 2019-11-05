@@ -147,7 +147,7 @@ public class Job
                 break;
         }
 
-        Debug.Log(taskIconLocation);
+        //Debug.Log(taskIconLocation);
         taskIcon = Resources.Load<Sprite>(taskIconLocation);
 
         if(taskIcon != null)

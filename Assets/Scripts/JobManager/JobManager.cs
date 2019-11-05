@@ -276,7 +276,7 @@ public class JobManager : MonoBehaviour
         List<Job> tempJobList = ActiveJobList.Where(x => x.taskID != _jobID).ToList();
 
         ActiveJobList = tempJobList;
-        
+
         jobToBeRemoved.ResetJob();
         jobsCompletedInPeriod++;
     }
