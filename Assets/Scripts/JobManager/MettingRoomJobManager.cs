@@ -42,15 +42,35 @@ public class MettingRoomJobManager : MonoBehaviour
             dt = 0.0f;
         }
 
+        //Spawn Jobs
         if (dt > timeBetweenJobs && jobs.Count < maxNumberOfJobsAtOnce)
         {
             //Instantiate UI element at gamePos
             //Give UI element this job
-            Job tempJob = JobManager.Instance.GetRandomInactiveJobAndAddToQueue();
-    
+            Job tempJob = null;
+
+            Debug.Log(JobManager.Instance.currentGameDifficulty);
+
+            switch (JobManager.Instance.currentGameDifficulty)
+            {
+                case JobManager.CurrentGameDifficulty.SUPER_EASY:
+                    tempJob = JobManager.Instance.GetRandomInactiveJobAndAddToQueue(Difficulty.EASY);
+                    break;
+                case JobManager.CurrentGameDifficulty.EASY:
+                    tempJob = JobManager.Instance.GetRandomInactiveJobAndAddToQueue(Difficulty.EASY);
+                    break;
+                case JobManager.CurrentGameDifficulty.MEDIUM:
+                    tempJob = JobManager.Instance.GetRandomInactiveJobAndAddToQueue(Difficulty.MEDIUM);
+                    break;
+                case JobManager.CurrentGameDifficulty.HARD:
+                    tempJob = JobManager.Instance.GetRandomInactiveJobAndAddToQueue(Difficulty.HARD);
+                    break;
+                default:
+                    Debug.Log("Failed to find job");
+                    break;
+            }
             if (tempJob != null)
             {
-
                 JobUIElement = JobUIManager.Instance.SpawnUIElement(JobUIManager.UIElement.JOB_DESCRIPTION, gameObject);
                 JobUIElement.GetComponent<JobOfferBox>().SetUpJobUI(tempJob);
                 jobs.Add(tempJob);
