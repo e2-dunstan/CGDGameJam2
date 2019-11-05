@@ -55,7 +55,7 @@ public class MettingRoomJobManager : MonoBehaviour
                 JobUIElement = JobUIManager.Instance.SpawnUIElement(JobUIManager.UIElement.JOB_DESCRIPTION, gameObject);
                 JobUIElement.GetComponent<JobOfferBox>().SetUpJobUI(tempJob);
                 jobs.Add(tempJob);
-                AudioManager.Instance.PlayRandom(AudioManager.SoundsType.POP_UP);
+                AudioManager.Instance.Play(AudioManager.SoundsType.TASK, (int)AudioManager.TaskSounds.CREATED);
                 dt = 0.0f;
             }
             else

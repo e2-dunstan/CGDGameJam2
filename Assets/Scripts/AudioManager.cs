@@ -1,38 +1,43 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
 
     public GameObject audioSources;
-
-    public AudioClip[] popSounds;
-    public AudioClip[] loopSounds;
-    List<AudioSource> sources = new List<AudioSource>();
-    List<Fade> fades = new List<Fade>();
-    List<float> volumes = new List<float>();
-    List<float> maxVolumes = new List<float>();
+    List<LoopSound> loopSounds = new List<LoopSound>();
+    public AudioClip[] taskSounds;
+    public AudioClip[] loopedSounds;
     float gameVolume = 1.0f;
     Dictionary<SoundsType, AudioClip[]> audioClips = new Dictionary<SoundsType, AudioClip[]>();
+
+    class LoopSound
+    {
+        public AudioSource source;
+        public bool fade;
+        public float maxVolume;
+    }
 
     public enum SoundsType
     {
         LOOPING = 0,
-        POP_UP = 1,
+        TASK = 1,
     }
-    public enum PopUpSounds
+    public enum TaskSounds
     {
-        ONE = 0,
+        CREATED = 0,
+        ACCEPTED = 1,
+        REJECT = 2,
+        COMPLETED = 3
     }
 
-    public enum Fade
+    public enum LoopSounds
     {
-        NO_FADE = 0,
-        NOT_YET = 1,
-        IN = 2,
-        OUT = 3
+        MUSIC = 0,
+        CHATTER = 1,
+        FOOTSTEPS = 2,
+        TYPING = 3
     }
 
     // Start is called before the first frame update
@@ -43,7 +48,11 @@ public class AudioManager : MonoBehaviour
 
         AudioSource[] newSources;
         newSources = audioSources.GetComponents<AudioSource>();
-        for (int i = 0; i < loopSounds.Length; ++i)
+
+        audioClips.Add(SoundsType.TASK, taskSounds);
+        audioClips.Add(SoundsType.LOOPING, loopedSounds);
+
+        for (int i = 0; i < loopedSounds.Length; ++i)
         {
             if (i >= newSources.Length)
             {
@@ -51,72 +60,43 @@ public class AudioManager : MonoBehaviour
                 newSources = audioSources.GetComponents<AudioSource>();
             }
 
-            sources.Add(newSources[i]);
-            fades.Add(Fade.NOT_YET);
-            volumes.Add(0.0f);
-            maxVolumes.Add(1.0f);
-            sources[i].clip = loopSounds[i];
-            if (!sources[i].loop)
-            {
-                sources[i].loop = true;
-            }
+            LoopSound sound = new LoopSound();
+            sound.source = newSources[i];
+            sound.source.clip = loopedSounds[i];
+            sound.source.loop = true;
+            sound.source.playOnAwake = false;
+            sound.fade = false;
+            sound.maxVolume = 1.0f;
+            loopSounds.Add(sound);
         }
-
-        audioClips.Add(SoundsType.POP_UP, popSounds);
-        audioClips.Add(SoundsType.LOOPING, loopSounds);
     }
 
     void Start()
     {
-        FadePlay(0);
-        SetSoundMaxVolume(0, 0.1f);
+        //FadePlay(0, 0.1f);
+        //SetSoundMaxVolume(0, 0.5f);
+        //Play(SoundsType.LOOPING, 0, 0.0f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if(!sources[0].isPlaying)
-        //{
-        //    Play(SoundsType.LOOPING, 0, 0.1f);
-        //}
-
-        for(int i = 0; i < sources.Count; ++i)
+        for (int i = 0; i < loopSounds.Count; ++i)
         {
-            if (!sources[i].isPlaying || fades[i] == Fade.NO_FADE)
+            if (!loopSounds[i].source.isPlaying || !loopSounds[i].fade)
             {
                 continue;
             }
 
-            if(fades[i] == Fade.IN)
+            if (loopSounds[i].source.time >= loopSounds[i].source.clip.length * 0.9f)
             {
-                if (volumes[i] < maxVolumes[i])
-                    volumes[i] += Time.deltaTime * 0.1f;
-                else if (volumes[i] >= maxVolumes[i])
-                    fades[i] = Fade.NOT_YET;
-
-                sources[i].volume = volumes[i];
+                StopCoroutine(fadeOut(i, 0.5f));
             }
-            else if (fades[i] == Fade.OUT)
+            else if (loopSounds[i].source.time <= loopSounds[i].source.clip.length * 0.1f)
             {
-                if (volumes[i] > 0.0f)
-                    volumes[i] -= Time.deltaTime * 0.1f;
-                else if (volumes[i] <= 0.0f)
-                    fades[i] = Fade.NOT_YET;
-
-                sources[i].volume = volumes[i] * gameVolume;
-            }
-
-            if(sources[i].time >= sources[i].clip.length * 0.9f)
-            {
-                fades[i] = Fade.OUT;
-            }
-            else if (sources[i].time <= sources[i].clip.length * 0.1f)
-            {
-                fades[i] = Fade.IN;
+                StopCoroutine(fadeIn(i, 0.1f));
             }
         }
-
-        Debug.Log(volumes[0]);
     }
 
     public void Play(SoundsType type, int sound)
@@ -128,9 +108,9 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            //GetComponent<AudioSource>().clip = GetSound(type, sound);
-            fades[sound] = Fade.NO_FADE;
-            sources[sound].Play();
+            loopSounds[sound].source.volume = 1.0f * gameVolume;
+            loopSounds[sound].fade = false;
+            loopSounds[sound].source.Play();
         }
     }
 
@@ -143,27 +123,27 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            sources[sound].volume = volume * gameVolume;
-            fades[sound] = Fade.NO_FADE;
-            sources[sound].Play();
+            loopSounds[sound].source.volume = volume * gameVolume;
+            loopSounds[sound].fade = false;
+            loopSounds[sound].source.Play();
         }
     }
 
-    public void FadePlay(int sound)
+    public void FadePlay(int sound, float fadeSpeed)
     {
-        fades[sound] = Fade.IN;
-        sources[sound].Play();
-        volumes[sound] = 0.0f;
+        loopSounds[sound].source.volume = 0.0f;
+        loopSounds[sound].fade = true;
+        StartCoroutine(fadeIn(sound, fadeSpeed));
     }
 
-    public void FadeStop(int sound)
+    public void FadeStop(int sound, float fadeSpeed)
     {
-        fades[sound] = Fade.OUT;
+        StartCoroutine(fadeOut(sound, fadeSpeed));
     }
 
     public void SetSoundMaxVolume(int sound, float volume)
     {
-        maxVolumes[sound] = volume;
+        loopSounds[sound].maxVolume = volume;
     }
 
     public void PlayRandom(SoundsType type)
@@ -177,8 +157,9 @@ public class AudioManager : MonoBehaviour
         else
         {
             int sound = Random.Range(0, audioClips[type].Length);
-            sources[sound].volume = 1.0f * gameVolume;
-            sources[sound].Play();
+            loopSounds[sound].source.volume = 1.0f * gameVolume;
+            loopSounds[sound].fade = false;
+            loopSounds[sound].source.Play();
         }
     }
 
@@ -193,47 +174,76 @@ public class AudioManager : MonoBehaviour
         else
         {
             int sound = Random.Range(0, audioClips[type].Length);
-            sources[sound].volume = volume * gameVolume;
-            sources[sound].Play();
+            loopSounds[sound].source.volume = volume * gameVolume;
+            loopSounds[sound].fade = false;
+            loopSounds[sound].source.Play();
         }
     }
 
     void Stop(SoundsType type, int sound)
     {
-        sources[sound].Stop();
+        loopSounds[sound].source.Stop();
     }
 
     void Pause(SoundsType type, int sound)
     {
-        sources[sound].Pause();
+        loopSounds[sound].source.Pause();
     }
 
     void Resume(SoundsType type, int sound)
     {
-        sources[sound].UnPause();
+        loopSounds[sound].source.UnPause();
     }
 
     void Volume(SoundsType type, int sound, float _volume)
     {
-        sources[sound].volume = _volume * gameVolume;
+        loopSounds[sound].source.volume = _volume * gameVolume;
     }
 
     float Volume(SoundsType type, int sound)
     {
-        return sources[sound].volume;
+        return loopSounds[sound].source.volume;
     }
 
     ref AudioClip GetSound(SoundsType type, int sound)
     {
         switch (type)
         {
-            case SoundsType.POP_UP:
-                if (sound >= popSounds.Length)
-                    sound = popSounds.Length - 1;
+            case SoundsType.TASK:
+                if (sound >= taskSounds.Length)
+                    sound = taskSounds.Length - 1;
 
-                    return ref popSounds[sound];
+                    return ref taskSounds[sound];
         }
 
-        return ref popSounds[0];
+        return ref taskSounds[0];
+    }
+
+    public bool IsSoundPlaying(int sound)
+    {
+        return loopSounds[sound].source.isPlaying;
+    }
+
+    IEnumerator fadeIn(int sound, float fadeSpeed)
+    {
+        while(loopSounds[sound].source.volume < loopSounds[sound].maxVolume)
+        {
+            loopSounds[sound].source.volume += Time.deltaTime * fadeSpeed;
+            yield return null;
+        }
+        loopSounds[sound].source.volume = loopSounds[sound].maxVolume;
+        yield return 0;
+    }
+
+    IEnumerator fadeOut(int sound, float fadeSpeed)
+    {
+        while (loopSounds[sound].source.volume > 0.0f)
+        {
+            loopSounds[sound].source.volume -= Time.deltaTime * fadeSpeed;
+            yield return null;
+        }
+        loopSounds[sound].source.volume = 0.0f;
+        loopSounds[sound].source.Stop();
+        yield return 0;
     }
 }

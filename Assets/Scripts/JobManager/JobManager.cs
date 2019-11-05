@@ -271,6 +271,8 @@ public class JobManager : MonoBehaviour
         List<Job> tempJobList = ActiveJobList.Where(x => x.taskID != _jobID).ToList();
 
         ActiveJobList = tempJobList;
+
+        AudioManager.Instance.Play(AudioManager.SoundsType.TASK, (int)AudioManager.TaskSounds.COMPLETED);
         
         jobToBeRemoved.ResetJob();
         jobsCompletedInPeriod++;
