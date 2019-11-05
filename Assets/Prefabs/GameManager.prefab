@@ -221,11 +221,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: VFXManager
       objectReference: {fileID: 0}
-    - target: {fileID: 5591245678761790642, guid: 90a93eb20948282429c6e208044ba7d8,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5591245678761790640, guid: 90a93eb20948282429c6e208044ba7d8,
         type: 3}
       propertyPath: m_LocalPosition.x
