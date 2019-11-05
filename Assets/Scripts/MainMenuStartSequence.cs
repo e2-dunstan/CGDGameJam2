@@ -25,12 +25,12 @@ public class MainMenuStartSequence : MonoBehaviour
         delay += 0.5f;
         Tween.Color(foundaryLogo, logoEndColour, 1.5f, delay, Tween.EaseBounce);
 
-        delay += 1.5f;
+        delay += 1.0f;
 
         Vector3 frenzyStartSize = new Vector3(2.0f, 2.0f, 1.0f);
         Vector3 frenzyEndSize = new Vector3(1.0f, 1.0f, 1.0f);
-        Tween.Color(frenzy, frenzyEndColour, 1.5f, delay, Tween.EaseOut);
-        Tween.LocalScale(frenzy.transform, frenzyStartSize, frenzyEndSize, 1.5f, delay, Tween.EaseOut, Tween.LoopType.None, null, StartPulsingText);
+        Tween.Color(frenzy, frenzyEndColour, 1.0f, delay, Tween.EaseInStrong);
+        Tween.LocalScale(frenzy.transform, frenzyStartSize, frenzyEndSize, 1.0f, delay, Tween.EaseInStrong, Tween.LoopType.None, null, StartPulsingText);
     }
 
     void StartPulsingText()

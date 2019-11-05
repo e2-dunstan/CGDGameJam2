@@ -57,10 +57,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47108696a072b6846af91b8a8679fa50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minActiveEmployees: 3
+  repUi: {fileID: 0}
+  minActiveEmployees: 4
   maxActiveEmployees: 10
   minStarRating: 1
-  maxStartRating: 3
+  maxStarRating: 3
   employeeArray:
   - {fileID: 4699074850902738783}
   - {fileID: 796357777303824680}
@@ -76,8 +77,11 @@ MonoBehaviour:
   - {fileID: 7963524833223646426}
   - {fileID: 6569810622469804368}
   - {fileID: 5569834140175468207}
-  taskCheckFrequency: 25
-  taskToStarMultiplier: 1.1
+  reputationDecayMultiplier: 0.02
+  taskCompletionBase: 0.6
+  easyTaskMultiplier: 0.9
+  mediumTaskMultiplier: 1.25
+  hardTaskMultiplier: 1.45
 --- !u!1001 &722951874151274744
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -149,6 +153,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4460509974767152824, guid: 7ff3f34038469bc48a5b0570d6f55881,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ff3f34038469bc48a5b0570d6f55881, type: 3}
@@ -242,6 +251,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4460509974767152824, guid: 7ff3f34038469bc48a5b0570d6f55881,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ff3f34038469bc48a5b0570d6f55881, type: 3}
 --- !u!4 &6840672685554008686 stripped
@@ -269,16 +283,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2366957426208581832}
     m_Modifications:
-    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
-        type: 3}
-      propertyPath: m_Name
-      value: FemaleEmployee
-      objectReference: {fileID: 0}
-    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3599722056387961814, guid: 13cc8ae77f5feb344bd5d938b22da83c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -333,6 +337,20 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
+        type: 3}
+      propertyPath: m_Name
+      value: FemaleEmployee
+      objectReference: {fileID: 0}
+    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046360536, guid: 13cc8ae77f5feb344bd5d938b22da83c, type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13cc8ae77f5feb344bd5d938b22da83c, type: 3}
@@ -426,6 +444,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4460509974767152824, guid: 7ff3f34038469bc48a5b0570d6f55881,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ff3f34038469bc48a5b0570d6f55881, type: 3}
 --- !u!114 &6569810622469804368 stripped
@@ -518,6 +541,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4460509974767152824, guid: 7ff3f34038469bc48a5b0570d6f55881,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ff3f34038469bc48a5b0570d6f55881, type: 3}
 --- !u!114 &5945166833383469058 stripped
@@ -545,16 +573,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2366957426208581832}
     m_Modifications:
-    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
-        type: 3}
-      propertyPath: m_Name
-      value: FemaleEmployee (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3599722056387961814, guid: 13cc8ae77f5feb344bd5d938b22da83c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -610,6 +628,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
+        type: 3}
+      propertyPath: m_Name
+      value: FemaleEmployee (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046360536, guid: 13cc8ae77f5feb344bd5d938b22da83c, type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13cc8ae77f5feb344bd5d938b22da83c, type: 3}
 --- !u!4 &575572036648529464 stripped
@@ -637,16 +669,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2366957426208581832}
     m_Modifications:
-    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
-        type: 3}
-      propertyPath: m_Name
-      value: FemaleEmployee (3)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3599722056387961814, guid: 13cc8ae77f5feb344bd5d938b22da83c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -702,6 +724,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
+        type: 3}
+      propertyPath: m_Name
+      value: FemaleEmployee (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046360536, guid: 13cc8ae77f5feb344bd5d938b22da83c, type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13cc8ae77f5feb344bd5d938b22da83c, type: 3}
 --- !u!4 &596785048461945671 stripped
@@ -729,16 +765,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2366957426208581832}
     m_Modifications:
-    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
-        type: 3}
-      propertyPath: m_Name
-      value: FemaleEmployee (6)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3599722056387961814, guid: 13cc8ae77f5feb344bd5d938b22da83c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -793,6 +819,20 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
+        type: 3}
+      propertyPath: m_Name
+      value: FemaleEmployee (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046360536, guid: 13cc8ae77f5feb344bd5d938b22da83c, type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13cc8ae77f5feb344bd5d938b22da83c, type: 3}
@@ -886,6 +926,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4460509974767152824, guid: 7ff3f34038469bc48a5b0570d6f55881,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ff3f34038469bc48a5b0570d6f55881, type: 3}
 --- !u!114 &2954656416897119429 stripped
@@ -913,16 +958,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2366957426208581832}
     m_Modifications:
-    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
-        type: 3}
-      propertyPath: m_Name
-      value: FemaleEmployee (5)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3599722056387961814, guid: 13cc8ae77f5feb344bd5d938b22da83c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -977,6 +1012,20 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
+        type: 3}
+      propertyPath: m_Name
+      value: FemaleEmployee (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046360536, guid: 13cc8ae77f5feb344bd5d938b22da83c, type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13cc8ae77f5feb344bd5d938b22da83c, type: 3}
@@ -1070,6 +1119,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4460509974767152824, guid: 7ff3f34038469bc48a5b0570d6f55881,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ff3f34038469bc48a5b0570d6f55881, type: 3}
 --- !u!114 &2727754007047045379 stripped
@@ -1097,16 +1151,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2366957426208581832}
     m_Modifications:
-    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
-        type: 3}
-      propertyPath: m_Name
-      value: FemaleEmployee (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3599722056387961814, guid: 13cc8ae77f5feb344bd5d938b22da83c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1162,6 +1206,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
+        type: 3}
+      propertyPath: m_Name
+      value: FemaleEmployee (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046360536, guid: 13cc8ae77f5feb344bd5d938b22da83c, type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13cc8ae77f5feb344bd5d938b22da83c, type: 3}
 --- !u!114 &7781202280878090444 stripped
@@ -1189,16 +1247,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2366957426208581832}
     m_Modifications:
-    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
-        type: 3}
-      propertyPath: m_Name
-      value: FemaleEmployee (4)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3599722056387961814, guid: 13cc8ae77f5feb344bd5d938b22da83c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1253,6 +1301,20 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
+        type: 3}
+      propertyPath: m_Name
+      value: FemaleEmployee (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4281070728166826185, guid: 13cc8ae77f5feb344bd5d938b22da83c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046360536, guid: 13cc8ae77f5feb344bd5d938b22da83c, type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13cc8ae77f5feb344bd5d938b22da83c, type: 3}
@@ -1345,6 +1407,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4460509974767152824, guid: 7ff3f34038469bc48a5b0570d6f55881,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ff3f34038469bc48a5b0570d6f55881, type: 3}
