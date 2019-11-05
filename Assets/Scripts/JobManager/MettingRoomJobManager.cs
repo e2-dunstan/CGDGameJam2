@@ -18,6 +18,8 @@ public class MettingRoomJobManager : MonoBehaviour
     private GameObject JobUIElement = null;
     private GameObject AlertUIElement = null;
 
+    public static AudioManager audio;
+
     List<GameObject> employeesInRoom = new List<GameObject>();
 
     // Start is called before the first frame update
@@ -53,6 +55,7 @@ public class MettingRoomJobManager : MonoBehaviour
                 JobUIElement = JobUIManager.Instance.SpawnUIElement(JobUIManager.UIElement.JOB_DESCRIPTION, gameObject);
                 JobUIElement.GetComponent<JobOfferBox>().SetUpJobUI(tempJob);
                 jobs.Add(tempJob);
+                AudioManager.Instance.PlayRandom(AudioManager.SoundsType.POP_UP);
                 dt = 0.0f;
             }
             else
