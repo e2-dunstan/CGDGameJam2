@@ -75,4 +75,9 @@ public class CollectableItem : MonoBehaviour
         particleColour = _color;
         objParticleSystem.GetComponent<ParticleSystem>().startColor = _color;
     }
+
+    public Color GetParticleColour()
+    {
+        return particleColour;
+    }
 }

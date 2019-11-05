@@ -18,12 +18,17 @@ public class ItemManager: MonoBehaviour
             color = _color;
             isInUse = false;
         }
+        public void SetIsInUse(bool _setTo)
+        {
+            isInUse = _setTo;
+        }
 
         public Color color;
         public bool isInUse;
     };
 
     public List<ColorStruct> colorList = new List<ColorStruct>();
+    private List<ColorStruct> activeColors = new List<ColorStruct>();
 
     public List<Color> colors = new List<Color>();
     // Start is called before the first frame update
@@ -66,21 +71,30 @@ public class ItemManager: MonoBehaviour
 
     public Color GetColor()
     {
-        //I know this is disgusting. It's crunch.
-        if (referencePoint > colorList.Count)
+        List<ColorStruct> tempColorList = colorList.Where(x => x.isInUse == false).ToList();
+        int randomIndex = Random.Range(0, tempColorList.Count);
+
+        foreach(var col in colorList)
         {
-            return Color.red;
+            if(col.color == tempColorList[randomIndex].color)
+            {
+                col.SetIsInUse(true);
+            }
         }
-        else
-        {
-            referencePoint++;
-            return colorList[referencePoint - 1].color;
-        }
+
+        return tempColorList[randomIndex].color;
+        
     }
 
-    public void RemoveColorFromActive()
+    public void RemoveColorFromActive(Color _color)
     {
-        referencePoint--;
+        foreach(var tempCol in colorList)
+        {
+            if(tempCol.color == _color)
+            {
+                tempCol.SetIsInUse(false);
+            }
+        }
     }
 
     public void SetSpawnPositionToActive(GameObject _spawnPos)

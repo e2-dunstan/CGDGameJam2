@@ -107,11 +107,11 @@ public class TaskProgressBar : MonoBehaviour
                 break;
             case Event.REQUIRE_BLUE_PERSON:
                 numberOfPeople.gameObject.SetActive(true);
-                numberOfPeople.text = "Blue Person";
+                numberOfPeople.text = "Blue Hair";
                 break;
             case Event.REQUIRE_PINK_PERSON:
                 numberOfPeople.gameObject.SetActive(true);
-                numberOfPeople.text = "Pink Person";
+                numberOfPeople.text = "Pink Hair";
                 break;
             case Event.REQUIRE_ITEM:
                 numberOfPeople.gameObject.SetActive(true);

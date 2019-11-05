@@ -248,7 +248,7 @@ public class TaskRoomManager : MonoBehaviour
                 if (other.gameObject.GetInstanceID() == requiredItem.GetInstanceID())
                 {
                     other.gameObject.GetComponent<CollectableItem>().DeactiveEffect();
-                    ItemManager.Instance.RemoveColorFromActive();
+                    ItemManager.Instance.RemoveColorFromActive(other.gameObject.GetComponent<CollectableItem>().GetParticleColour());
                     Destroy(other.gameObject);
                     isItemInRoom = true;
                 }
