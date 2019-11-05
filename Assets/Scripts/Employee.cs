@@ -73,6 +73,13 @@ public class Employee : MonoBehaviour
     private void OnEnable()
     {
         state = State.IDLE;
+        VFXController.Instance.CreateParticleSystemForEmployee(
+            VFXController.Instance.runningPS, 
+            VFXController.Instance.runningPSList);
+
+        VFXController.Instance.CreateParticleSystemForEmployee(
+            VFXController.Instance.idlePS,
+            VFXController.Instance.idlePSList);
     }
 
     private void OnDisable()
@@ -100,6 +107,10 @@ public class Employee : MonoBehaviour
                 if (currentInteractable != null && currentInteractable.type == InteractableFurniture.Interactable.Type.CHAIR
                     && !IsSitting())
                     anim.SetTrigger("Sit");
+                VFXController.Instance.PlayParticleSystemOnEmployee(
+                    gameObject,
+                    VFXController.Instance.idlePSList,
+                    0, 4);
                 break;
         }
     }
@@ -110,6 +121,9 @@ public class Employee : MonoBehaviour
         {
             //StartCoroutine(LerpFromTo(transform.position, roomEntry));
             anim.SetTrigger("Stand");
+            VFXController.Instance.StopParticleSystemOnEmployee(
+                gameObject,
+                VFXController.Instance.idlePSList);
         }
 
         switch (newState)
@@ -266,6 +280,7 @@ public class Employee : MonoBehaviour
         if (moveSpeed > 0.7f)
         {
             anim.SetBool("Pant", true);
+            VFXController.Instance.PlayParticleSystemOnEmployee(gameObject, VFXController.Instance.runningPSList);
         }
 
         if (/*moveSpeed < 0.05 && */Vector3.Distance(agent.pathEndPosition, transform.position) < 0.05f)
