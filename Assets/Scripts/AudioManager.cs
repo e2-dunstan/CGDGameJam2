@@ -73,9 +73,10 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
-        //FadePlay(0, 0.1f);
-        //SetSoundMaxVolume(0, 0.5f);
-        //Play(SoundsType.LOOPING, 0, 0.0f);
+        FadeIn((int)LoopSounds.MUSIC, 0.1f, 0.2f);
+        Play(SoundsType.LOOPING, (int)LoopSounds.MUSIC, 0.0f);
+        Play(SoundsType.LOOPING, (int)LoopSounds.FOOTSTEPS, 0.2f);
+        Pause((int)LoopSounds.FOOTSTEPS);
     }
 
     // Update is called once per frame
@@ -83,8 +84,13 @@ public class AudioManager : MonoBehaviour
     {
         for (int i = 0; i < loopSounds.Count; ++i)
         {
-            if (!loopSounds[i].source.isPlaying || !loopSounds[i].fade)
+            if (!loopSounds[i].source.isPlaying)
             {
+                continue;
+            }
+            else if(!loopSounds[i].fade && loopSounds[i].source.time >= loopSounds[i].source.clip.length)
+            {
+                Stop(i);
                 continue;
             }
 
@@ -129,16 +135,22 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void FadePlay(int sound, float fadeSpeed)
+    public void FadeIn(int sound, float fadeSpeed, float maxVolume)
     {
         loopSounds[sound].source.volume = 0.0f;
+        loopSounds[sound].maxVolume = maxVolume;
         loopSounds[sound].fade = true;
         StartCoroutine(fadeIn(sound, fadeSpeed));
     }
 
-    public void FadeStop(int sound, float fadeSpeed)
+    public void FadeOut(int sound, float fadeSpeed)
     {
         StartCoroutine(fadeOut(sound, fadeSpeed));
+    }
+
+    public void SetFade(int sound, bool fade)
+    {
+        loopSounds[sound].fade = fade;
     }
 
     public void SetSoundMaxVolume(int sound, float volume)
@@ -180,27 +192,27 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    void Stop(SoundsType type, int sound)
+    public void Stop(int sound)
     {
         loopSounds[sound].source.Stop();
     }
 
-    void Pause(SoundsType type, int sound)
+    public void Pause(int sound)
     {
         loopSounds[sound].source.Pause();
     }
 
-    void Resume(SoundsType type, int sound)
+    public void Resume(int sound)
     {
         loopSounds[sound].source.UnPause();
     }
 
-    void Volume(SoundsType type, int sound, float _volume)
+    public void Volume(int sound, float _volume)
     {
         loopSounds[sound].source.volume = _volume * gameVolume;
     }
 
-    float Volume(SoundsType type, int sound)
+    public float Volume(int sound)
     {
         return loopSounds[sound].source.volume;
     }
@@ -210,9 +222,7 @@ public class AudioManager : MonoBehaviour
         switch (type)
         {
             case SoundsType.TASK:
-                if (sound >= taskSounds.Length)
-                    sound = taskSounds.Length - 1;
-
+                Debug.Log(sound);
                     return ref taskSounds[sound];
         }
 

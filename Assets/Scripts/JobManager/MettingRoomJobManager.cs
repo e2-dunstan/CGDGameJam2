@@ -82,7 +82,7 @@ public class MettingRoomJobManager : MonoBehaviour
                 JobUIElement = JobUIManager.Instance.SpawnUIElement(JobUIManager.UIElement.JOB_DESCRIPTION, gameObject);
                 JobUIElement.GetComponent<JobOfferBox>().SetUpJobUI(tempJob);
                 jobs.Add(tempJob);
-                AudioManager.Instance.Play(AudioManager.SoundsType.TASK, (int)AudioManager.TaskSounds.CREATED);
+                AudioManager.Instance.Play(AudioManager.SoundsType.TASK, (int)AudioManager.TaskSounds.CREATED, 0.1f);
                 dt = 0.0f;
             }
             else
@@ -168,6 +168,7 @@ public class MettingRoomJobManager : MonoBehaviour
             employeeWithoutJob.GetComponent<EmployeeJobManager>().SetJob(jobs[randomJob], JobUIManager.UIElement.HAS_TASK);
             RemoveJobFromList(jobs[randomJob]);
             JobUIElement.GetComponent<JobOfferBox>().CloseJobOfferBox();
+            AudioManager.Instance.Play(AudioManager.SoundsType.TASK, (int)AudioManager.TaskSounds.ACCEPTED, 1.0f);
             return true;
         }
         else
@@ -182,7 +183,7 @@ public class MettingRoomJobManager : MonoBehaviour
         JobManager.Instance.CompleteJob(jobs[randomJob].taskID);
         RemoveJobFromList(jobs[randomJob]);
         JobUIElement.GetComponent<JobOfferBox>().CloseJobOfferBox();
-
+        AudioManager.Instance.Play(AudioManager.SoundsType.TASK, (int)AudioManager.TaskSounds.REJECT, 1.0f);
         return true;
         //GameObject employeeWithoutJob = employeesInRoom.Where(x => x.GetComponent<EmployeeJobManager>().hasJob != true).FirstOrDefault();
 

@@ -274,8 +274,6 @@ public class JobManager : MonoBehaviour
 
         ActiveJobList = tempJobList;
 
-        AudioManager.Instance.Play(AudioManager.SoundsType.TASK, (int)AudioManager.TaskSounds.COMPLETED);
-        
         jobToBeRemoved.ResetJob();
         jobsCompletedInPeriod++;
     }

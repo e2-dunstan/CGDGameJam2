@@ -29,7 +29,7 @@ public class PresentationRoomManager : MonoBehaviour
             if (other.gameObject.GetComponent<EmployeeJobManager>().hasJob && other.gameObject.GetComponent<EmployeeJobManager>().GetJob().isTaskCompleted)
             {
                 Job job = other.gameObject.GetComponent<EmployeeJobManager>().GetJobAndRemoveUIElement();
-
+                AudioManager.Instance.Play(AudioManager.SoundsType.TASK, (int)AudioManager.TaskSounds.COMPLETED);
                 JobManager.Instance.CompleteJob(job.taskID);
                 ReputationManager.Instance.JobCompleted(Mathf.FloorToInt(job.baseTaskScore), job.taskTime, job.completionTime, job.taskDifficulty);
 
