@@ -222,6 +222,10 @@ public class AudioManager : MonoBehaviour
         switch (type)
         {
             case SoundsType.TASK:
+<<<<<<< HEAD
+=======
+                //Debug.Log(sound);
+>>>>>>> InputAndAI
                     return ref taskSounds[sound];
         }
 

@@ -32,7 +32,9 @@ public class TouchInput : MonoBehaviour
     private bool mousePressed = false;
 
     public LayerMask layerMask;
+    public LayerMask roomMask;
 
+    private Room currentRoomHoveredOver = Room.NONE;
 
     private void Awake()
     {
@@ -52,11 +54,31 @@ public class TouchInput : MonoBehaviour
         if (inputType == InputType.MOUSE)
         {
             UpdateMouseInput();
+            if (playerTouches[0].tracking && playerTouches[0].moved)
+            {
+                RoomOutline(playerTouches[0]);
+            }
+            else
+            {
+                if (currentRoomHoveredOver != Room.NONE)
+                {
+                    RoomHighlightManager.Instance.SetRoomHighlight(currentRoomHoveredOver, false);
+                    currentRoomHoveredOver = Room.NONE;
+                }
+            }
         }
         // -- TOUCH INPUT -- //
         else if (inputType == InputType.TOUCH && Input.touchCount > 0)
         {
             UpdateTouchInput();
+            foreach(PlayerTouch t in playerTouches)
+            {
+                if (t.tracking && t.moved)
+                {
+                    RoomOutline(t);
+                }
+
+            }
         }
     }
 
@@ -237,5 +259,46 @@ public class TouchInput : MonoBehaviour
         }
 
         return activeTouches;
+    }
+
+    private void RoomOutline(PlayerTouch _touch)
+    {
+        Room newRoom = Room.NONE;
+
+        Ray ray = Camera.main.ScreenPointToRay(_touch.touchEnd);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, roomMask))
+        {
+            Debug.Log("Raycast " + hit.transform.gameObject.name);
+            if (hit.transform.GetComponent<RoomType>() != null)
+            {
+                Debug.Log("room hovered over");
+                newRoom = hit.transform.GetComponent<RoomType>().roomType;
+            }
+            else
+            {
+                newRoom = Room.NONE;
+            }
+        }
+        Debug.Log(newRoom);
+
+        if (newRoom != Room.NONE)
+        {
+            if (newRoom != currentRoomHoveredOver)
+            {
+                RoomHighlightManager.Instance.SetRoomHighlight(currentRoomHoveredOver, false);
+            }
+            RoomHighlightManager.Instance.SetRoomHighlight(newRoom, true);
+            currentRoomHoveredOver = newRoom;
+        }
+        else
+        {
+            RoomHighlightManager.Instance.SetRoomHighlight(Room.MEETING, false);
+            RoomHighlightManager.Instance.SetRoomHighlight(Room.RELAX, false);
+            RoomHighlightManager.Instance.SetRoomHighlight(Room.PRESENTATION, false);
+            RoomHighlightManager.Instance.SetRoomHighlight(Room.TASK_1, false);
+            RoomHighlightManager.Instance.SetRoomHighlight(Room.TASK_2, false);
+            RoomHighlightManager.Instance.SetRoomHighlight(Room.TASK_3, false);
+        }
     }
 }

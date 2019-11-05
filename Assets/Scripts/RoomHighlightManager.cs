@@ -8,15 +8,15 @@ public class RoomHighlightManager : MonoBehaviour
 {
     public static RoomHighlightManager Instance;
 
-    public enum ROOM
-    {
-        MEETING,
-        PRESENTATION,
-        IDLE,
-        TASK1,
-        TASK2,
-        TASK3
-    }
+    //public enum ROOM
+    //{
+    //    MEETING,
+    //    PRESENTATION,
+    //    IDLE,
+    //    TASK1,
+    //    TASK2,
+    //    TASK3
+    //}
 
     [Header("References")]
     [SerializeField] private Outline meetingRoomOutline;
@@ -91,7 +91,7 @@ public class RoomHighlightManager : MonoBehaviour
         taskRoom3Outline.OutlineColor = tempCol;
     }
 
-    public void SetRoomHighlight(ROOM _room, bool isOn)
+    public void SetRoomHighlight(Room _room, bool isOn)
     {
         if (isOn)
         {
@@ -103,41 +103,41 @@ public class RoomHighlightManager : MonoBehaviour
         }
     }
 
-    void StartRoomHighlight(ROOM _room)
+    void StartRoomHighlight(Room _room)
     {
         switch (_room)
         {
-            case ROOM.MEETING:
+            case Room.MEETING:
                 if(meetingTween == null || meetingTween.Status != Tween.TweenStatus.Running)
                 {
                     meetingTween = Tween.Value(0f, 1f, UpdateMeetingAlpha, 0.75f, 0f, Tween.EaseInOut, Tween.LoopType.PingPong);
                 }
                 break;
-            case ROOM.PRESENTATION:
+            case Room.PRESENTATION:
                 if (presentationTween == null || presentationTween.Status != Tween.TweenStatus.Running)
                 {
                     presentationTween = Tween.Value(0f, 1f, UpdatePresentationAlpha, 0.75f, 0f, Tween.EaseInOut, Tween.LoopType.PingPong);
                 }
                 break;
-            case ROOM.IDLE:
+            case Room.RELAX:
                 if (idleTween == null || idleTween.Status != Tween.TweenStatus.Running)
                 {
                     idleTween = Tween.Value(0f, 1f, UpdateIdleAlpha, 0.75f, 0f, Tween.EaseInOut, Tween.LoopType.PingPong);
                 }
                 break;
-            case ROOM.TASK1:
+            case Room.TASK_1:
                 if (task1Tween == null || task1Tween.Status != Tween.TweenStatus.Running)
                 {
                     task1Tween = Tween.Value(0f, 1f, UpdateTask1Alpha, 0.75f, 0f, Tween.EaseInOut, Tween.LoopType.PingPong);
                 }
                 break;
-            case ROOM.TASK2:
+            case Room.TASK_2:
                 if (task2Tween == null || task2Tween.Status != Tween.TweenStatus.Running)
                 {
                     task2Tween = Tween.Value(0f, 1f, UpdateTask2Alpha, 0.75f, 0f, Tween.EaseInOut, Tween.LoopType.PingPong);
                 }
                 break;
-            case ROOM.TASK3:
+            case Room.TASK_3:
                 if (task3Tween == null || task3Tween.Status != Tween.TweenStatus.Running)
                 {
                     task3Tween = Tween.Value(0f, 1f, UpdateTask3Alpha, 0.75f, 0f, Tween.EaseInOut, Tween.LoopType.PingPong);
@@ -176,33 +176,39 @@ public class RoomHighlightManager : MonoBehaviour
         task3Alpha = a;
     }
 
-    void StopRoomHighlight(ROOM _room)
+    void StopRoomHighlight(Room _room)
     {
         switch (_room)
         {
-            case ROOM.MEETING:
-                meetingTween.Stop();
-                meetingTween = Tween.Value(meetingAlpha, 0f, UpdateMeetingAlpha, 0.5f, 0f, Tween.EaseInOut);
+            case Room.MEETING:
+                meetingTween?.Stop();
+                meetingAlpha = 0;
+                //meetingTween = Tween.Value(meetingAlpha, 0f, UpdateMeetingAlpha, 0.5f, 0f, Tween.EaseInOut);
                 break;
-            case ROOM.PRESENTATION:
-                presentationTween.Stop();
-                presentationTween = Tween.Value(presentationAlpha, 0f, UpdatePresentationAlpha, 0.5f, 0f, Tween.EaseInOut);
+            case Room.PRESENTATION:
+                presentationTween?.Stop();
+                presentationAlpha = 0;
+                //presentationTween = Tween.Value(presentationAlpha, 0f, UpdatePresentationAlpha, 0.5f, 0f, Tween.EaseInOut);
                 break;
-            case ROOM.IDLE:
-                idleTween.Stop();
-                idleTween = Tween.Value(idleAlpha, 0f, UpdateIdleAlpha, 0.5f, 0f, Tween.EaseInOut);
+            case Room.RELAX:
+                idleTween?.Stop();
+                idleAlpha = 0;
+                //idleTween = Tween.Value(idleAlpha, 0f, UpdateIdleAlpha, 0.5f, 0f, Tween.EaseInOut);
                 break;
-            case ROOM.TASK1:
-                task1Tween.Stop();
-                task1Tween = Tween.Value(task1Alpha, 0f, UpdateTask1Alpha, 0.5f, 0f, Tween.EaseInOut);
+            case Room.TASK_1:
+                task1Tween?.Stop();
+                task1Alpha = 0;
+                //task1Tween = Tween.Value(task1Alpha, 0f, UpdateTask1Alpha, 0.5f, 0f, Tween.EaseInOut);
                 break;
-            case ROOM.TASK2:
-                task2Tween.Stop();
-                task2Tween = Tween.Value(task2Alpha, 0f, UpdateTask2Alpha, 0.5f, 0f, Tween.EaseInOut);
+            case Room.TASK_2:
+                task2Tween?.Stop();
+                task2Alpha = 0;
+                //task2Tween = Tween.Value(task2Alpha, 0f, UpdateTask2Alpha, 0.5f, 0f, Tween.EaseInOut);
                 break;
-            case ROOM.TASK3:
-                task3Tween.Stop();
-                task3Tween = Tween.Value(task3Alpha, 0f, UpdateTask3Alpha, 0.5f, 0f, Tween.EaseInOut);
+            case Room.TASK_3:
+                task3Tween?.Stop();
+                task3Alpha = 0;
+                //task3Tween = Tween.Value(task3Alpha, 0f, UpdateTask3Alpha, 0.5f, 0f, Tween.EaseInOut);
                 break;
         }
     }
@@ -229,32 +235,32 @@ public class RoomHighlightManager : MonoBehaviour
     [ContextMenu("Flash Task rooms")]
     void FlashTaskRooms()
     {
-        SetRoomHighlight(ROOM.TASK1, true);
-        SetRoomHighlight(ROOM.TASK2, true);
-        SetRoomHighlight(ROOM.TASK3, true);
+        SetRoomHighlight(Room.TASK_1, true);
+        SetRoomHighlight(Room.TASK_2, true);
+        SetRoomHighlight(Room.TASK_3, true);
     }
 
     [ContextMenu("Flash Idle Room")]
     void FlashIdle()
     {
-        SetRoomHighlight(ROOM.IDLE, true);
+        SetRoomHighlight(Room.RELAX, true);
     }
 
     [ContextMenu("Flash Presentation And Meeting")]
     void FlashMeetingAndIdle()
     {
-        SetRoomHighlight(ROOM.MEETING, true);
-        SetRoomHighlight(ROOM.PRESENTATION, true);
+        SetRoomHighlight(Room.MEETING, true);
+        SetRoomHighlight(Room.PRESENTATION, true);
     }
 
     [ContextMenu("Stop all flashing")]
     void StopAllFlashing()
     {
-        SetRoomHighlight(ROOM.TASK1, false);
-        SetRoomHighlight(ROOM.TASK2, false);
-        SetRoomHighlight(ROOM.TASK3, false);
-        SetRoomHighlight(ROOM.MEETING, false);
-        SetRoomHighlight(ROOM.PRESENTATION, false);
-        SetRoomHighlight(ROOM.IDLE, false);
+        SetRoomHighlight(Room.TASK_1, false);
+        SetRoomHighlight(Room.TASK_2, false);
+        SetRoomHighlight(Room.TASK_3, false);
+        SetRoomHighlight(Room.MEETING, false);
+        SetRoomHighlight(Room.PRESENTATION, false);
+        SetRoomHighlight(Room.RELAX, false);
     }
 }
