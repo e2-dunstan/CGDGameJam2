@@ -42,6 +42,7 @@ public class DrawArrow : MonoBehaviour
         }
         if (startPointSet)
         {
+            //Allow user to drag the line
             drawPoints[1] = endDragLoc;
             float distance = Vector3.Distance(startLoc, endDragLoc);
             ChangeSizeBasedOnDistance(distance);
@@ -51,20 +52,19 @@ public class DrawArrow : MonoBehaviour
         }
         if (endPointSet)
         {
-
-            if (pathPoints.Count == 0)
-            {
-                lr.positionCount = targetEmployee.EmployeeNavMeshPath.corners.Length;
-                lr.SetPosition(0, target.transform.position);
-
-                for (int i = 1; i < targetEmployee.EmployeeNavMeshPath.corners.Length ; i++)
-                {
-                    lr.SetPosition(i, targetEmployee.EmployeeNavMeshPath.corners[i]);
-                }
-            }
-
-            lr.startWidth = 0.5f;
-            lr.endWidth = 1;
+            //  Draw the path
+            InitWalkingPath();
+            //for (int i = 1; i < targetEmployee.EmployeeNavMeshPath.corners.Length - 1; i++)
+            //{
+            //    if (Vector3.Distance(target.transform.position, targetEmployee.EmployeeNavMeshPath.corners[i - 1]) < 0.25f
+            //    && pathPoints.Contains(targetEmployee.EmployeeNavMeshPath.corners[i - 1]))
+            //    {
+            //        pathPoints.Remove(pathPoints[i - 1]);
+            //        print("Removedpoint");
+            //    }
+            //}
+            //lr.positionCount = pathPoints.Count;
+            //SetPath(pathPoints.ToArray());
         }
         reached = (Vector3.Distance(target.transform.position, endDragLoc) < 0.5f);
     }
@@ -108,5 +108,23 @@ public class DrawArrow : MonoBehaviour
         {
             distLine = 0.1f;
         }
+    }
+    void InitWalkingPath()
+    {
+        pathPoints.Clear();
+        lr.positionCount = targetEmployee.EmployeeNavMeshPath.corners.Length;
+        SetPath(targetEmployee.EmployeeNavMeshPath.corners);
+
+        for (int i = 0; i < targetEmployee.EmployeeNavMeshPath.corners.Length - 1; i++)
+        {
+            pathPoints.Add(lr.GetPosition(i));
+        }
+
+        print("setvariables");
+    }
+    void SetPath(Vector3[] positions)
+    {
+        lr.SetPositions(positions);
+        lr.SetPosition(0, target.transform.position);
     }
 }
