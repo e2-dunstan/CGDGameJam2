@@ -37,6 +37,7 @@ public class AudioManager : MonoBehaviour
     public enum MiscSounds
     {
         CELEBRATION = 0,
+        ERROR = 1,
     }
 
     public enum LoopSounds
