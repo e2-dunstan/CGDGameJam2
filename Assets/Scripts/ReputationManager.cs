@@ -76,7 +76,7 @@ public class ReputationManager : MonoBehaviour
     private void PlayEmplyeeSounds()
     {
         bool chatting = false;
-        bool walking = false;
+        //bool walking = false;
         bool working = false;
         for (int i = 0; i < employeeArray.Length; ++i)
         {
@@ -85,30 +85,33 @@ public class ReputationManager : MonoBehaviour
             {
                 if (!AudioManager.Instance.IsSoundPlaying((int)AudioManager.LoopSounds.CHATTER))
                 {
-                    AudioManager.Instance.Play(AudioManager.SoundsType.LOOPING, (int)AudioManager.LoopSounds.CHATTER);
-                    AudioManager.Instance.FadeIn((int)AudioManager.LoopSounds.CHATTER, 0.5f, 0.5f);
+                    AudioManager.Instance.Play(AudioManager.SoundsType.LOOPING, (int)AudioManager.LoopSounds.CHATTER, 0.5f);
+                    AudioManager.Instance.FadeIn((int)AudioManager.LoopSounds.CHATTER, 0.5f, 1.0f);
                 }
                 chatting = true;
             }
-            else if (employeeArray[i].GetMoveSpeed() > 0.0f)
-            {
-                if (!AudioManager.Instance.IsSoundPlaying((int)AudioManager.LoopSounds.FOOTSTEPS))
-                {
-                    AudioManager.Instance.Resume((int)AudioManager.LoopSounds.FOOTSTEPS);
-                    //AudioManager.Instance.FadePlay((int)AudioManager.LoopSounds.FOOTSTEPS, 0.2f, 0.2f);
-                }
-                walking = true;
-            }
-            else if (employeeArray[i].GetState() == Employee.State.WORKING)
+
+            //Debug.Log(employeeArray[i].GetMoveSpeed());
+
+            //if (employeeArray[i].GetMoveSpeed() > 0.0f)
+            //{
+            //    if (!AudioManager.Instance.IsSoundPlaying((int)AudioManager.LoopSounds.FOOTSTEPS))
+            //    {
+            //        AudioManager.Instance.Resume((int)AudioManager.LoopSounds.FOOTSTEPS);
+            //        //AudioManager.Instance.FadePlay((int)AudioManager.LoopSounds.FOOTSTEPS, 0.2f, 0.2f);
+            //    }
+            //    walking = true;
+            //}
+            if (employeeArray[i].GetState() == Employee.State.WORKING)
             {
                 if (!AudioManager.Instance.IsSoundPlaying((int)AudioManager.LoopSounds.TYPING))
                 {
-                    AudioManager.Instance.Play(AudioManager.SoundsType.LOOPING, (int)AudioManager.LoopSounds.TYPING);
-                    AudioManager.Instance.FadeIn((int)AudioManager.LoopSounds.TYPING, 0.2f, 0.5f);
+                    AudioManager.Instance.Play(AudioManager.SoundsType.LOOPING, (int)AudioManager.LoopSounds.TYPING, 0.5f);
+                    AudioManager.Instance.FadeIn((int)AudioManager.LoopSounds.TYPING, 0.2f, 0.1f);
                 }
+
                 working = true;
             }
-
             //if (i == employeeArray.Length - 1)
             //{
             //}
@@ -117,17 +120,17 @@ public class ReputationManager : MonoBehaviour
         if (!chatting && AudioManager.Instance.IsSoundPlaying((int)AudioManager.LoopSounds.CHATTER))
         {
             //AudioManager.Instance.Stop((int)AudioManager.LoopSounds.CHATTER);
-            AudioManager.Instance.FadeOut((int)AudioManager.LoopSounds.CHATTER, 0.5f);
+            AudioManager.Instance.FadeOut((int)AudioManager.LoopSounds.CHATTER, 0.4f);
             AudioManager.Instance.SetFade((int)AudioManager.LoopSounds.CHATTER, false);
         }
-        if (!walking && AudioManager.Instance.IsSoundPlaying((int)AudioManager.LoopSounds.FOOTSTEPS))
-        {
-            AudioManager.Instance.Pause((int)AudioManager.LoopSounds.FOOTSTEPS);
-            // AudioManager.Instance.FadeStop((int)AudioManager.LoopSounds.FOOTSTEPS, 0.8f);
-        }
+        //if (!walking && AudioManager.Instance.IsSoundPlaying((int)AudioManager.LoopSounds.FOOTSTEPS))
+        //{
+        //    AudioManager.Instance.Pause((int)AudioManager.LoopSounds.FOOTSTEPS);
+        //    // AudioManager.Instance.FadeStop((int)AudioManager.LoopSounds.FOOTSTEPS, 0.8f);
+        //}
         if (!working && AudioManager.Instance.IsSoundPlaying((int)AudioManager.LoopSounds.TYPING))
         {
-            AudioManager.Instance.FadeOut((int)AudioManager.LoopSounds.TYPING, 0.5f);
+            AudioManager.Instance.FadeOut((int)AudioManager.LoopSounds.TYPING, 0.25f);
             AudioManager.Instance.SetFade((int)AudioManager.LoopSounds.TYPING, false);
         }
     }

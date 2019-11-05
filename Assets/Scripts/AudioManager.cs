@@ -8,6 +8,7 @@ public class AudioManager : MonoBehaviour
     public GameObject audioSources;
     List<LoopSound> loopSounds = new List<LoopSound>();
     public AudioClip[] taskSounds;
+    public AudioClip[] miscSounds;
     public AudioClip[] loopedSounds;
     float gameVolume = 1.0f;
     Dictionary<SoundsType, AudioClip[]> audioClips = new Dictionary<SoundsType, AudioClip[]>();
@@ -23,6 +24,7 @@ public class AudioManager : MonoBehaviour
     {
         LOOPING = 0,
         TASK = 1,
+        MISC = 2
     }
     public enum TaskSounds
     {
@@ -32,12 +34,17 @@ public class AudioManager : MonoBehaviour
         COMPLETED = 3
     }
 
+    public enum MiscSounds
+    {
+        CELEBRATION = 0,
+    }
+
     public enum LoopSounds
     {
         MUSIC = 0,
         CHATTER = 1,
-        FOOTSTEPS = 2,
-        TYPING = 3
+        FOOTSTEPS = 3,
+        TYPING = 2
     }
 
     // Start is called before the first frame update
@@ -49,8 +56,9 @@ public class AudioManager : MonoBehaviour
         AudioSource[] newSources;
         newSources = audioSources.GetComponents<AudioSource>();
 
-        audioClips.Add(SoundsType.TASK, taskSounds);
         audioClips.Add(SoundsType.LOOPING, loopedSounds);
+        audioClips.Add(SoundsType.TASK, taskSounds);
+        audioClips.Add(SoundsType.MISC, miscSounds);
 
         for (int i = 0; i < loopedSounds.Length; ++i)
         {
@@ -75,8 +83,9 @@ public class AudioManager : MonoBehaviour
     {
         FadeIn((int)LoopSounds.MUSIC, 0.1f, 0.2f);
         Play(SoundsType.LOOPING, (int)LoopSounds.MUSIC, 0.0f);
-        Play(SoundsType.LOOPING, (int)LoopSounds.FOOTSTEPS, 0.2f);
-        Pause((int)LoopSounds.FOOTSTEPS);
+        //Play(SoundsType.LOOPING, (int)LoopSounds.FOOTSTEPS, 0.2f);
+        //SetFade((int)LoopSounds.FOOTSTEPS, false);
+        //Pause((int)LoopSounds.FOOTSTEPS);
     }
 
     // Update is called once per frame
@@ -94,31 +103,32 @@ public class AudioManager : MonoBehaviour
                 continue;
             }
 
-            if (loopSounds[i].source.time >= loopSounds[i].source.clip.length * 0.9f)
-            {
-                StopCoroutine(fadeOut(i, 0.5f));
-            }
-            else if (loopSounds[i].source.time <= loopSounds[i].source.clip.length * 0.1f)
-            {
-                StopCoroutine(fadeIn(i, 0.1f));
-            }
+            //if (loopSounds[i].source.time >= loopSounds[i].source.clip.length * 0.9f)
+            //{
+            //    StartCoroutine(fadeOut(i, 0.5f));
+            //}
+            //else if (loopSounds[i].source.time <= loopSounds[i].source.clip.length * 0.1f)
+            //{
+            //    StartCoroutine(fadeIn(i, 0.1f));
+            //}
         }
     }
 
-    public void Play(SoundsType type, int sound)
-    {
-        if (type != SoundsType.LOOPING)
-        {
-            AudioSource newSource = GetComponent<AudioSource>();
-            newSource.PlayOneShot(GetSound(type, sound), 1.0f * gameVolume);
-        }
-        else
-        {
-            loopSounds[sound].source.volume = 1.0f * gameVolume;
-            loopSounds[sound].fade = false;
-            loopSounds[sound].source.Play();
-        }
-    }
+    //public void Play(SoundsType type, int sound)
+    //{
+    //    if (type != SoundsType.LOOPING)
+    //    {
+    //        AudioSource newSource = GetComponent<AudioSource>();
+    //        newSource.PlayOneShot(GetSound(type, sound), 1.0f * gameVolume);
+    //    }
+    //    else
+    //    {
+    //        Debug.Log(type + " :: " + sound);
+    //        loopSounds[sound].source.volume = 1.0f * gameVolume;
+    //        loopSounds[sound].fade = false;
+    //        loopSounds[sound].source.Play();
+    //    }
+    //}
 
     public void Play(SoundsType type, int sound, float volume)
     {
@@ -129,6 +139,7 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
+            Debug.Log(type + " :: " + sound);
             loopSounds[sound].source.volume = volume * gameVolume;
             loopSounds[sound].fade = false;
             loopSounds[sound].source.Play();
@@ -222,8 +233,9 @@ public class AudioManager : MonoBehaviour
         switch (type)
         {
             case SoundsType.TASK:
-
                     return ref taskSounds[sound];
+            case SoundsType.MISC:
+                return ref miscSounds[sound];
         }
 
         return ref taskSounds[0];

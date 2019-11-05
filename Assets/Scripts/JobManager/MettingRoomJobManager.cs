@@ -168,7 +168,7 @@ public class MettingRoomJobManager : MonoBehaviour
             employeeWithoutJob.GetComponent<EmployeeJobManager>().SetJob(jobs[randomJob], JobUIManager.UIElement.HAS_TASK);
             RemoveJobFromList(jobs[randomJob]);
             JobUIElement.GetComponent<JobOfferBox>().CloseJobOfferBox();
-            AudioManager.Instance.Play(AudioManager.SoundsType.TASK, (int)AudioManager.TaskSounds.ACCEPTED, 1.0f);
+            AudioManager.Instance.Play(AudioManager.SoundsType.TASK, (int)AudioManager.TaskSounds.ACCEPTED, 0.1f);
             return true;
         }
         else

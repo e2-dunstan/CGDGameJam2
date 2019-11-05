@@ -51,10 +51,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7746f61195926464d98c2b257b375f6f, type: 3}
   - {fileID: 8300000, guid: 2e36d0b317c3fc0418f260e1248b1905, type: 3}
   - {fileID: 8300000, guid: 1c0f7b83477d30547ad558293ea14401, type: 3}
+  miscSounds:
+  - {fileID: 8300000, guid: cac12a9a16941ce41a04c60c5ed9a546, type: 3}
   loopedSounds:
   - {fileID: 8300000, guid: e4c0680dd95d60142a1781fdd906f21e, type: 3}
   - {fileID: 8300000, guid: 2130702ddca8689469d54dc4d01591f4, type: 3}
-  - {fileID: 8300000, guid: 4f12a304f5e101e4bb38ee6f48b310ad, type: 3}
   - {fileID: 8300000, guid: eea4bee8d8357a74a8d97bb6d8ed0e88, type: 3}
 --- !u!82 &3720169311225049276
 AudioSource:
