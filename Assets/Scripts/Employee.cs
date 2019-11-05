@@ -84,8 +84,8 @@ public class Employee : MonoBehaviour
 
     private void Update()
     {
-        if (state == State.WORKING) agent.enabled = false;
-        else agent.enabled = true;
+        //if (state == State.WORKING) agent.enabled = false;
+        //else agent.enabled = true;
 
         moveSpeed = agent.velocity.magnitude / defaultMaxSpeed;
         anim.SetFloat("MoveSpeed", moveSpeed);
@@ -125,8 +125,8 @@ public class Employee : MonoBehaviour
                     if (currentInteractable.type == InteractableFurniture.Interactable.Type.CHAIR)
                     {
                         anim.SetTrigger("Stand");
-                        if (state != State.WORKING) 
-                            MoveTo(transform.position + (transform.forward * 1));
+                        //if (state != State.WORKING) 
+                            //MoveTo(transform.position + (transform.forward * 1));
                     }
 
                     currentInteractable = null;
@@ -146,7 +146,7 @@ public class Employee : MonoBehaviour
             case State.WORKING:
                 if (state != State.WORKING)
                 {
-                    agent.ResetPath();
+                    //agent.ResetPath();
                     FindWorkstation();
                 }
                 break;
@@ -159,24 +159,29 @@ public class Employee : MonoBehaviour
         currentInteractable = InteractableFurniture.Instance.GetInteractable(currentRoom);
         if (currentInteractable != null)
         {
-            StartCoroutine(GoToWorkstation());
+            MoveTo(currentInteractable.origin.position);
+            //StartCoroutine(GoToWorkstation());
         }
-    }
-
-    private IEnumerator GoToWorkstation()
-    {
-        roomEntry = transform.position;
-
-        yield return LerpFromTo(roomEntry, currentInteractable.origin.position);
-
-        if (currentInteractable != null)
+        else
         {
-            yield return RotateTo(currentInteractable.origin.rotation);
-
-            if (currentInteractable.type == InteractableFurniture.Interactable.Type.CHAIR)
-                anim.SetTrigger("Sit");
+            Debug.LogWarning("Cannot find a work room interactable");
         }
     }
+
+    //private IEnumerator GoToWorkstation()
+    //{
+    //    roomEntry = transform.position;
+
+    //    yield return LerpFromTo(roomEntry, currentInteractable.origin.position);
+
+    //    if (currentInteractable != null)
+    //    {
+    //        yield return RotateTo(currentInteractable.origin.rotation);
+
+    //        if (currentInteractable.type == InteractableFurniture.Interactable.Type.CHAIR)
+    //            anim.SetTrigger("Sit");
+    //    }
+    //}
 
 
 
@@ -223,34 +228,34 @@ public class Employee : MonoBehaviour
 
     private void UpdateMoving()
     {
-        if (CanMove())
-        {
-            currentMaxSpeed = defaultMaxSpeed;
-            //currentMaxSpeed = defaultMaxSpeed * (shouldRelaxAfterMoving ? 0.2f : 1.0f);
-            //agent.speed = currentMaxSpeed;
-        }
-        else
-        {
-            //agent.speed = 0;
-        }
+        //if (CanMove())
+        //{
+        //    currentMaxSpeed = defaultMaxSpeed;
+        //    currentMaxSpeed = defaultMaxSpeed * (shouldRelaxAfterMoving ? 0.2f : 1.0f);
+        //    agent.speed = currentMaxSpeed;
+        //}
+        //else
+        //{
+        //    agent.speed = 0;
+        //}
 
         if (moveSpeed > 0.7f)
         {
             anim.SetBool("Pant", true);
         }
 
-        //if (moveSpeed < 0.05 && Vector3.Distance(agent.pathEndPosition, transform.position) < 0.05f)
-        //{
-        //    if (shouldRelaxAfterMoving)
-        //    {
-        //        shouldRelaxAfterMoving = false;
-        //        ChangeState(State.RELAXING);
-        //    }
-        //    else
-        //    {
-        //        ChangeState(State.IDLE);
-        //    }
-        //}
+        if (/*moveSpeed < 0.05 && */Vector3.Distance(agent.pathEndPosition, transform.position) < 0.05f)
+        {
+            if (shouldRelaxAfterMoving)
+            {
+                shouldRelaxAfterMoving = false;
+                ChangeState(State.RELAXING);
+            }
+            else
+            {
+                ChangeState(State.IDLE);
+            }
+        }
 
         if (debugVisualisation)
         {
@@ -263,18 +268,6 @@ public class Employee : MonoBehaviour
 
     #endregion
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (state == State.WORKING && other.GetComponent<RoomType>() != null)
-    //    {
-    //        Room _room = other.GetComponent<RoomType>().roomType;
-    //        if (_room != Room.RELAX)
-    //        {
-    //            currentRoom = _room;
-    //        }
-    //    }
-    //}
-
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.GetComponent<RoomType>() != null)
@@ -285,11 +278,8 @@ public class Employee : MonoBehaviour
         }
     }
 
-
     private bool CanMove()
     {
-        //NOTICE ELLIE, perhaps we can include a fix here for the sliding whilst panting. Cache input command and only initiate until pant animation finishes?
-
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle")
             || anim.GetCurrentAnimatorStateInfo(0).IsName("Motion"))
             //|| anim.GetCurrentAnimatorStateInfo(0).IsName("female_idle_pant")
@@ -347,6 +337,7 @@ public class Employee : MonoBehaviour
 
     private void MoveTo(Vector3 pos)
     {
+        StopAllCoroutines();
         destination = pos;
         StartCoroutine(GetPath());
     }
@@ -375,6 +366,8 @@ public class Employee : MonoBehaviour
         }
 
         timeToFindPath = 0;
+
+        while (!CanMove()) yield return null;
 
         ChangeState(State.MOVING);
         agent.destination = destination;
