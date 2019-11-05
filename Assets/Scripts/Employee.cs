@@ -43,6 +43,8 @@ public class Employee : MonoBehaviour
 
 
     [SerializeField] private GameObject itemHoldPosition = null;
+    [SerializeField] private GameObject pickupParticle = null;
+    public bool hasItem = false;
 
     public bool Selected
     {
@@ -405,5 +407,15 @@ public class Employee : MonoBehaviour
     public GameObject GetItemHoldTransform()
     {
         return itemHoldPosition;
+    }
+
+    public void SetPickupParticleActiveState(bool state)
+    {
+        pickupParticle.SetActive(state);
+    }
+
+    public void SetPickupParticleColour(Color color)
+    {
+        pickupParticle.GetComponent<ParticleSystem>().startColor = color;
     }
 }

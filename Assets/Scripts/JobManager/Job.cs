@@ -72,8 +72,20 @@ public class Job
             {
             return id;
             }
+
+        public void SetColour(Color _color)
+        {
+            color = _color;
+        }
+
+        public Color GetColor()
+        {
+            return color;
+        }
+
         private Event key;
         private object genericObj;
+        private Color color;
         private string id = Guid.NewGuid().ToString();
     }
 
@@ -81,10 +93,11 @@ public class Job
     {
         public List<GenericStruct> genericEventList = new List<GenericStruct>();
 
-        public void Add<T>(Event key, T value) where T : class
+        public void Add<T>(Event key, T value, Color color) where T : class
         {
             GenericStruct tempStruct = new GenericStruct();
             tempStruct.Init(key, value);
+            tempStruct.SetColour(color);
             genericEventList.Add(tempStruct);
         }
     }

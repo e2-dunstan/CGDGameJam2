@@ -146,7 +146,8 @@ public class TaskRoomManager : MonoBehaviour
                             {
                                 requiredItem = jobEvent.GetValue<Job.GenericGameObject>().gameObj;
                                 progressBar.GetComponent<TaskProgressBar>().taskHasRequirements = Event.REQUIRE_ITEM;
-                                Debug.Log("Item Required In Room To Continue! Go Bring One");
+                                progressBar.GetComponent<TaskProgressBar>().itemRequiredTextColour = jobEvent.GetColor();
+                                //Debug.Log("Item Required In Room To Continue! Go Bring One");
                                 conditionRequired = true;
                             }
                             else
@@ -246,6 +247,8 @@ public class TaskRoomManager : MonoBehaviour
             {
                 if (other.gameObject.GetInstanceID() == requiredItem.GetInstanceID())
                 {
+                    other.gameObject.GetComponent<CollectableItem>().DeactiveEffect();
+                    ItemManager.Instance.RemoveColorFromActive();
                     Destroy(other.gameObject);
                     isItemInRoom = true;
                 }

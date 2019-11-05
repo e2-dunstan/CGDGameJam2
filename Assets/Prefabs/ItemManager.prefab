@@ -129,7 +129,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7549749196485816510}
-  - component: {fileID: 7549749196485816509}
+  - component: {fileID: 248471421}
   m_Layer: 0
   m_Name: ItemManager
   m_TagString: Untagged
@@ -155,7 +155,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7549749196485816509
+--- !u!114 &248471421
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -164,13 +164,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7549749196485816511}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06c0242aea3684c9aa92af1d5c075223, type: 3}
+  m_Script: {fileID: 11500000, guid: c281f1a636119459792a7237c36acdd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itemList:
-  - {fileID: 1752417358833621397, guid: 6f6e8231550e248f097665d704a9154d, type: 3}
-  - {fileID: 5084492792783525202, guid: f5b537d4b2e7349fcad22a7665a0ae20, type: 3}
-  - {fileID: 7398435226863271876, guid: 063775638ca4141628f4e3bdb62157c9, type: 3}
+  - {fileID: 8784365141767865917, guid: e14cbf4443be24ca18db43c34ba90002, type: 3}
+  - {fileID: 8784365141767865917, guid: e14cbf4443be24ca18db43c34ba90002, type: 3}
+  - {fileID: 8784365141767865917, guid: e14cbf4443be24ca18db43c34ba90002, type: 3}
   spawnPositions:
   - {fileID: 7549749195512923066}
   - {fileID: 7549749195133990550}

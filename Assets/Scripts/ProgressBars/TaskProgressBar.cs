@@ -33,6 +33,7 @@ public class TaskProgressBar : MonoBehaviour
     public bool pinkRequired = false;
     public bool blueRequired = false;
     public bool itemRequired = false;
+    public Color itemRequiredTextColour;
 
     public void PauseProgress()
     {
@@ -102,7 +103,7 @@ public class TaskProgressBar : MonoBehaviour
                 break;
             case Event.REQUIRE_NUMBER_OF_PEOPLE:
                 numberOfPeople.gameObject.SetActive(true);
-                numberOfPeople.text = numberOfPeopleRequired.ToString() + "x";
+                numberOfPeople.text = numberOfPeopleRequired.ToString() + "x People";
                 break;
             case Event.REQUIRE_BLUE_PERSON:
                 numberOfPeople.gameObject.SetActive(true);
@@ -114,6 +115,8 @@ public class TaskProgressBar : MonoBehaviour
                 break;
             case Event.REQUIRE_ITEM:
                 numberOfPeople.gameObject.SetActive(true);
+                numberOfPeople.color = itemRequiredTextColour;
+                Debug.Log(itemRequiredTextColour);
                 numberOfPeople.text = "Item";
                 break;
             default:
@@ -160,6 +163,7 @@ public class TaskProgressBar : MonoBehaviour
 
     public void ResetProgressBarEvent()
     {
+        numberOfPeople.color = Color.white;
         requiredText.gameObject.SetActive(false);
         numberOfPeople.text = "";
         numberOfPeople.gameObject.SetActive(false);
