@@ -347,6 +347,16 @@ public class Employee : MonoBehaviour
     //    transform.position = to;
     //}
 
+    public State GetState()
+    {
+        return state;
+    }
+
+    public float GetMoveSpeed()
+    {
+        return anim.speed;
+    }
+
     #region NAVMESH
     public void ProcessNewPath(TouchInput.PlayerTouch _touchInfo)
     {
