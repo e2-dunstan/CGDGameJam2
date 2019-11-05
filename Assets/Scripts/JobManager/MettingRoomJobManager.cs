@@ -7,7 +7,11 @@ public class MettingRoomJobManager : MonoBehaviour
 {
     public float timeBetweenJobs = 5.0f;
 
-    public float dt = 0.0f;
+    public float easyJobSpawnTimer = 5.0f;
+    public float mediumJobSpawnTimer = 3.0f;
+    public float hardJobSpawnTimer = 2.0f;
+
+    private float dt = 10.0f;
 
     public List<Job> jobs = null;
 
@@ -49,24 +53,26 @@ public class MettingRoomJobManager : MonoBehaviour
             //Give UI element this job
             Job tempJob = null;
 
-            Debug.Log(JobManager.Instance.currentGameDifficulty);
-
             switch (JobManager.Instance.currentGameDifficulty)
             {
                 case JobManager.CurrentGameDifficulty.SUPER_EASY:
                     tempJob = JobManager.Instance.GetRandomInactiveJobAndAddToQueue(Difficulty.EASY);
+                    timeBetweenJobs = easyJobSpawnTimer;
                     break;
                 case JobManager.CurrentGameDifficulty.EASY:
                     tempJob = JobManager.Instance.GetRandomInactiveJobAndAddToQueue(Difficulty.EASY);
+                    timeBetweenJobs = easyJobSpawnTimer;
                     break;
                 case JobManager.CurrentGameDifficulty.MEDIUM:
                     tempJob = JobManager.Instance.GetRandomInactiveJobAndAddToQueue(Difficulty.MEDIUM);
+                    timeBetweenJobs = mediumJobSpawnTimer;
                     break;
                 case JobManager.CurrentGameDifficulty.HARD:
                     tempJob = JobManager.Instance.GetRandomInactiveJobAndAddToQueue(Difficulty.HARD);
+                    timeBetweenJobs = hardJobSpawnTimer;
                     break;
                 default:
-                    Debug.Log("Failed to find job");
+                    Debug.Log("Job difficulty isn't set properly");
                     break;
             }
             if (tempJob != null)
