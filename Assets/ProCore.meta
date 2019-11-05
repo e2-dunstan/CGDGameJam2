@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/VFX/Icons.meta
+guid: 04560bb16f26e4141a69041fc4e81086
+=======
 guid: ecc796b3cbb0d10409932a80eb136724
+>>>>>>> edacc06250e920bba465bd821e34a54251c275f0:Assets/ProCore.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
