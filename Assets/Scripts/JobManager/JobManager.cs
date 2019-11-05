@@ -94,23 +94,25 @@ public class JobManager : MonoBehaviour
                 jobsCompletedInPeriod--;
                 difficultyDeltaTime = 0.0f;
             }
+        }
 
-            if (jobsCompletedInPeriod < 2)
-            {
-                currentGameDifficulty = CurrentGameDifficulty.SUPER_EASY;
-            }
-            else if (jobsCompletedInPeriod < 4)
-            {
+        switch (ReputationManager.Instance.CurrentRating)
+        {
+            case 0:
                 currentGameDifficulty = CurrentGameDifficulty.EASY;
-            }
-            else if (jobsCompletedInPeriod < 6)
-            {
+                break;
+            case 1:
+                currentGameDifficulty = CurrentGameDifficulty.EASY;
+                break;
+            case 2:
                 currentGameDifficulty = CurrentGameDifficulty.MEDIUM;
-            }
-            else if (jobsCompletedInPeriod < 8)
-            {
+                break;
+            case 3:
                 currentGameDifficulty = CurrentGameDifficulty.HARD;
-            }
+                break;
+            default:
+                Debug.Log("Failed");
+                break;
         }
     }
 
@@ -249,7 +251,7 @@ public class JobManager : MonoBehaviour
 
             ActiveJobList.Add(InactiveJobList[randomIndex]);
 
-            return ActiveJobList[randomIndex];
+            return InactiveJobList[randomIndex];
         }
         else
         {
@@ -271,7 +273,7 @@ public class JobManager : MonoBehaviour
         List<Job> tempJobList = ActiveJobList.Where(x => x.taskID != _jobID).ToList();
 
         ActiveJobList = tempJobList;
-        
+
         jobToBeRemoved.ResetJob();
         jobsCompletedInPeriod++;
     }
