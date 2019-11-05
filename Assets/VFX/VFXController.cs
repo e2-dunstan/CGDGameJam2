@@ -11,10 +11,10 @@ public class VFXController : MonoBehaviour
 
     public GameObject pathIndicatorPrefab;
 
-    [SerializeField] private ParticleSystem runningPS;
-    private List<PartSys> runningPSList = new List<PartSys>();
-    [SerializeField] private ParticleSystem idlePS;
-    private List<PartSys> idlePSList = new List<PartSys>();
+    public ParticleSystem runningPS;
+    public List<PartSys> runningPSList = new List<PartSys>();
+    public ParticleSystem idlePS;
+    public List<PartSys> idlePSList = new List<PartSys>();
 
     public class PathIndicator
     {
@@ -59,8 +59,8 @@ public class VFXController : MonoBehaviour
 
             pathIndicators.Add(pathIndicator);
         }
-        CreateParticleSystemForAllEmployees(idlePS, idlePSList);
-        CreateParticleSystemForAllEmployees(runningPS, runningPSList);
+        //CreateParticleSystemForAllEmployees(idlePS, idlePSList);
+        //CreateParticleSystemForAllEmployees(runningPS, runningPSList);
 
         //This will need modifying to allow for the path indicators
     }
@@ -69,7 +69,6 @@ public class VFXController : MonoBehaviour
     void Update()
     {
         DrawArrowManage();
-        
     }
     void DrawArrowManage()
     {
@@ -97,10 +96,6 @@ public class VFXController : MonoBehaviour
                     pathIndicators[i].drawArrow.Reset();
                     pathIndicators[i].instance.transform.position = Vector3.zero;
                     pathIndicators[i].instance.SetActive(false);
-
-                    //Play particle systems
-                    PlayParticleSystemOnEmployee(currentEmployee, runningPSList, 0, -0.25f);
-                    PlayParticleSystemOnEmployee(currentEmployee, idlePSList, 0, 4);
                 }
             }
             //If it's not active, set it active
@@ -141,6 +136,16 @@ public class VFXController : MonoBehaviour
         }
     }
 
+    public void CreateParticleSystemForEmployee(ParticleSystem _pEffect, List<PartSys> _list)
+    {
+        PartSys pSys = new PartSys();
+
+        pSys.effect = Instantiate(_pEffect, transform);
+        pSys.instance = pSys.effect.gameObject;
+        pSys.target = pSys.instance;
+        _list.Add(pSys);
+        _list[_list.Count-1].instance.SetActive(false);
+    }
     public void CreateParticleSystemForAllEmployees(ParticleSystem _pEffect, List <PartSys>_list)
     {
         _list.Clear();
