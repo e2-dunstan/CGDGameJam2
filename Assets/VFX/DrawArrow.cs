@@ -13,7 +13,7 @@ public class DrawArrow : MonoBehaviour
     public GameObject target;
     private Vector3[] drawPoints = new Vector3[2];
     public List<Vector3> pathPoints = new List<Vector3>();
-    private LineRenderer lr;
+    public LineRenderer lr;
     float distLine = 0.0f;
 
     bool checkIfEnded = false;

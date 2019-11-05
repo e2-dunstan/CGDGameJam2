@@ -43,6 +43,10 @@ public class Employee : MonoBehaviour
     private Vector3 roomEntry = Vector3.zero;
 
 
+    [SerializeField] private GameObject itemHoldPosition = null;
+    [SerializeField] private GameObject pickupParticle = null;
+    public bool hasItem = false;
+
     public bool Selected
     {
         get; set;
@@ -441,5 +445,18 @@ public class Employee : MonoBehaviour
 
     #endregion
 
-    
+    public GameObject GetItemHoldTransform()
+    {
+        return itemHoldPosition;
+    }
+
+    public void SetPickupParticleActiveState(bool state)
+    {
+        pickupParticle.SetActive(state);
+    }
+
+    public void SetPickupParticleColour(Color color)
+    {
+        pickupParticle.GetComponent<ParticleSystem>().startColor = color;
+    }
 }
