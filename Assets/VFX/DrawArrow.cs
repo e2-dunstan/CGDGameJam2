@@ -16,6 +16,8 @@ public class DrawArrow : MonoBehaviour
     private LineRenderer lr;
     float distLine = 0.0f;
 
+    bool checkIfEnded = false;
+
     private float min = 0.65f;
     private float max = 20.0f;
     public bool reached;
@@ -25,6 +27,12 @@ public class DrawArrow : MonoBehaviour
         lr = GetComponent<LineRenderer>();
         lr.enabled = false;
         endPointSet = false;
+        checkIfEnded = false;
+    }
+
+    private void Start()
+    {
+        Invoke("DelayCheckForEnd", 4);
     }
 
     // Update is called once per frame
@@ -72,8 +80,16 @@ public class DrawArrow : MonoBehaviour
                 InitWalkingPath();
             }
 
-            reached = !targetEmployee.EmployeeNavMeshAgent.hasPath || (Vector3.Distance(target.transform.position, endDragLoc) < 0.5f);
+            if(checkIfEnded)
+            {
+                reached = targetEmployee.GetComponent<Rigidbody>().velocity.magnitude == 0 || (Vector3.Distance(target.transform.position, endDragLoc) < 0.5f);
+            }
         }
+    }
+
+    private void DelayCheckForEnd()
+    {
+        checkIfEnded = true;
     }
 
     private bool ActivateLineRenderer()
@@ -126,12 +142,13 @@ public class DrawArrow : MonoBehaviour
         {
             pathPoints.Add(lr.GetPosition(i));
         }
-
-        print("setvariables");
     }
     void SetPath(Vector3[] positions)
     {
-        lr.SetPositions(positions);
-        lr.SetPosition(0, target.transform.position);
+        if(positions.Length != 0)
+        {
+            lr.SetPositions(positions);
+            lr.SetPosition(0, target.transform.position);
+        }
     }
 }
