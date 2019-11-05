@@ -222,7 +222,6 @@ public class AudioManager : MonoBehaviour
         switch (type)
         {
             case SoundsType.TASK:
-                Debug.Log(sound);
                     return ref taskSounds[sound];
         }
 
