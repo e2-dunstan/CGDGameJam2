@@ -8,6 +8,8 @@ public class VFXController : MonoBehaviour
 
     private StraightArrow fxStraightArrow;
     private DrawArrow fxDrawArrow;
+   [SerializeField] private Material arrowMat;
+   [SerializeField] private Material pathMat;
 
     public GameObject pathIndicatorPrefab;
 
@@ -24,7 +26,7 @@ public class VFXController : MonoBehaviour
         public DrawArrow drawArrow;
         public StraightArrow straightArrow;
         public ParticleSystem ps;
-        public TouchInput.PlayerTouch touchRef = null;
+        public TouchInput.PlayerTouch touchRef = null;  
     }
 
     private List<PathIndicator> pathIndicators = new List<PathIndicator>();
@@ -41,12 +43,8 @@ public class VFXController : MonoBehaviour
     private void Awake()
     {
         if (Instance == null) Instance = this;
-    }
 
-    private void Start()
-    {
-
-        for(int i = 0; i < TouchInput.Instance.MaxTouches; i++)
+        for (int i = 0; i < TouchInput.Instance.MaxTouches; i++)
         {
             //Initialise a new path indicator on start
             PathIndicator pathIndicator = new PathIndicator();
@@ -56,11 +54,17 @@ public class VFXController : MonoBehaviour
             pathIndicator.drawArrow = pathIndicator.instance.GetComponent<DrawArrow>();
             //Assign touch reference
             pathIndicator.touchRef = TouchInput.Instance.playerTouches[i];
+
+            pathIndicator.drawArrow.lr.material = arrowMat;
             //Disable the object by default
             pathIndicator.instance.SetActive(false);
 
             pathIndicators.Add(pathIndicator);
         }
+    }
+
+    private void Start()
+    {
         //CreateParticleSystemForAllEmployees(idlePS, idlePSList);
         //CreateParticleSystemForAllEmployees(runningPS, runningPSList);
 

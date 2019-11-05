@@ -52,6 +52,7 @@ MonoBehaviour:
   targetEmployee: {fileID: 0}
   target: {fileID: 0}
   pathPoints: []
+  lr: {fileID: 0}
   reached: 0
 --- !u!114 &5768547480966227547
 MonoBehaviour:
@@ -65,7 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d0093b87232c6e4399ee43cbdfb6096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrollSpeed: 1
+  scrollSpeed: 5
 --- !u!120 &9214818885099817015
 LineRenderer:
   m_ObjectHideFlags: 0
