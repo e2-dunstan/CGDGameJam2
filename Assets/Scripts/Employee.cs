@@ -226,12 +226,13 @@ public class Employee : MonoBehaviour
     {
         if (CanMove())
         {
-            currentMaxSpeed = defaultMaxSpeed * (shouldRelaxAfterMoving ? 0.2f : 1.0f);
-            agent.speed = currentMaxSpeed;
+            currentMaxSpeed = defaultMaxSpeed;
+            //currentMaxSpeed = defaultMaxSpeed * (shouldRelaxAfterMoving ? 0.2f : 1.0f);
+            //agent.speed = currentMaxSpeed;
         }
         else
         {
-            agent.speed = 0;
+            //agent.speed = 0;
         }
 
         if (moveSpeed > 0.7f)
@@ -239,18 +240,18 @@ public class Employee : MonoBehaviour
             anim.SetBool("Pant", true);
         }
 
-        if (moveSpeed < 0.05 && Vector3.Distance(agent.pathEndPosition, transform.position) < 0.05f)
-        {
-            if (shouldRelaxAfterMoving)
-            {
-                shouldRelaxAfterMoving = false;
-                ChangeState(State.RELAXING);
-            }
-            else
-            {
-                ChangeState(State.IDLE);
-            }
-        }
+        //if (moveSpeed < 0.05 && Vector3.Distance(agent.pathEndPosition, transform.position) < 0.05f)
+        //{
+        //    if (shouldRelaxAfterMoving)
+        //    {
+        //        shouldRelaxAfterMoving = false;
+        //        ChangeState(State.RELAXING);
+        //    }
+        //    else
+        //    {
+        //        ChangeState(State.IDLE);
+        //    }
+        //}
 
         if (debugVisualisation)
         {
@@ -288,6 +289,8 @@ public class Employee : MonoBehaviour
 
     private bool CanMove()
     {
+        //NOTICE ELLIE, perhaps we can include a fix here for the sliding whilst panting. Cache input command and only initiate until pant animation finishes?
+
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle")
             || anim.GetCurrentAnimatorStateInfo(0).IsName("Motion"))
             //|| anim.GetCurrentAnimatorStateInfo(0).IsName("female_idle_pant")

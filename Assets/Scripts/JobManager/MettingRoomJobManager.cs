@@ -42,7 +42,7 @@ public class MettingRoomJobManager : MonoBehaviour
             dt = 0.0f;
         }
 
-        if (dt > timeBetweenJobs && jobs.Count < maxNumberOfJobsAtOnce && numberOfEmployeesInRoomWithJob == 0 && numberOfActiveEmployeesInRoom > 0)
+        if (dt > timeBetweenJobs && jobs.Count < maxNumberOfJobsAtOnce)
         {
             //Instantiate UI element at gamePos
             //Give UI element this job
