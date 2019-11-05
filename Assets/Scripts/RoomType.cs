@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum Room
 {
-    TASK_1, TASK_2, TASK_3, RELAX, PRESENTATION, MEETING
+    TASK_1, TASK_2, TASK_3, RELAX, PRESENTATION, MEETING, NONE
 }
 
 public class RoomType : MonoBehaviour
