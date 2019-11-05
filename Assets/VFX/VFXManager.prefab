@@ -48,3 +48,4 @@ MonoBehaviour:
   runningPS: {fileID: 3370849144291517768, guid: ceef83e372b674448917566860129f9a,
     type: 3}
   idlePS: {fileID: 6112114458602576347, guid: 4de401fd5236b384585715b37c352db0, type: 3}
+  pulsePS: {fileID: 1179895551199145252, guid: 71cdec8e09d5e244b9f5bcbaf94007f6, type: 3}
