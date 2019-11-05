@@ -95,7 +95,7 @@ public class ReputationManager : MonoBehaviour
                 if (!AudioManager.Instance.IsSoundPlaying((int)AudioManager.LoopSounds.FOOTSTEPS))
                 {
                     AudioManager.Instance.Resume((int)AudioManager.LoopSounds.FOOTSTEPS);
-                   //AudioManager.Instance.FadePlay((int)AudioManager.LoopSounds.FOOTSTEPS, 0.2f, 0.2f);
+                    //AudioManager.Instance.FadePlay((int)AudioManager.LoopSounds.FOOTSTEPS, 0.2f, 0.2f);
                 }
                 walking = true;
             }
