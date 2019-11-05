@@ -222,6 +222,7 @@ public class AudioManager : MonoBehaviour
         switch (type)
         {
             case SoundsType.TASK:
+
                     return ref taskSounds[sound];
         }
 
