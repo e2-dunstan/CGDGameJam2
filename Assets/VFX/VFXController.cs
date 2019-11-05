@@ -43,6 +43,12 @@ public class VFXController : MonoBehaviour
     private void Awake()
     {
         if (Instance == null) Instance = this;
+    }
+
+    private void Start()
+    {
+        //CreateParticleSystemForAllEmployees(idlePS, idlePSList);
+        //CreateParticleSystemForAllEmployees(runningPS, runningPSList);
 
         for (int i = 0; i < TouchInput.Instance.MaxTouches; i++)
         {
@@ -61,12 +67,6 @@ public class VFXController : MonoBehaviour
 
             pathIndicators.Add(pathIndicator);
         }
-    }
-
-    private void Start()
-    {
-        //CreateParticleSystemForAllEmployees(idlePS, idlePSList);
-        //CreateParticleSystemForAllEmployees(runningPS, runningPSList);
 
         //This will need modifying to allow for the path indicators
     }
