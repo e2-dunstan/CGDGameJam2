@@ -9,6 +9,11 @@ public class TaskProgressBar : MonoBehaviour
     [SerializeField] private Image progressImage;
     [SerializeField] private Text progressText;
 
+    [SerializeField] private Text requiredText;
+    [SerializeField] private Text numberOfPeople;
+    [SerializeField] private Image personImage;
+
+
     //To be made private
     [SerializeField] private float currentTime;
 
@@ -21,6 +26,14 @@ public class TaskProgressBar : MonoBehaviour
 
 
     private bool isPaused = false;
+    private Color startColour;
+
+    public Event taskHasRequirements = Event.NONE;
+    public int numberOfPeopleRequired = 0;
+    public bool pinkRequired = false;
+    public bool blueRequired = false;
+    public bool itemRequired = false;
+    public Color itemRequiredTextColour;
 
     public void PauseProgress()
     {
@@ -37,6 +50,10 @@ public class TaskProgressBar : MonoBehaviour
 
     private void Awake()
     {
+        requiredText.gameObject.SetActive(false);
+        numberOfPeople.gameObject.SetActive(false);
+        
+        startColour = progressImage.color;
         startScale = new Vector3(0, this.transform.localScale.y, 1);
         endScale = this.transform.localScale;
         active = true;
@@ -61,6 +78,7 @@ public class TaskProgressBar : MonoBehaviour
 
     private void UpdateProgress()
     {
+        progressImage.color = startColour;
         float percentage = (currentTime / job.taskTime);
         percentage = Mathf.Clamp(percentage, 0.0f, 1.0f);
 
@@ -72,6 +90,37 @@ public class TaskProgressBar : MonoBehaviour
             job.isTaskCompleted = true;
             progressText.text = "Done";
             progressImage.color = Color.green;
+        }
+    }
+
+    private void UpdateStuckProgress()
+    {
+        requiredText.gameObject.SetActive(true);
+
+        switch(taskHasRequirements)
+        {
+            case Event.NONE:
+                break;
+            case Event.REQUIRE_NUMBER_OF_PEOPLE:
+                numberOfPeople.gameObject.SetActive(true);
+                numberOfPeople.text = numberOfPeopleRequired.ToString() + "x People";
+                break;
+            case Event.REQUIRE_BLUE_PERSON:
+                numberOfPeople.gameObject.SetActive(true);
+                numberOfPeople.text = "Blue Hair";
+                break;
+            case Event.REQUIRE_PINK_PERSON:
+                numberOfPeople.gameObject.SetActive(true);
+                numberOfPeople.text = "Pink Hair";
+                break;
+            case Event.REQUIRE_ITEM:
+                numberOfPeople.gameObject.SetActive(true);
+                numberOfPeople.color = itemRequiredTextColour;
+                //Debug.Log(itemRequiredTextColour);
+                numberOfPeople.text = "Item";
+                break;
+            default:
+                break;
         }
     }
 
@@ -91,6 +140,12 @@ public class TaskProgressBar : MonoBehaviour
                 currentTime += (Time.deltaTime / job.recommendedUnitCount) * (job.currentPlayersAssigned);
                 UpdateProgress();
             }
+            else
+            {
+                UpdateStuckProgress();
+                progressText.text = "Task Is Stuck";
+                progressImage.color = Color.red;
+            }
         }
     }
 
@@ -104,5 +159,18 @@ public class TaskProgressBar : MonoBehaviour
     private void DestroyBar()
     {
         Destroy(this.gameObject);
+    }
+
+    public void ResetProgressBarEvent()
+    {
+        numberOfPeople.color = Color.white;
+        requiredText.gameObject.SetActive(false);
+        numberOfPeople.text = "";
+        numberOfPeople.gameObject.SetActive(false);
+        taskHasRequirements = Event.NONE;
+        numberOfPeopleRequired = 0;
+        blueRequired = false;
+        pinkRequired = false;
+        itemRequired = false;
     }
 }

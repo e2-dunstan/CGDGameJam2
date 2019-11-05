@@ -130,8 +130,8 @@ public class JobManager : MonoBehaviour
                 {
                     if (job.eventList.genericEventList.Count < 1)
                     {
-                        //int randomEvent = Random.Range(0, 4);
-                        int randomEvent = Random.Range(0, 3);
+                        int randomEvent = Random.Range(0, 4);
+                        //int randomEvent = 3;
 
                         switch (randomEvent)
                         {
@@ -139,28 +139,31 @@ public class JobManager : MonoBehaviour
                                 {
                                     int randomNumber = Random.Range(2, 3);
                                     Job.GenericInt genericInt = new Job.GenericInt(randomNumber);
-                                    job.eventList.Add<Job.GenericInt>(Event.REQUIRE_NUMBER_OF_PEOPLE, genericInt);
+                                    job.eventList.Add<Job.GenericInt>(Event.REQUIRE_NUMBER_OF_PEOPLE, genericInt, Color.red);
                                     break;
                                 }
                             case 1:
                                 { 
                                     int randomNumber = Random.Range(1, 2);
                                     Job.GenericInt genericInt = new Job.GenericInt(randomNumber);
-                                    job.eventList.Add<Job.GenericInt>(Event.REQUIRE_BLUE_PERSON, genericInt);
+                                    job.eventList.Add<Job.GenericInt>(Event.REQUIRE_BLUE_PERSON, genericInt, Color.red);
                                     break;
                                 }
                             case 2:
                                 {
                                     int randomNumber = Random.Range(1, 2);
                                     Job.GenericInt genericInt = new Job.GenericInt(randomNumber);
-                                    job.eventList.Add<Job.GenericInt>(Event.REQUIRE_PINK_PERSON, genericInt);
+                                    job.eventList.Add<Job.GenericInt>(Event.REQUIRE_PINK_PERSON, genericInt, Color.red);
                                     break;
                                 }
                             case 3:
                                 {
                                     GameObject tempObj = ItemManager.Instance.GetRandomItem();
                                     Job.GenericGameObject genericObj = new Job.GenericGameObject(tempObj);
-                                    job.eventList.Add<Job.GenericGameObject>(Event.REQUIRE_ITEM, genericObj);
+                                    Color randomColour = ItemManager.Instance.GetColor();
+                                    Debug.Log(randomColour);
+                                    job.eventList.Add<Job.GenericGameObject>(Event.REQUIRE_ITEM, genericObj, randomColour);
+                                    tempObj.GetComponent<CollectableItem>().SetParticleColour(randomColour);
                                     break;
                                 }
                         }
