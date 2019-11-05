@@ -6,9 +6,6 @@ using UnityEditor;
 
 public class Employee : MonoBehaviour
 {
-    //go to idle
-    //
-
     public enum Gender
     {
         MALE, FEMALE
@@ -84,9 +81,6 @@ public class Employee : MonoBehaviour
 
     private void Update()
     {
-        //if (state == State.WORKING) agent.enabled = false;
-        //else agent.enabled = true;
-
         moveSpeed = agent.velocity.magnitude / defaultMaxSpeed;
         anim.SetFloat("MoveSpeed", moveSpeed);
 
@@ -102,6 +96,9 @@ public class Employee : MonoBehaviour
                 UpdateMoving();
                 break;
             case State.WORKING:
+                if (currentInteractable != null && currentInteractable.type == InteractableFurniture.Interactable.Type.CHAIR
+                    && !IsSitting())
+                    anim.SetTrigger("Sit");
                 break;
         }
     }
@@ -110,10 +107,8 @@ public class Employee : MonoBehaviour
     {
         if(state == State.WORKING && newState != State.WORKING)
         {
-            StartCoroutine(LerpFromTo(transform.position, roomEntry));
-            if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Idle")
-            && !anim.GetCurrentAnimatorStateInfo(0).IsName("Motion"))
-                anim.SetTrigger("Stand");
+            //StartCoroutine(LerpFromTo(transform.position, roomEntry));
+            anim.SetTrigger("Stand");
         }
 
         switch (newState)
@@ -139,6 +134,7 @@ public class Employee : MonoBehaviour
                 if (currentInteractable.type == InteractableFurniture.Interactable.Type.CHAIR)
                     anim.SetTrigger("Sit");
 
+
                 break;
             case State.MOVING:
 
@@ -151,14 +147,43 @@ public class Employee : MonoBehaviour
                 }
                 break;
         }
-        state = newState;
+
+
+        if (currentInteractable != null && newState == State.RELAXING
+            && (currentInteractable.room == Room.TASK_1 || currentInteractable.room == Room.TASK_2 || currentInteractable.room == Room.TASK_3))
+        {
+            state = State.WORKING;
+        }
+        else
+        {
+            state = newState;
+        }
+    }
+
+    private bool IsSitting()
+    {
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("male_sit")
+            || anim.GetCurrentAnimatorStateInfo(0).IsName("female_sit")
+            || anim.GetCurrentAnimatorStateInfo(0).IsName("male_talk_sit")
+            || anim.GetCurrentAnimatorStateInfo(0).IsName("female_talk_sit")
+            || anim.GetCurrentAnimatorStateInfo(0).IsName("male_laugh_sit")
+            || anim.GetCurrentAnimatorStateInfo(0).IsName("female_laugh_sit"))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     private void FindWorkstation()
     {
         currentInteractable = InteractableFurniture.Instance.GetInteractable(currentRoom);
+
         if (currentInteractable != null)
         {
+            if (currentInteractable.type == InteractableFurniture.Interactable.Type.CHAIR) shouldRelaxAfterMoving = true;
             MoveTo(currentInteractable.origin.position);
             //StartCoroutine(GoToWorkstation());
         }
@@ -182,8 +207,6 @@ public class Employee : MonoBehaviour
     //            anim.SetTrigger("Sit");
     //    }
     //}
-
-
 
     #region UPDATE STATES
 
@@ -253,7 +276,8 @@ public class Employee : MonoBehaviour
             }
             else
             {
-                ChangeState(State.IDLE);
+                if (currentRoom != Room.TASK_1 && currentRoom != Room.TASK_2 && currentRoom != Room.TASK_3)
+                    ChangeState(State.IDLE);
             }
         }
 
@@ -309,18 +333,18 @@ public class Employee : MonoBehaviour
         transform.rotation = rot;
     }
 
-    private IEnumerator LerpFromTo(Vector3 from, Vector3 to)
-    {
-        float lerpTime = 1.0f;
+    //private IEnumerator LerpFromTo(Vector3 from, Vector3 to)
+    //{
+    //    float lerpTime = 1.0f;
 
-        for (float t = 0; t < lerpTime; t += Time.deltaTime)
-        {
-            transform.position = Vector3.Lerp(from, to, t);
-            yield return null;
-        }
+    //    for (float t = 0; t < lerpTime; t += Time.deltaTime)
+    //    {
+    //        transform.position = Vector3.Lerp(from, to, t);
+    //        yield return null;
+    //    }
 
-        transform.position = to;
-    }
+    //    transform.position = to;
+    //}
 
     #region NAVMESH
     public void ProcessNewPath(TouchInput.PlayerTouch _touchInfo)
