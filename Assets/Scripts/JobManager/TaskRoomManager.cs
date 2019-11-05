@@ -112,7 +112,7 @@ public class TaskRoomManager : MonoBehaviour
                                     
                                     if (numberOfFemalesInRoom < jobEvent.GetValue<Job.GenericInt>().number)
                                     {
-                                        Debug.Log("Need " + jobEvent.GetValue<Job.GenericInt>().number + "Pink Persons");
+                                        //Debug.Log("Need " + jobEvent.GetValue<Job.GenericInt>().number + "Pink Persons");
                                         progressBar.GetComponent<TaskProgressBar>().taskHasRequirements = Event.REQUIRE_PINK_PERSON;
                                         conditionRequired = true;
                                     }

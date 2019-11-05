@@ -116,7 +116,7 @@ public class TaskProgressBar : MonoBehaviour
             case Event.REQUIRE_ITEM:
                 numberOfPeople.gameObject.SetActive(true);
                 numberOfPeople.color = itemRequiredTextColour;
-                Debug.Log(itemRequiredTextColour);
+                //Debug.Log(itemRequiredTextColour);
                 numberOfPeople.text = "Item";
                 break;
             default:
