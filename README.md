@@ -34,21 +34,20 @@ Juice it or lose it youtube video
 ## 
 ## The Game
 
-Run the foundry with X number of employees. Tasks come in with a location, recommended number of people to assign, and a time to complete it. Meeting room -> workspaces (most time) -> presentation room (least time) -> complete. Final score could be saved to a leaderboard?
-
-Tasks appear and shrink over time if not started.
+Run the Foundry with X number of employees. Tasks come in with a difficulty, recommended number of people to assign, and a time to complete it. Meeting room -> workspaces (most time) -> presentation room (least time) -> complete. Final score is dependent on reputation and tasks completed.
 
 Top down perspective
 
 ### Mechanics
 
-- Input system with navmesh - Ellie
-- The Foundry level - Alex
-- Task people and time management - Ben
-- Task UI elements - Dan
+- Input system with navmesh
+- The Foundry level
+- Task people and time management
+- Task UI elements
   - Radial circle for completion time
-- Character emotion particle effects i.e. stormy cloud. - Dan
-- Visual of line from character to destination. Once character moving, draw path (stretch). - Sol and Lewis 
+- Character emotion particle effects i.e. stormy cloud
+- Visual of line from character to destination. Once character moving, draw path (stretch)
+- Lots and lots of juice
  
 ### Potential Assets
 
