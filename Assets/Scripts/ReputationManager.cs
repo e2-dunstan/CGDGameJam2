@@ -200,7 +200,7 @@ public class ReputationManager : MonoBehaviour
         {
             foreach (var employee in employeeArray)
             {
-                if (employee.gameObject.activeSelf && !employee.GetComponent<EmployeeJobManager>().hasJob)
+                if (employee.gameObject.activeSelf && !employee.GetComponent<EmployeeJobManager>().hasJob && !employee.GetComponent<Employee>().hasItem)
                 {
                     employee.gameObject.SetActive(false);
                     currentActiveCount--;

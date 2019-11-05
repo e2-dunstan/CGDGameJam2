@@ -11,7 +11,7 @@ public class ItemManager: MonoBehaviour
 
     public List<GameObject> spawnPositions = new List<GameObject>();
 
-    public struct ColorStruct
+    public class ColorStruct
     {
         public ColorStruct(Color _color)
         {
@@ -74,11 +74,11 @@ public class ItemManager: MonoBehaviour
         List<ColorStruct> tempColorList = colorList.Where(x => x.isInUse == false).ToList();
         int randomIndex = Random.Range(0, tempColorList.Count);
 
-        foreach(var col in colorList)
+        for(int i = 0; i < colorList.Count; i++)
         {
-            if(col.color == tempColorList[randomIndex].color)
+            if (colorList[i].color == tempColorList[randomIndex].color)
             {
-                col.SetIsInUse(true);
+                colorList[i].isInUse = true;
             }
         }
 
@@ -88,11 +88,11 @@ public class ItemManager: MonoBehaviour
 
     public void RemoveColorFromActive(Color _color)
     {
-        foreach(var tempCol in colorList)
+        for(int i = 0; i < colorList.Count; i++)
         {
-            if(tempCol.color == _color)
+            if(colorList[i].color == _color)
             {
-                tempCol.SetIsInUse(false);
+                colorList[i].isInUse = false;
             }
         }
     }
