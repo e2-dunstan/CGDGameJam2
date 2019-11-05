@@ -20,7 +20,7 @@ public class DrawArrow : MonoBehaviour
     private float max = 20.0f;
     public bool reached;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         lr = GetComponent<LineRenderer>();
         lr.enabled = false;
@@ -52,7 +52,6 @@ public class DrawArrow : MonoBehaviour
         }
         if (endPointSet)
         {
-            
             //  Draw the path
             if (pathPoints.Count > 0)
             {
@@ -73,8 +72,8 @@ public class DrawArrow : MonoBehaviour
                 InitWalkingPath();
             }
 
+            reached = !targetEmployee.EmployeeNavMeshAgent.hasPath || (Vector3.Distance(target.transform.position, endDragLoc) < 0.5f);
         }
-        reached = (Vector3.Distance(target.transform.position, endDragLoc) < 0.5f);
     }
 
     private bool ActivateLineRenderer()

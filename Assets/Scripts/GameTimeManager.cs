@@ -42,7 +42,7 @@ public class GameTimeManager : MonoBehaviour
                 timer = 0;
                 TimerComplete();
             }
-            timerObject.UpdateTimer(gameDuration, timer);
+            //timerObject.UpdateTimer(gameDuration, timer);
         }
     }
 

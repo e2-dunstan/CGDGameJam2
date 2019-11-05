@@ -24,7 +24,9 @@ public class VFXController : MonoBehaviour
         public ParticleSystem ps;
         public TouchInput.PlayerTouch touchRef = null;
     }
+
     private List<PathIndicator> pathIndicators = new List<PathIndicator>();
+    private List<PathIndicator> employeePaths = new List<PathIndicator>();
 
     public class PartSys
     {
@@ -32,7 +34,6 @@ public class VFXController : MonoBehaviour
         public GameObject target;
         public ParticleSystem effect;
     }
-
 
 
     private void Awake()
@@ -74,30 +75,32 @@ public class VFXController : MonoBehaviour
     {
         for (int i = 0; i < pathIndicators.Count; i++)
         {
-            GameObject currentEmployee = pathIndicators[i].drawArrow.target;
-
             if (!pathIndicators[i].touchRef.tracking)
             {
                 //If the startpoint is set, trigger the particle system
                 if (pathIndicators[i].drawArrow.startPointSet)
                 {
-                    pathIndicators[i].drawArrow.endPointSet = true;
-                    pathIndicators[i].instance.transform.position = currentEmployee.transform.position;
+                    GameObject currentEmployee = pathIndicators[i].drawArrow.target;
+
+                    //Initialise a new path indicator on start
+                    PathIndicator employeePath = new PathIndicator();
+                    employeePath.instance = Instantiate(pathIndicatorPrefab, transform);
+                    employeePath.drawArrow = employeePath.instance.GetComponent<DrawArrow>();
+                    employeePath.drawArrow.targetEmployee = pathIndicators[i].drawArrow.targetEmployee;
+                    employeePath.drawArrow.endDragLoc = pathIndicators[i].drawArrow.endDragLoc;
+                    employeePath.drawArrow.startPointSet = pathIndicators[i].drawArrow.startPointSet;
+                    employeePath.drawArrow.endPointSet = true;
+                    employeePath.instance.transform.position = currentEmployee.transform.position;
+
+                    employeePaths.Add(employeePath);
+
+                    pathIndicators[i].drawArrow.Reset();
+                    pathIndicators[i].instance.transform.position = Vector3.zero;
+                    pathIndicators[i].instance.SetActive(false);
 
                     //Play particle systems
                     PlayParticleSystemOnEmployee(currentEmployee, runningPSList, 0, -0.25f);
                     PlayParticleSystemOnEmployee(currentEmployee, idlePSList, 0, 4);
-                }
-                //End the loop
-                if (pathIndicators[i].drawArrow.reached)
-                {
-                    //If this touch isn't being tracked, skip over this iteration and ensure it's disabled
-                    pathIndicators[i].drawArrow.Reset();
-                    StopParticleSystemOnEmployee(currentEmployee, runningPSList);
-                    StopParticleSystemOnEmployee(currentEmployee, idlePSList);
-                    pathIndicators[i].instance.transform.position = Vector3.zero;
-                    pathIndicators[i].instance.SetActive(false);
-                    continue;
                 }
             }
             //If it's not active, set it active
@@ -115,6 +118,25 @@ public class VFXController : MonoBehaviour
                 pathIndicators[i].drawArrow.startPointSet = true;
 
                 //print("Drawing line!!! Start:" + pathIndicators[i].drawArrow.startloc + ", End: " + pathIndicators[i].drawArrow.endLoc);
+            }
+        }
+
+        for (int i = 0; i < employeePaths.Count; i++)
+        {
+            //End the loop
+            if (employeePaths[i].drawArrow.reached)
+            {
+                GameObject currentEmployee = employeePaths[i].drawArrow.target;
+
+                PathIndicator employeePath = employeePaths[i];
+                employeePath.drawArrow.Reset();
+
+                employeePaths.Remove(employeePath);
+                employeePath.instance.SetActive(false);
+                Destroy(employeePath.instance);
+
+                StopParticleSystemOnEmployee(currentEmployee, runningPSList);
+                StopParticleSystemOnEmployee(currentEmployee, idlePSList);
             }
         }
     }
