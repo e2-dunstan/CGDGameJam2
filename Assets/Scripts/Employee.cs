@@ -96,6 +96,9 @@ public class Employee : MonoBehaviour
                 UpdateMoving();
                 break;
             case State.WORKING:
+                if (currentInteractable != null && currentInteractable.type == InteractableFurniture.Interactable.Type.CHAIR
+                    && !IsSitting())
+                    anim.SetTrigger("Sit");
                 break;
         }
     }
@@ -105,7 +108,7 @@ public class Employee : MonoBehaviour
         if(state == State.WORKING && newState != State.WORKING)
         {
             //StartCoroutine(LerpFromTo(transform.position, roomEntry));
-            //anim.SetTrigger("Stand");
+            anim.SetTrigger("Stand");
         }
 
         switch (newState)
@@ -154,6 +157,23 @@ public class Employee : MonoBehaviour
         else
         {
             state = newState;
+        }
+    }
+
+    private bool IsSitting()
+    {
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("male_sit")
+            || anim.GetCurrentAnimatorStateInfo(0).IsName("female_sit")
+            || anim.GetCurrentAnimatorStateInfo(0).IsName("male_talk_sit")
+            || anim.GetCurrentAnimatorStateInfo(0).IsName("female_talk_sit")
+            || anim.GetCurrentAnimatorStateInfo(0).IsName("male_laugh_sit")
+            || anim.GetCurrentAnimatorStateInfo(0).IsName("female_laugh_sit"))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
