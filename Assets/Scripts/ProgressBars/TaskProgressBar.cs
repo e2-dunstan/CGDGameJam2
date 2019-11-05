@@ -35,14 +35,21 @@ public class TaskProgressBar : MonoBehaviour
     public bool itemRequired = false;
     public Color itemRequiredTextColour;
 
+    private bool hasBeenPlayed = false;
     public void PauseProgress()
     {
         isPaused = true;
+        if (!hasBeenPlayed)
+        {
+            AudioManager.Instance.Play(AudioManager.SoundsType.MISC, (int)AudioManager.MiscSounds.ERROR, 0.1f);
+            hasBeenPlayed = true;
+        }
     }
 
     public void UnPauseProgress()
     {
         isPaused = false;
+        hasBeenPlayed = false;
     }
 
     Vector3 startScale = new Vector3(0, 1, 0);
@@ -172,5 +179,6 @@ public class TaskProgressBar : MonoBehaviour
         blueRequired = false;
         pinkRequired = false;
         itemRequired = false;
+        hasBeenPlayed = false;
     }
 }
