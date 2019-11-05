@@ -22,3 +22,4 @@
   - Achiever: Reputation
 - Evaluation (list improvements, not criticism)
   - Audio: footsteps with animation events (Lewis)
+  - Camera: focal point of activity in the room, camera shake (Brief) (Lewis)
