@@ -15,11 +15,12 @@ public enum Difficulty
 }
 
 public enum Event
-{
+{ 
     REQUIRE_NUMBER_OF_PEOPLE = 0,
     REQUIRE_ITEM = 1,
     REQUIRE_PINK_PERSON = 2,
-    REQUIRE_BLUE_PERSON = 3
+    REQUIRE_BLUE_PERSON = 3,
+    NONE = 4
 }
 
 [System.Serializable]
@@ -62,7 +63,7 @@ public class Job
             return key;
         }
 
-        public T GetValue<T>(string key) where T : class
+        public T GetValue<T>() where T : class
         {
             return genericObj as T;
         }

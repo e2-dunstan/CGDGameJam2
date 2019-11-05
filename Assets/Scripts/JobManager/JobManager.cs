@@ -131,7 +131,7 @@ public class JobManager : MonoBehaviour
                     if (job.eventList.genericEventList.Count < 1)
                     {
                         //int randomEvent = Random.Range(0, 4);
-                        int randomEvent = Random.Range(0, 3);
+                        int randomEvent = 3;
 
                         switch (randomEvent)
                         {

@@ -16,6 +16,8 @@ public class CollectableItem : MonoBehaviour
 
     public CollectableType collectableType = CollectableType.CONTROLLER;
 
+    private bool hasBeenCollected = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,9 +32,12 @@ public class CollectableItem : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Employee"))
+        if(other.gameObject.CompareTag("Employee") && !hasBeenCollected)
         {
-            gameObject.transform.parent = other.transform;
+            hasBeenCollected = true;
+            gameObject.transform.position = other.GetComponent<Employee>().GetItemHoldTransform().transform.position;
+            gameObject.transform.parent = other.GetComponent<Employee>().GetItemHoldTransform().transform.parent;
+            gameObject.transform.rotation = other.GetComponent<Employee>().GetItemHoldTransform().transform.rotation;
         }
     }
 }

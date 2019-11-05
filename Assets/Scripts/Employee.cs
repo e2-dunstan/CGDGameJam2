@@ -42,6 +42,8 @@ public class Employee : MonoBehaviour
     private Vector3 roomEntry = Vector3.zero;
 
 
+    [SerializeField] private GameObject itemHoldPosition = null;
+
     public bool Selected
     {
         get; set;
@@ -262,10 +264,10 @@ public class Employee : MonoBehaviour
         //    agent.speed = 0;
         //}
 
-        if (moveSpeed > 0.7f)
-        {
-            anim.SetBool("Pant", true);
-        }
+        //if (moveSpeed > 0.7f)
+        //{
+        //    anim.SetBool("Pant", true);
+        //}
 
         if (/*moveSpeed < 0.05 && */Vector3.Distance(agent.pathEndPosition, transform.position) < 0.05f)
         {
@@ -399,4 +401,9 @@ public class Employee : MonoBehaviour
     }
 
     #endregion
+
+    public GameObject GetItemHoldTransform()
+    {
+        return itemHoldPosition;
+    }
 }
