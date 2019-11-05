@@ -5,50 +5,116 @@ using UnityEngine;
 public class DrawArrow : MonoBehaviour
 {
     public Vector3 startLoc;
-    public Vector3 endLoc;
+    public Vector3 endDragLoc;
     public bool startPointSet;
     public bool endPointSet;
 
+    public Employee targetEmployee = null;
     public GameObject target;
-    public bool killPS;
-    public bool startPs;
-    public Vector3[] points = new Vector3[2];
+    private Vector3[] drawPoints = new Vector3[2];
+    public List<Vector3> pathPoints = new List<Vector3>();
     private LineRenderer lr;
     float distLine = 0.0f;
 
+    bool checkIfEnded = false;
+
     private float min = 0.65f;
     private float max = 20.0f;
+    public bool reached;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        startPs = false;
         lr = GetComponent<LineRenderer>();
         lr.enabled = false;
         endPointSet = false;
+        checkIfEnded = false;
+    }
+
+    private void Start()
+    {
+        Invoke("DelayCheckForEnd", 4);
     }
 
     // Update is called once per frame
     void Update()
     {
-        killPS = false;
-        //Once the player clicks a Dev
-       // Debug.Log(startPointSet);
-
-        //print("Set starting position!! " + startloc.transform.position);
-            points[0] = startLoc;
-            points[1] = endLoc;
-
-        //Start playing the animation once the player drops the dev
-        if (startPointSet && endPointSet)
+        lr.enabled = ActivateLineRenderer();
+        if (targetEmployee != null)
         {
-            startPs = true;
+            target = targetEmployee.gameObject;
+
+            drawPoints[0] = new Vector3(
+                        target.transform.position.x,
+                        target.transform.position.y + 1,
+                        target.transform.position.z);
+        }
+        if (startPointSet)
+        {
+            //Allow user to drag the line
+            drawPoints[1] = endDragLoc;
+            float distance = Vector3.Distance(startLoc, endDragLoc);
+            ChangeSizeBasedOnDistance(distance);
+            lr.SetPositions(drawPoints);
+            lr.startWidth = distLine;
+            lr.endWidth = distLine;
+        }
+        if (endPointSet)
+        {
+            //  Draw the path
+            if (pathPoints.Count > 0)
+            {
+                for (int i = 1; i < pathPoints.Count; i++)
+                {
+                    if (Vector3.Distance(target.transform.position, pathPoints[i]) < 0.25f)
+                    {
+                        pathPoints.Remove(pathPoints[i - 1]);
+                        print("Removedpoint");
+                    }
+                }
+                
+                lr.positionCount = pathPoints.Count;
+                SetPath(pathPoints.ToArray());
+            }
+            else
+            {
+                InitWalkingPath();
+            }
+
+            if(checkIfEnded)
+            {
+                reached = targetEmployee.GetComponent<Rigidbody>().velocity.magnitude == 0 || (Vector3.Distance(target.transform.position, endDragLoc) < 0.5f);
+            }
+        }
+    }
+
+    private void DelayCheckForEnd()
+    {
+        checkIfEnded = true;
+    }
+
+    private bool ActivateLineRenderer()
+    {
+        if (startPointSet  || endPointSet)
+        {
+            return true;
         }
         else
-        {
-            killPS = true;
-            startPs = false;
-        }
-        float distance = Vector3.Distance(startLoc, endLoc);
+        return false;
+    }
+    public void Reset()
+    {
+        startLoc = Vector3.zero;
+        endDragLoc = Vector3.zero;
+        lr.enabled = false;
+        startPointSet = false;
+        endPointSet = false;
+        targetEmployee = null;
+        lr.positionCount = 2;
+        pathPoints.Clear();
+        pathPoints = new List<Vector3>();
+    }
+    void ChangeSizeBasedOnDistance(float distance)
+    {
         if (distance < min)
         {
             distLine = 1.0f;
@@ -59,45 +125,30 @@ public class DrawArrow : MonoBehaviour
         }
         else
         {
-            distLine = 1 -(distance / max);
+            distLine = 1 - (distance / max);
         }
         if (distLine <= 0.1f)
         {
             distLine = 0.1f;
         }
-
     }
-
-    private void FixedUpdate()
+    void InitWalkingPath()
     {
-        if (!startPointSet && !endPointSet || startPointSet && endPointSet)
+        pathPoints.Clear();
+        lr.positionCount = targetEmployee.EmployeeNavMeshPath.corners.Length;
+        SetPath(targetEmployee.EmployeeNavMeshPath.corners);
+
+        for (int i = 0; i < targetEmployee.EmployeeNavMeshPath.corners.Length; i++)
         {
-            if (lr.enabled == true)
-            {
-                lr.enabled = false;
-            }
-        }
-        else if (startPointSet && !endPointSet)
-        {
-            if (lr.enabled == false)
-            {
-                lr.enabled = true;
-            }
-            GetComponent<LineRenderer>().SetPositions(points);
-            lr.startWidth = distLine;
-            lr.endWidth = distLine;
-            //print("DistLine" +distLine);
+            pathPoints.Add(lr.GetPosition(i));
         }
     }
-
-    public void Reset()
+    void SetPath(Vector3[] positions)
     {
-        startPs = false;
-        startLoc = Vector3.zero;
-        endLoc = Vector3.zero;
-        lr.enabled = false;
-        startPointSet = false;
-        endPointSet = false;
-        target = null;
+        if(positions.Length != 0)
+        {
+            lr.SetPositions(positions);
+            lr.SetPosition(0, target.transform.position);
+        }
     }
 }
