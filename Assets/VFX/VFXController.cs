@@ -15,6 +15,8 @@ public class VFXController : MonoBehaviour
     public List<PartSys> runningPSList = new List<PartSys>();
     public ParticleSystem idlePS;
     public List<PartSys> idlePSList = new List<PartSys>();
+    public ParticleSystem pulsePS;
+    public List<PartSys> pulsePSList = new List<PartSys>();
 
     public class PathIndicator
     {
@@ -109,6 +111,7 @@ public class VFXController : MonoBehaviour
                 pathIndicators[i].instance.SetActive(true);
 
                 pathIndicators[i].drawArrow.targetEmployee = pathIndicators[i].touchRef.selectedChar;
+                PlayParticleSystemOnEmployee(pathIndicators[i].drawArrow.targetEmployee.gameObject, pulsePSList);
                 pathIndicators[i].drawArrow.endDragLoc = pathIndicators[i].touchRef.worldEnd;
                 pathIndicators[i].drawArrow.startPointSet = true;
 
@@ -168,6 +171,10 @@ public class VFXController : MonoBehaviour
             if (_list[i].target == _target)
             {
                 _list[i].instance.transform.position = _list[i].target.transform.position;
+                if (!_list[i].effect.isPlaying)
+                {
+                    StopParticleSystemOnEmployee(_list[i].target, _list);
+                }
                 return false;
             }
         }

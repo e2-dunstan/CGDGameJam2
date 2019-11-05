@@ -73,13 +73,8 @@ public class Employee : MonoBehaviour
     private void OnEnable()
     {
         state = State.IDLE;
-        VFXController.Instance.CreateParticleSystemForEmployee(
-            VFXController.Instance.runningPS, 
-            VFXController.Instance.runningPSList);
 
-        VFXController.Instance.CreateParticleSystemForEmployee(
-            VFXController.Instance.idlePS,
-            VFXController.Instance.idlePSList);
+        InitialiseParticleSystems();
     }
 
     private void OnDisable()
@@ -266,6 +261,9 @@ public class Employee : MonoBehaviour
 
     private void UpdateMoving()
     {
+        VFXController.Instance.PlayParticleSystemOnEmployee(
+            gameObject,
+            VFXController.Instance.runningPSList);
         //if (CanMove())
         //{
         //    currentMaxSpeed = defaultMaxSpeed;
@@ -370,6 +368,20 @@ public class Employee : MonoBehaviour
     {
         return anim.speed;
     }
+    void InitialiseParticleSystems()
+    {
+        VFXController.Instance.CreateParticleSystemForEmployee(
+            VFXController.Instance.runningPS,
+            VFXController.Instance.runningPSList);
+
+        VFXController.Instance.CreateParticleSystemForEmployee(
+            VFXController.Instance.idlePS,
+            VFXController.Instance.idlePSList);
+
+        VFXController.Instance.CreateParticleSystemForEmployee(
+            VFXController.Instance.pulsePS,
+            VFXController.Instance.pulsePSList);
+    }
 
     #region NAVMESH
     public void ProcessNewPath(TouchInput.PlayerTouch _touchInfo)
@@ -424,4 +436,6 @@ public class Employee : MonoBehaviour
     }
 
     #endregion
+
+    
 }
