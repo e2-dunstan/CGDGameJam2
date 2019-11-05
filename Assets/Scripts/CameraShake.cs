@@ -53,7 +53,6 @@ public class CameraShake : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(minPoints[0]);
         if (timeout >= 0.0f)
         {
             Shake();
@@ -69,7 +68,6 @@ public class CameraShake : MonoBehaviour
         {
             SetIntenLength(10.0f, 0.25f);
         }
-        //Pixelplacement.Tween.Value();
     }
 
     private void Shake()

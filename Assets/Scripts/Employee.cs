@@ -366,7 +366,11 @@ public class Employee : MonoBehaviour
 
     public float GetMoveSpeed()
     {
-        return anim.speed;
+        if (anim != null)
+        {
+            return anim.speed;
+        }
+        return 0.0f;
     }
     void InitialiseParticleSystems()
     {
