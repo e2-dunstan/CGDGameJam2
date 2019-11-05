@@ -132,9 +132,6 @@ public class VFXController : MonoBehaviour
                 employeePaths.Remove(employeePath);
                 employeePath.instance.SetActive(false);
                 Destroy(employeePath.instance);
-
-                StopParticleSystemOnEmployee(currentEmployee, runningPSList);
-                StopParticleSystemOnEmployee(currentEmployee, idlePSList);
             }
         }
     }
@@ -204,6 +201,10 @@ public class VFXController : MonoBehaviour
                 _target.transform.position.y,
                 _target.transform.position.z);
 
+                if (!_list[i].effect.isPlaying)
+                {
+                    StopParticleSystemOnEmployee(_list[i].target, _list);
+                }
                 return false;
             }
         }
@@ -234,6 +235,10 @@ public class VFXController : MonoBehaviour
                     _target.transform.position.y + yAdjustment,
                     _target.transform.position.z);
 
+                if (!_list[i].effect.isPlaying)
+                {
+                    StopParticleSystemOnEmployee(_list[i].target, _list);
+                }
                 return false;
             }
         }
@@ -267,6 +272,10 @@ public class VFXController : MonoBehaviour
                     _target.transform.position.y + yAdjustment,
                     _target.transform.position.z + zAdjustment);
 
+                if (!_list[i].effect.isPlaying)
+                {
+                    StopParticleSystemOnEmployee(_list[i].target, _list);
+                }
                 return false;
             }
         }
