@@ -33,6 +33,8 @@ public class PresentationRoomManager : MonoBehaviour
                 JobManager.Instance.CompleteJob(job.taskID);
                 ReputationManager.Instance.JobCompleted(Mathf.FloorToInt(job.baseTaskScore), job.taskTime, job.completionTime, job.taskDifficulty);
 
+                ParticleSystemHandler.Instance.EmitTaskSubmitParticle(transform.position + new Vector3(0, 1, 0));
+
                 numberOfJobsCompleted--;
 
                 if (numberOfJobsCompleted == 0)
