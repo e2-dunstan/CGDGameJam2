@@ -277,11 +277,10 @@ public class Employee : MonoBehaviour
         //    agent.speed = 0;
         //}
 
-        if (moveSpeed > 0.7f)
-        {
-            anim.SetBool("Pant", true);
-            VFXController.Instance.PlayParticleSystemOnEmployee(gameObject, VFXController.Instance.runningPSList);
-        }
+        //if (moveSpeed > 0.7f)
+        //{
+        //    anim.SetBool("Pant", true);
+        //}
 
         if (/*moveSpeed < 0.05 && */Vector3.Distance(agent.pathEndPosition, transform.position) < 0.05f)
         {

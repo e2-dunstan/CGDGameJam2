@@ -15,7 +15,7 @@ public class JobLoadManager : MonoBehaviour
 
     void Awake()
     {
-        jsonFilePath = Application.dataPath + "/JSONFiles/";
+        jsonFilePath = Application.streamingAssetsPath + "/JSONFiles/";
     }
 
 
