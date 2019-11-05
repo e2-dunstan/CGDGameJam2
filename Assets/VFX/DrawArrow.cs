@@ -52,19 +52,27 @@ public class DrawArrow : MonoBehaviour
         }
         if (endPointSet)
         {
+            
             //  Draw the path
-            InitWalkingPath();
-            //for (int i = 1; i < targetEmployee.EmployeeNavMeshPath.corners.Length - 1; i++)
-            //{
-            //    if (Vector3.Distance(target.transform.position, targetEmployee.EmployeeNavMeshPath.corners[i - 1]) < 0.25f
-            //    && pathPoints.Contains(targetEmployee.EmployeeNavMeshPath.corners[i - 1]))
-            //    {
-            //        pathPoints.Remove(pathPoints[i - 1]);
-            //        print("Removedpoint");
-            //    }
-            //}
-            //lr.positionCount = pathPoints.Count;
-            //SetPath(pathPoints.ToArray());
+            if (pathPoints.Count > 0)
+            {
+                for (int i = 1; i < pathPoints.Count; i++)
+                {
+                    if (Vector3.Distance(target.transform.position, pathPoints[i]) < 0.25f)
+                    {
+                        pathPoints.Remove(pathPoints[i - 1]);
+                        print("Removedpoint");
+                    }
+                }
+                
+                lr.positionCount = pathPoints.Count;
+                SetPath(pathPoints.ToArray());
+            }
+            else
+            {
+                InitWalkingPath();
+            }
+
         }
         reached = (Vector3.Distance(target.transform.position, endDragLoc) < 0.5f);
     }
@@ -115,7 +123,7 @@ public class DrawArrow : MonoBehaviour
         lr.positionCount = targetEmployee.EmployeeNavMeshPath.corners.Length;
         SetPath(targetEmployee.EmployeeNavMeshPath.corners);
 
-        for (int i = 0; i < targetEmployee.EmployeeNavMeshPath.corners.Length - 1; i++)
+        for (int i = 0; i < targetEmployee.EmployeeNavMeshPath.corners.Length; i++)
         {
             pathPoints.Add(lr.GetPosition(i));
         }
