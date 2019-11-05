@@ -9686,6 +9686,16 @@ PrefabInstance:
       propertyPath: repUi
       value: 
       objectReference: {fileID: 1832832104}
+    - target: {fileID: 8136546153216576448, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: reputationDecayMultiplier
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 8136546153216576448, guid: 43cd205dc236189419b96420f82e5599,
+        type: 3}
+      propertyPath: taskCompletionBase
+      value: 0.75
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43cd205dc236189419b96420f82e5599, type: 3}
 --- !u!114 &2123211188 stripped
@@ -10281,6 +10291,11 @@ PrefabInstance:
       propertyPath: endPopupObject
       value: 
       objectReference: {fileID: 237362804}
+    - target: {fileID: 7851899264590233355, guid: 9050eff8fda70e441a8462cd3ad0b435,
+        type: 3}
+      propertyPath: gameDuration
+      value: 180
+      objectReference: {fileID: 0}
     - target: {fileID: 8098372375447038360, guid: 9050eff8fda70e441a8462cd3ad0b435,
         type: 3}
       propertyPath: m_IsActive
