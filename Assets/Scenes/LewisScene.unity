@@ -333,7 +333,7 @@ MonoBehaviour:
   outlineWidth: 6.3
   precomputeOutline: 1
   bakeKeys:
-  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 3}
   bakeValues:
   - data:
     - {x: 0.57735026, y: -0.57735026, z: 0.57735026}
@@ -732,8 +732,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39c0b566405dea34db5780b36672b65c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  count: 0.5
-  intense: 2
 --- !u!1 &1968655255
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CameraShake : MonoBehaviour
 {
+
+    public static CameraShake Instance;
+
     public Vector3 lookAtPos;
     List<Vector3> startPoints = new List<Vector3>();
     List<Vector3> maxPoints = new List<Vector3>();
@@ -19,6 +22,9 @@ public class CameraShake : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        if (Instance == null) Instance = this;
+        else if (Instance != this) Destroy(gameObject);
+
         //startPoint = gameObject.transform.position;
         //lastPoint = startPoint;
         ////minPoint = startPoint - new Vector3(3, 0, 1);
@@ -75,18 +81,18 @@ public class CameraShake : MonoBehaviour
             if (newPoints[0] == maxPoints[0])
             {
                 newPoints[0] = minPoints[0];
-               // newPoints[1] = minPoints[1];
+                // newPoints[1] = minPoints[1];
             }
             else
             {
                 newPoints[0] = maxPoints[0];
-              //  newPoints[1] = maxPoints[1];
+                //  newPoints[1] = maxPoints[1];
             }
             time = 0.0f;
         }
         time += (Time.deltaTime * intense);
         gameObject.transform.position = Vector3.Lerp(lastPoints[0], newPoints[0], time);
-       // lookAtPos = Vector3.Lerp(lastPoints[1], newPoints[1], time);
+        // lookAtPos = Vector3.Lerp(lastPoints[1], newPoints[1], time);
     }
 
     public void SetIntenLength(float _intense = 5.0f, float _length = 0.25f)
