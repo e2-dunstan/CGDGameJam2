@@ -4,9 +4,9 @@ using UnityEngine;
 using Pixelplacement;
 using Pixelplacement.TweenSystem;
 
-public class RoomGlowManager : MonoBehaviour
+public class RoomHighlightManager : MonoBehaviour
 {
-    public static RoomGlowManager Instance;
+    public static RoomHighlightManager Instance;
 
     public enum ROOM
     {
@@ -110,37 +110,37 @@ public class RoomGlowManager : MonoBehaviour
             case ROOM.MEETING:
                 if(meetingTween == null || meetingTween.Status != Tween.TweenStatus.Running)
                 {
-                    meetingTween = Tween.Value(0f, 1f, UpdateMeetingAlpha, 1.5f, 0f, Tween.EaseInOut, Tween.LoopType.PingPong);
+                    meetingTween = Tween.Value(0f, 1f, UpdateMeetingAlpha, 0.75f, 0f, Tween.EaseInOut, Tween.LoopType.PingPong);
                 }
                 break;
             case ROOM.PRESENTATION:
                 if (presentationTween == null || presentationTween.Status != Tween.TweenStatus.Running)
                 {
-                    presentationTween = Tween.Value(0f, 1f, UpdatePresentationAlpha, 1.5f, 0f, Tween.EaseInOut, Tween.LoopType.PingPong);
+                    presentationTween = Tween.Value(0f, 1f, UpdatePresentationAlpha, 0.75f, 0f, Tween.EaseInOut, Tween.LoopType.PingPong);
                 }
                 break;
             case ROOM.IDLE:
                 if (idleTween == null || idleTween.Status != Tween.TweenStatus.Running)
                 {
-                    idleTween = Tween.Value(0f, 1f, UpdateIdleAlpha, 1.5f, 0f, Tween.EaseInOut, Tween.LoopType.PingPong);
+                    idleTween = Tween.Value(0f, 1f, UpdateIdleAlpha, 0.75f, 0f, Tween.EaseInOut, Tween.LoopType.PingPong);
                 }
                 break;
             case ROOM.TASK1:
                 if (task1Tween == null || task1Tween.Status != Tween.TweenStatus.Running)
                 {
-                    task1Tween = Tween.Value(0f, 1f, UpdateTask1Alpha, 1.5f, 0f, Tween.EaseInOut, Tween.LoopType.PingPong);
+                    task1Tween = Tween.Value(0f, 1f, UpdateTask1Alpha, 0.75f, 0f, Tween.EaseInOut, Tween.LoopType.PingPong);
                 }
                 break;
             case ROOM.TASK2:
                 if (task2Tween == null || task2Tween.Status != Tween.TweenStatus.Running)
                 {
-                    task2Tween = Tween.Value(0f, 1f, UpdateTask2Alpha, 1.5f, 0f, Tween.EaseInOut, Tween.LoopType.PingPong);
+                    task2Tween = Tween.Value(0f, 1f, UpdateTask2Alpha, 0.75f, 0f, Tween.EaseInOut, Tween.LoopType.PingPong);
                 }
                 break;
             case ROOM.TASK3:
                 if (task3Tween == null || task3Tween.Status != Tween.TweenStatus.Running)
                 {
-                    task3Tween = Tween.Value(0f, 1f, UpdateTask3Alpha, 1.5f, 0f, Tween.EaseInOut, Tween.LoopType.PingPong);
+                    task3Tween = Tween.Value(0f, 1f, UpdateTask3Alpha, 0.75f, 0f, Tween.EaseInOut, Tween.LoopType.PingPong);
                 }
                 break;
         }
@@ -182,27 +182,27 @@ public class RoomGlowManager : MonoBehaviour
         {
             case ROOM.MEETING:
                 meetingTween.Stop();
-                meetingTween = Tween.Value(meetingAlpha, 0f, UpdateMeetingAlpha, 0.2f, 0f, Tween.EaseInOut);
+                meetingTween = Tween.Value(meetingAlpha, 0f, UpdateMeetingAlpha, 0.5f, 0f, Tween.EaseInOut);
                 break;
             case ROOM.PRESENTATION:
                 presentationTween.Stop();
-                presentationTween = Tween.Value(presentationAlpha, 0f, UpdatePresentationAlpha, 0.2f, 0f, Tween.EaseInOut);
+                presentationTween = Tween.Value(presentationAlpha, 0f, UpdatePresentationAlpha, 0.5f, 0f, Tween.EaseInOut);
                 break;
             case ROOM.IDLE:
                 idleTween.Stop();
-                idleTween = Tween.Value(idleAlpha, 0f, UpdateIdleAlpha, 0.2f, 0f, Tween.EaseInOut);
+                idleTween = Tween.Value(idleAlpha, 0f, UpdateIdleAlpha, 0.5f, 0f, Tween.EaseInOut);
                 break;
             case ROOM.TASK1:
                 task1Tween.Stop();
-                task1Tween = Tween.Value(task1Alpha, 0f, UpdateTask1Alpha, 0.2f, 0f, Tween.EaseInOut);
+                task1Tween = Tween.Value(task1Alpha, 0f, UpdateTask1Alpha, 0.5f, 0f, Tween.EaseInOut);
                 break;
             case ROOM.TASK2:
                 task2Tween.Stop();
-                task2Tween = Tween.Value(task2Alpha, 0f, UpdateTask2Alpha, 0.2f, 0f, Tween.EaseInOut);
+                task2Tween = Tween.Value(task2Alpha, 0f, UpdateTask2Alpha, 0.5f, 0f, Tween.EaseInOut);
                 break;
             case ROOM.TASK3:
                 task3Tween.Stop();
-                task3Tween = Tween.Value(task3Alpha, 0f, UpdateTask3Alpha, 0.2f, 0f, Tween.EaseInOut);
+                task3Tween = Tween.Value(task3Alpha, 0f, UpdateTask3Alpha, 0.5f, 0f, Tween.EaseInOut);
                 break;
         }
     }
