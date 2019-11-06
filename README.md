@@ -1,4 +1,4 @@
-# CGD Game Jam 2
+# Foundry Frenzy
 
 The Boomers - Dan, Ellie, Ben, Alex, Sol, Lewis
 
