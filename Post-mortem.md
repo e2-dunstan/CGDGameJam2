@@ -38,6 +38,7 @@ Additionally, the game also appeals to the achiever, with rewards and benefits f
 ## Improvements
 
 More juice
+Further visual improvements should be made to the existing juice effects in order to convey more information to the player. For example, when drawing a path for an employee the path could change colour to indicate whether the destination is valid or not. As the employees have a tendency to sit down, they should emit an effect to inform the player that this employee is available to control. With better planning more polished juice effects like these could have been produced earlier in the project.
 
 Better/professionally made assets
 
