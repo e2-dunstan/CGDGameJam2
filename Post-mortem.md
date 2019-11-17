@@ -7,16 +7,26 @@
 
 ### GitHub
 
-Not as good, maybe because the project was so different and the final goal was more open ended
+Github this time around was a little more lax. Due to project being more focused on polish we weren't immediately sure on what should be polished and if it did how. This resulted in people working on their systems after our initial meeting and once they were done just slowing add things as we thought appropriate. In hindsight after we got the core systems implemented we should've had a group meeting to decide on what polish we were going to add to what systems and update Github accordingly
 
 ### Communication
 
-Improved, but once again hit crunch time due to people not able to complete things on time or stick to milestones
+Communication this time around was better overall. Members of the team were more proactive at checking slack and letting eachother know if there was going to be issues. We also worked together as a group almost every time we worked on the jam. Meaning if discussions were needed in regards to specific systems, we could quickly talk them out instead of waiting for replies on slack.
 
 #
 ## The Game
 
 ### Code
+
+Task system
+
+Reputation system
+
+The Reputation system managed the difficulty curve of the game. The player starts off at zero reputation and with a minimum amount of employees. As the player completes tasks in quick succession the reputation of the foundary goes up. This leads to the player getting access to more employees to allot to tasks and tasks that are harder in difficulty but reward more score. At all times the reputation of the player is degrading and once it goes below a tiers threshold then the bonuses gained from that tier are lost.
+
+AI
+
+Touch system
 
 Each touch is stored in a pooled list of touches with elements such as their movement phase, what they're tapping, etc tracked without the game getting confused about which touch is which.
 
@@ -27,6 +37,8 @@ AI
 Touch Input
 
 Level Design
+
+Since we wanted the game at its core to be a collabrative experience we built the level it. The center of the level is where the employees idle. Being in the center of the screen makes it easy to reach for any player surrounding the touch screens we were briefed to work with. Then accepting and handing off tasks is to the left and work areas are on the right. This meant that if there are two players one can focus on using employees from the center to accept and hand off tasks and the second player can focus on alloting employees to working on tasks. If we wanted to make it more chaotic in the future we could mix these placements up requiring players to reach all around the screen and get in each others way. 
 
 Task System
 
