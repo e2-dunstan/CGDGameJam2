@@ -40,7 +40,8 @@ Pathing line renderer
 
 Particle systems
 
-Audio
+In keeping with the focus on juice and polish, the audio was implemented into the game. It was used to keep the players engaged and let them know if anything had happened. A celebratory sound effect played when someone handed in a task or an error sound effect played when the task was interrupted. These little actions add to the game and making more enjoyable at the same time. There was also looping music was playing the background, this music was in keeping with the office style of the game. This was all done in the audio manager which created all the audio sources at the start of the game and then played and paused. This was done instead of creating new ones every time for optimization's sake. Overall the audio worked well but there were definite improvements that could be made for next time.
+
 
 #### The Foundry
 
@@ -62,6 +63,8 @@ In terms of UI, the "reputation" system could have been displayed with a variati
 The game would also benefit from more professional and fitting assets - including models, textures and animations - which are not possible to acquire in 2 weeks.
 
 Varied level design layouts for improved communication between multiple players
+
+With proper integration with FMOD, the audio system for the game could have been really improved with better quality sound effects as well as proper testing whilst the game was running. Also, it would have helped instead of coding in a dynamic fade in and fade out, FMOD handles that all for you so it would have made it easier to have better music and transitions in the game.
 
 #
 ## Gameplay
