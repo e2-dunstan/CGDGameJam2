@@ -32,7 +32,7 @@ Since we wanted the game at its core to be a collaborative experience, we built 
 
 Task System
 
-UI - don't talk about the assets but do talk about their placement.
+UI
 
 As the theme of this Games Jam was about Juice and Polish, UI was a much larger focus this time around. The Surge library was imported into the project to ensure a tweening system could be used for managing all UI animations with unique easing and animation curves. This was primarily used for spawning and despawning UI elements and could be used outside of Unity's global time. Additional effort was made to ensure UI elements had correct ordering, resized correctly for varying screen resolutions and were parented to follow the employees correctly. Each UI element that required to interact with other parts of the code base had interface functions built to populate the UI element. Still, the delay in tween animations sometimes leads to problems with spawning tasks. Also, the text font used, while retro-styled, can be challenging to read at times due to letter spacing. 
 
