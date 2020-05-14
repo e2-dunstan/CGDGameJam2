@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class PathEmitter : MonoBehaviour
 {
-    //Parent
+    //  Parent
     public Employee parentEmployee;
-        private Transform parentTransform;
+    private Transform parentTransform;
+
     //  Line positions
     public Vector3 startPosition;
     public Vector3 endPosition;
@@ -24,7 +25,7 @@ public class PathEmitter : MonoBehaviour
     private ParticleSystem pathPS;
     private ParticleSystem.SizeOverLifetimeModule pathPS_SizeOL;
 
-    //  misc
+    //  Misc
     [SerializeField] private float pulseTimer;
 
 
@@ -34,6 +35,7 @@ public class PathEmitter : MonoBehaviour
         parentTransform = parentEmployee.transform;
         pathInstance = Instantiate(pathPrefab);
     }
+
     private void OnEnable()
     {
         if (CheckVariablesInitialised())

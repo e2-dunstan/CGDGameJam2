@@ -16,6 +16,8 @@ public class TaskRoomManager : MonoBehaviour
 
     public bool roomUsesEvents = false;
 
+    [SerializeField] Transform exitPosition;
+
     [SerializeField]
     private GameObject requiredItem = null;
     private bool isItemInRoom = false;
@@ -65,6 +67,7 @@ public class TaskRoomManager : MonoBehaviour
             foreach(var employee in employeesInRoom)
             {
                 employee.GetComponent<Employee>().ChangeState(Employee.State.IDLE);
+                employee.GetComponent<Employee>().MoveTo(exitPosition.position);
             }
         }
 

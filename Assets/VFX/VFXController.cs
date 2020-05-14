@@ -76,6 +76,7 @@ public class VFXController : MonoBehaviour
     {
         DrawArrowManage();
     }
+
     void DrawArrowManage()
     {
         for (int i = 0; i < pathIndicators.Count; i++)

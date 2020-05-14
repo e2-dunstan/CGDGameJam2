@@ -52,6 +52,8 @@ public class Employee : MonoBehaviour
         get; set;
     }
 
+    private bool wasSelected = false;
+
     public State GetEmployeeState()
     {
         return state;
@@ -88,6 +90,13 @@ public class Employee : MonoBehaviour
 
     private void Update()
     {
+        if (Selected)
+        {
+            timeIdle = 0;
+            StopAllCoroutines();
+            return;
+        }
+
         moveSpeed = agent.velocity.magnitude / defaultMaxSpeed;
         anim.SetFloat("MoveSpeed", moveSpeed);
 
@@ -128,14 +137,12 @@ public class Employee : MonoBehaviour
         switch (newState)
         {
             case State.IDLE:
-                if (currentInteractable != null && currentRoom != Room.TASK_1 && currentRoom != Room.TASK_2 && currentRoom != Room.TASK_3)
+                if (currentInteractable != null && currentRoom != Room.TASK_1 && currentRoom != Room.TASK_2 && currentRoom != Room.TASK_3 && !EmployeeNavMeshAgent.hasPath)
                 {
                     currentInteractable.occupied = false;
                     if (currentInteractable.type == InteractableFurniture.Interactable.Type.CHAIR)
                     {
                         anim.SetTrigger("Stand");
-                        //if (state != State.WORKING) 
-                            //MoveTo(transform.position + (transform.forward * 1));
                     }
 
                     currentInteractable = null;
@@ -199,7 +206,6 @@ public class Employee : MonoBehaviour
         {
             if (currentInteractable.type == InteractableFurniture.Interactable.Type.CHAIR) shouldRelaxAfterMoving = true;
             MoveTo(currentInteractable.origin.position);
-            //StartCoroutine(GoToWorkstation());
         }
         else
         {
@@ -207,25 +213,15 @@ public class Employee : MonoBehaviour
         }
     }
 
-    //private IEnumerator GoToWorkstation()
-    //{
-    //    roomEntry = transform.position;
-
-    //    yield return LerpFromTo(roomEntry, currentInteractable.origin.position);
-
-    //    if (currentInteractable != null)
-    //    {
-    //        yield return RotateTo(currentInteractable.origin.rotation);
-
-    //        if (currentInteractable.type == InteractableFurniture.Interactable.Type.CHAIR)
-    //            anim.SetTrigger("Sit");
-    //    }
-    //}
-
     #region UPDATE STATES
 
     private void UpdateIdle()
     {
+        if(currentRoom == Room.MEETING)
+        {
+            return;
+        }
+
         if (moveSpeed > 0.05)
         {
             ChangeState(State.MOVING);
@@ -233,12 +229,12 @@ public class Employee : MonoBehaviour
         if (anim.GetBool("Pant")) anim.SetBool("Pant", false);
 
         timeIdle += Time.deltaTime;
-        if (timeIdle > timeIdleToWait)
+        if (timeIdle > timeIdleToWait && !EmployeeNavMeshAgent.hasPath)
         {
             shouldRelaxAfterMoving = true;
 
             currentInteractable = InteractableFurniture.Instance.GetInteractable();
-            if (currentInteractable != null)
+            if (currentInteractable != null && !EmployeeNavMeshAgent.hasPath)
                 MoveTo(currentInteractable.origin.position);
             
             timeIdle = 0; 
@@ -254,7 +250,7 @@ public class Employee : MonoBehaviour
 
         float waitTime = currentInteractable.type == InteractableFurniture.Interactable.Type.CHAIR ? timeSitToWait : timeIdleToWait;
 
-        if (timeIdle > waitTime)
+        if (timeIdle > waitTime && !EmployeeNavMeshAgent.hasPath)
         {
             ChangeState(State.IDLE);
             timeIdle = 0;
@@ -268,23 +264,8 @@ public class Employee : MonoBehaviour
         VFXController.Instance.PlayParticleSystemOnEmployee(
             gameObject,
             VFXController.Instance.runningPSList);
-        //if (CanMove())
-        //{
-        //    currentMaxSpeed = defaultMaxSpeed;
-        //    currentMaxSpeed = defaultMaxSpeed * (shouldRelaxAfterMoving ? 0.2f : 1.0f);
-        //    agent.speed = currentMaxSpeed;
-        //}
-        //else
-        //{
-        //    agent.speed = 0;
-        //}
 
-        //if (moveSpeed > 0.7f)
-        //{
-        //    anim.SetBool("Pant", true);
-        //}
-
-        if (/*moveSpeed < 0.05 && */Vector3.Distance(agent.pathEndPosition, transform.position) < 0.05f)
+        if (Vector3.Distance(agent.pathEndPosition, transform.position) < 0.05f)
         {
             if (shouldRelaxAfterMoving)
             {
@@ -322,9 +303,7 @@ public class Employee : MonoBehaviour
     private bool CanMove()
     {
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle")
-            || anim.GetCurrentAnimatorStateInfo(0).IsName("Motion"))
-            //|| anim.GetCurrentAnimatorStateInfo(0).IsName("female_idle_pant")
-            //|| anim.GetCurrentAnimatorStateInfo(0).IsName("male_idle_pant"))
+         || anim.GetCurrentAnimatorStateInfo(0).IsName("Motion"))
         {
             return true;
         }
@@ -350,19 +329,6 @@ public class Employee : MonoBehaviour
         transform.rotation = rot;
     }
 
-    //private IEnumerator LerpFromTo(Vector3 from, Vector3 to)
-    //{
-    //    float lerpTime = 1.0f;
-
-    //    for (float t = 0; t < lerpTime; t += Time.deltaTime)
-    //    {
-    //        transform.position = Vector3.Lerp(from, to, t);
-    //        yield return null;
-    //    }
-
-    //    transform.position = to;
-    //}
-
     public State GetState()
     {
         return state;
@@ -376,6 +342,7 @@ public class Employee : MonoBehaviour
         }
         return 0.0f;
     }
+
     void InitialiseParticleSystems()
     {
         VFXController.Instance.CreateParticleSystemForEmployee(
@@ -404,7 +371,7 @@ public class Employee : MonoBehaviour
         }
     }
 
-    private void MoveTo(Vector3 pos)
+    public void MoveTo(Vector3 pos)
     {
         StopAllCoroutines();
         destination = pos;
