@@ -5,21 +5,23 @@ using UnityEngine;
 public class ParticleTween : MonoBehaviour
 {
     private float duration = 1.0f;
+    
+    [SerializeField]
     private RectTransform[] particles;
 
     void Start()
     {
-        particles = GetComponentsInChildren<RectTransform>();
         foreach (RectTransform particle in particles)
         {
             particle.gameObject.SetActive(false);
         }
     }
 
-    private void TweenParticles(Vector3 from, Vector3 to)
+    public void TweenParticles(Vector3 from, Vector3 to, Difficulty difficulty)
     {
-        foreach (RectTransform particle in particles)
+        for (int i = 0; i < (int)difficulty + 1; i++)
         {
+            RectTransform particle = particles[i];
             particle.localScale = Vector3.zero;
             particle.gameObject.SetActive(true);
 

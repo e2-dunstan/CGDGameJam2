@@ -67,7 +67,10 @@ public class TaskRoomManager : MonoBehaviour
             foreach(var employee in employeesInRoom)
             {
                 employee.GetComponent<Employee>().ChangeState(Employee.State.IDLE);
-                employee.GetComponent<Employee>().MoveTo(exitPosition.position);
+
+                Vector3 randomPosition = Random.insideUnitSphere * 3f;
+                randomPosition.y = 0;
+                employee.GetComponent<Employee>().MoveTo(exitPosition.position + randomPosition);
             }
         }
 

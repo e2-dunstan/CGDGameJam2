@@ -7,7 +7,7 @@ public class ReputationManager : MonoBehaviour
     public static ReputationManager Instance;
 
     [Header("Script References")]
-    [SerializeField] private ReputationStarsUI repUi;
+    public ReputationStarsUI repUi;
 
     //Depending on your current Star rating set employees active or inactive
     //Rating will also be used in job manager to throw out harder to complete jobs
@@ -63,6 +63,8 @@ public class ReputationManager : MonoBehaviour
         {
             currentStarRatingFloat -= Time.deltaTime * reputationDecayMultiplier;
             currentStarRatingFloat = currentStarRatingFloat < 0 ? 0 : currentStarRatingFloat;
+
+            repUi.slider.value = (currentStarRatingFloat - 1) / ((float)maxStarRating - 1);
 
             if (currentStarRatingFloat < currentStarRating)
             {

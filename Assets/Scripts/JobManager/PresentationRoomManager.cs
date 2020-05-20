@@ -8,6 +8,13 @@ public class PresentationRoomManager : MonoBehaviour
 
     int numberOfJobsCompleted = 0;
 
+    ParticleTween particleTween;
+
+    private void Awake()
+    {
+        particleTween = GetComponent<ParticleTween>();
+    }
+
     private void Start()
     {
         alertUIElement = JobUIManager.Instance.SpawnUIElement(JobUIManager.UIElement.PRESENTATION_ROOM_ALERT, gameObject);
@@ -37,6 +44,8 @@ public class PresentationRoomManager : MonoBehaviour
                 AudioManager.Instance.Play(AudioManager.SoundsType.MISC, (int)AudioManager.MiscSounds.CELEBRATION, 0.1f);
 
                 numberOfJobsCompleted--;
+
+                particleTween.TweenParticles(Camera.main.WorldToScreenPoint(this.transform.position), ReputationManager.Instance.repUi.GetPosition(), job.taskDifficulty);
 
                 if (numberOfJobsCompleted == 0)
                 {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Pixelplacement;
 
 public class ReputationStarsUI : MonoBehaviour
@@ -13,10 +14,12 @@ public class ReputationStarsUI : MonoBehaviour
     }
 
     [SerializeField] star[] starArray;
+    public Slider slider;
 
     private void Start()
     {
         SetReputation(0);
+        slider.value = 0;
     }
 
     public void SetReputation(int reputation)
@@ -55,5 +58,10 @@ public class ReputationStarsUI : MonoBehaviour
                 Tween.LocalScale(starArray[index].transform, startScale, endScale, duration, delay, Tween.EaseInBack, Tween.LoopType.None);
             }
         }
+    }
+
+    public Vector3 GetPosition()
+    {
+        return starArray[0].transform.position;
     }
 }
